@@ -1,3 +1,8 @@
+%% Overleaf			
+%% Software Manual and Technical Document Template	
+%% 									
+%% This provides an example of a software manual created in Overleaf.
+
 \documentclass{../ol-softwaremanual}
 
 % Packages used in this example
@@ -20,111 +25,116 @@
 \newcommand{\cs}[1]{\texttt{\textbackslash #1}}
 
 \begin{document}
-
-
-\begin{titlepage}
-
-
-% Frontmatter data; appears on title page
-\title{\en Team Plan \\}
-\version{0.1}
-\softwarelogo{\includegraphics[scale=0.4]{img/CarBazaar_whiteback.png}}
-\end{titlepage}
-
-
-\maketitle
-
-\newpage
-
-\center{\textbf{Μέλη Ομάδας}}
-
-\vspace{30pt}
-
-
-
-\begin{table}[htbp!]
-
-\begin{tabular}{llll}
-Μεμελετζόγλου Χαρίλαος & 1069364 & \en st1069364@ceid.upatras.gr & 4o Έτος   \\ 
-\\ Λέκκας Γεώργιος      &      1067430    &   \en st1067430@ceid.upatras.gr & 4o Έτος  \\
-\\ Γιαννουλάκης Ανδρέας        &   1067387       & \en st1067387@ceid.upatras.gr & 4o Έτος           \\
-\\ Κανελλόπουλος Ιωακείμ        &  1070914        &    \en st1070914@ceid.upatras.gr & 4o Έτος        \\ 
-\end{tabular}
-\end{table}
-
-\center{\textbf{Υπεύθυνοι Παρόντος Τεχνικού Κειμένου}}
-
-\vspace{40pt}
-
-\begin{table}[htbp!]
-\begin{tabular}{ll}
-Μεμελετζόγλου Χαρίλαος & \en Editor \\
-\\ Λέκκας Γεώργιος      &   \en  Editor \\
-\end{tabular}
-\end{table}
-
-
-\vspace{40pt}
-
-\center{\textbf{Εργαλεία που χρησιμοποιήθηκαν}}
-
-\vspace{20pt}
-\flushleft
-Χρησιμοποιήθηκε το \en \doclink{https://www.overleaf.com/}{Overleaf} \gr για την συγγραφή του \LaTeX\ κώδικα. \break
-
-Για την δημιουργία του λογότυπου, χρησιμοποιήθηκε το εργαλείο \en \doclink{https://www.adobe.com/express/create/logo}{Adobe Express} . \gr
-
-Για την ανάπτυξη του έργου χρησιμοποιήθηκε η γλώσσα προγραμματισμού \en Python. \gr \\
-
-Για την επικοινωνία των μελών της ομάδας, χρησιμοποιείται το \en \doclink{ https://www.discord.com/}{Discord} \gr . \\
-
-Για τον διαμοιρασμό και την παρακολούθηση της διαδικασίας ανάπτυξης, χρησιμοποιείται το \en Github \gr.
-
-
-
-\newpage
-
-\center{\textbf{Διαδικασία Διαχείρισης Έργου}}
-\flushleft
-Προκειμένου να οργανώσουμε την εργασία της ομάδας μας, αποφασίσαμε να δουλέψουμε ακολουθώντας την μέθοδο \en \textit{SCRUM} \gr , που ανήκει στην κατηγορία των \en Agile development frameworks. \gr
-
-Συγκεκριμένα, αποφασίσαμε να εργαστούμε χρησιμοποιώντας \en \textit{Sprints} \gr διάρκειας δύο εβδομάδων, όση και η προθεσμία για το κάθε παραδοτέο. \\ 
-
-Ρόλοι κατά \en Scrum \gr : \newline
-
-
-\flushleft
-\begin{tabular}{ll}
-     \en \textbf{Project Owner : }  & \gr \hspace{5mm}  Μεμελετζόγλου Χαρίλαος \\
-     \\ \en \textbf{Scrum Master : } &  \gr \hspace{5mm} Λέκκας Γεώργιος \\
-     
-     \\ \en \textbf{Development Team : } & \begin{tabular}[t]{ll}
-                      &  \gr  Μεμελετζόγλου Χαρίλαος  \\
-                      & \gr     Λέκκας Γεώργιος \\
-                      & \gr     Γιαννουλάκης Ανδρέας \\
-                      & \gr     Κανελλόπουλος Ιωακείμ \\
-                                            \end{tabular} 
-\end{tabular} \linebreak
-
-\vspace{20pt}
-
-Στην αρχή κάθε \en Sprint cycle \gr , διεξάγεται το \en Sprint Planning meeting \gr , στο οποίο καθορίζονται οι στόχοι της ομάδας για το \en Sprint \gr που πρόκειται να ξεκινήσει. Συγκεκριμένα, ο \en Project Owner \gr , επιλέγει τα \en tasks \gr με τα οποία θα ασχοληθεί η ομάδα, από το \en Project Backlog \gr . \\
-
-\vspace{5pt}
-
-Στόχος σε κάθε \en Sprint Cycle \gr , είναι η ανάπτυξη νέων \en features \gr και η παράδοση ενός \en working product \gr στους πελάτες. \\ 
-
-\vspace{5pt}
-
-Στην συνέχεια, η ομάδα ανάπτυξης, ξεκινά να εργάζεται στα καθορισμένα \en tasks \gr .
-Για να είναι συντονισμένη η διαδικασία ανάπτυξης των απαραίτητων Τεχνικών Κειμένων για το κάθε παραδοτέο, διεξάγονται 2 με 3 εβδομαδιαία \en Scrum meetings \gr . Στις συναντήσεις, αυτές, γίνεται έλεγχος προόδου, κάθε μέλος της ομάδας εξηγεί ποια \en tasks \gr έχει ολοκληρώσει και ποιά θα αναλάβει στην συνέχεια, αλλά και συζητά τυχόν εμπόδια που αντιμετωπίζει.
-Η επικοινωνία μεταξύ των μελών της ομάδας γίνεται μέσω \en Discord \gr, αλλα και μέσω δια ζώσης συναντήσεων. \\
-
-\vspace{5pt}
-
-Στο τέλος κάθε \en Sprint Cycle \gr , διεξάγεται το \en Sprint Retrospective meeting \gr , στο οποίο η ομάδα συζητά σχετικά με τις δυσκολίες και τα λάθη που έγιναν στο \en Sprint \gr που μόλις ολοκληρώθηκε, αλλά και πιθανούς τρόπους για να αντιμετωπιστούν αντίστοιχα φαινόμενα σε μελλοντικά \en Sprints \gr . Επίσης, γίνεται συζήτηση επί των μεθόδων που είχαν ως αποτέλεσμα την ομαλότερη διεκπεραίωση των \en tasks \gr του \en Sprint Backlog \gr .
-
-
-
-
+	
+	
+	\begin{titlepage}
+		
+		
+		% Frontmatter data; appears on title page
+		\title{\en Team Plan \\}
+		\version{0.1}
+		\softwarelogo{\includegraphics[scale=0.4]{../CarBazaar_logo.png}}
+	\end{titlepage}
+	
+	
+	\maketitle
+	
+	\newpage
+	
+	\center{\textbf{Μέλη Ομάδας}}
+	
+	\vspace{20pt}
+	
+	
+	
+	\begin{table}[htbp!]
+		
+		\begin{tabular}{llll}
+			Μεμελετζόγλου Χαρίλαος & 1069364 & \en st1069364@ceid.upatras.gr & 4o Έτος   \\ 
+			\\ Λέκκας Γεώργιος      &      1067430    &   \en st1067430@ceid.upatras.gr & 4o Έτος  \\
+			\\ Γιαννουλάκης Ανδρέας        &   1067387       & \en st1067387@ceid.upatras.gr & 4o Έτος           \\
+			\\ Κανελλόπουλος Ιωακείμ        &  1070914        &    \en st1070914@ceid.upatras.gr & 4o Έτος        \\ 
+		\end{tabular}
+	\end{table}
+	
+	\center{\textbf{Υπεύθυνοι Παρόντος Τεχνικού Κειμένου}}
+	
+	\vspace{20pt}
+	
+	\begin{table}[htbp!]
+		\begin{tabular}{ll}
+			Μεμελετζόγλου Χαρίλαος & \en Editor \\
+			\\ Λέκκας Γεώργιος      &   \en  Editor \\
+			\\ Γιαννουλάκης Ανδρέας & \en Editor \\
+			\\ Καννελόπουλος Ιαωκείμ & \en Editor \\ 
+		\end{tabular}
+	\end{table}
+	
+	
+	\vspace{20pt}
+	
+	\center{\textbf{Εργαλεία που χρησιμοποιήθηκαν}}
+	
+	\vspace{20pt}
+	\flushleft
+	Χρησιμοποιήθηκε το \en \doclink{https://www.overleaf.com/}{Overleaf} \gr για την συγγραφή του \LaTeX\ κώδικα. \break
+	
+	Για την δημιουργία του λογότυπου, χρησιμοποιήθηκε το εργαλείο \en \doclink{https://www.adobe.com/express/create/logo}{Adobe Express} . \gr \break
+	
+	Για την ανάπτυξη του έργου χρησιμοποιείται η γλώσσα προγραμματισμού \en Python \gr και για την συγγραφή του κώδικα, το \en IDE \doclink{https://www.jetbrains.com/pycharm/}{PyCharm} \gr και το \en \doclink{https://code.visualstudio.com/}{VSCode} \gr .         \\ \break
+	
+	Για την δημιουργία του \en Gantt Chart, \gr χρησιμοποιήθηκε το \en \doclink{https://instagantt.com/}{Instagantt} . \gr \break
+	
+	Για την επικοινωνία των μελών της ομάδας, χρησιμοποιείται το \en \doclink{ https://www.discord.com/}{Discord} \gr . \linebreak 
+	
+	
+	Για τον διαμοιρασμό και την παρακολούθηση της διαδικασίας ανάπτυξης, χρησιμοποιείται το \en Github \gr.
+	
+	
+	
+	\newpage
+	
+	\center{\textbf{Διαδικασία Διαχείρισης Έργου}}
+	\flushleft
+	Προκειμένου να οργανώσουμε την εργασία της ομάδας μας, αποφασίσαμε να δουλέψουμε ακολουθώντας την μέθοδο \en \textit{SCRUM} \gr , που ανήκει στην κατηγορία των \en Agile development frameworks. \gr
+	
+	Συγκεκριμένα, αποφασίσαμε να εργαστούμε χρησιμοποιώντας \en \textit{Sprints} \gr διάρκειας δύο εβδομάδων, όση και η προθεσμία για το κάθε παραδοτέο. \\ 
+	
+	Ρόλοι κατά \en Scrum \gr : \newline
+	
+	
+	\flushleft
+	\begin{tabular}{ll}
+		\en \textbf{Project Owner : }  & \gr \hspace{5mm}  Μεμελετζόγλου Χαρίλαος \\
+		\\ \en \textbf{Scrum Master : } &  \gr \hspace{5mm} Λέκκας Γεώργιος \\
+		
+		\\ \en \textbf{Development Team : } & \begin{tabular}[t]{ll}
+			&  \gr  Μεμελετζόγλου Χαρίλαος  \\
+			& \gr     Λέκκας Γεώργιος \\
+			& \gr     Γιαννουλάκης Ανδρέας \\
+			& \gr     Κανελλόπουλος Ιωακείμ \\
+		\end{tabular} 
+	\end{tabular} \linebreak
+	
+	\vspace{20pt}
+	
+	Στην αρχή κάθε \en Sprint cycle \gr , διεξάγεται το \en Sprint Planning meeting \gr , στο οποίο καθορίζονται οι στόχοι της ομάδας για το \en Sprint \gr που πρόκειται να ξεκινήσει. Συγκεκριμένα, ο \en Project Owner \gr , επιλέγει τα \en tasks \gr με τα οποία θα ασχοληθεί η ομάδα, από το \en Project Backlog \gr . \\
+	
+	\vspace{5pt}
+	
+	Στόχος σε κάθε \en Sprint Cycle \gr , είναι η ανάπτυξη νέων \en features \gr και η παράδοση ενός \en working product \gr στους πελάτες. \\ 
+	
+	\vspace{5pt}
+	
+	Στην συνέχεια, η ομάδα ανάπτυξης, ξεκινά να εργάζεται στα καθορισμένα \en tasks \gr .
+	Για να είναι συντονισμένη η διαδικασία ανάπτυξης των απαραίτητων Τεχνικών Κειμένων για το κάθε παραδοτέο, διεξάγονται 2 με 3 εβδομαδιαία \en Scrum meetings \gr . Στις συναντήσεις, αυτές, γίνεται έλεγχος προόδου, κάθε μέλος της ομάδας εξηγεί ποια \en tasks \gr έχει ολοκληρώσει και ποιά θα αναλάβει στην συνέχεια, αλλά και συζητά τυχόν εμπόδια που αντιμετωπίζει.
+	Η επικοινωνία μεταξύ των μελών της ομάδας γίνεται μέσω \en Discord \gr, αλλα και μέσω δια ζώσης συναντήσεων. \\
+	
+	\vspace{5pt}
+	
+	Στο τέλος κάθε \en Sprint Cycle \gr , διεξάγεται το \en Sprint Retrospective meeting \gr , στο οποίο η ομάδα συζητά σχετικά με τις δυσκολίες και τα λάθη που έγιναν στο \en Sprint \gr που μόλις ολοκληρώθηκε, αλλά και πιθανούς τρόπους για να αντιμετωπιστούν αντίστοιχα φαινόμενα σε μελλοντικά \en Sprints \gr . Επίσης, γίνεται συζήτηση επί των μεθόδων που είχαν ως αποτέλεσμα την ομαλότερη διεκπεραίωση των \en tasks \gr του \en Sprint Backlog \gr .
+	
+	
+	
+	
 \end{document}

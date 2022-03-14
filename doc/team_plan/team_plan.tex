@@ -19,6 +19,12 @@
 
 \usepackage{subfig}
 
+\usepackage{incgraph,tikz}
+
+
+
+\usepackage{rotating}
+
 
 % Custom macros used in this example document
 \newcommand{\doclink}[2]{\href{#1}{#2}\footnote{\url{#1}}}
@@ -83,7 +89,7 @@
 	
 	Για την ανάπτυξη του έργου χρησιμοποιείται η γλώσσα προγραμματισμού \en Python \gr και για την συγγραφή του κώδικα, το \en IDE \doclink{https://www.jetbrains.com/pycharm/}{PyCharm} \gr και το \en \doclink{https://code.visualstudio.com/}{VSCode} \gr .         \\ \break
 	
-	Για την δημιουργία του \en Gantt Chart, \gr χρησιμοποιήθηκε το \en \doclink{https://instagantt.com/}{Instagantt} . \gr \break
+	Για την δημιουργία του \en Gantt Chart, \gr χρησιμοποιήθηκε το \en \doclink{https://instagantt.com/}{Instagantt}  \gr και για την δημιουργία του \en Pert Chart \gr, το \en \doclink{https://www.smartdraw.com/}{Smartdraw} \gr. \break
 	
 	Για την επικοινωνία των μελών της ομάδας, χρησιμοποιείται το \en \doclink{ https://www.discord.com/}{Discord} \gr . \linebreak 
 	
@@ -134,7 +140,49 @@
 	
 	Στο τέλος κάθε \en Sprint Cycle \gr , διεξάγεται το \en Sprint Retrospective meeting \gr , στο οποίο η ομάδα συζητά σχετικά με τις δυσκολίες και τα λάθη που έγιναν στο \en Sprint \gr που μόλις ολοκληρώθηκε, αλλά και πιθανούς τρόπους για να αντιμετωπιστούν αντίστοιχα φαινόμενα σε μελλοντικά \en Sprints \gr . Επίσης, γίνεται συζήτηση επί των μεθόδων που είχαν ως αποτέλεσμα την ομαλότερη διεκπεραίωση των \en tasks \gr του \en Sprint Backlog \gr .
 	
+	\newpage
+	
+		\center{\textbf{Χρονοπρογραμματισμός Έργου}}
+		
+		\flushleft
+		
+		Στην εικόνα 1 παρατίθεται ο αρχικός χρονοπρογραμματισμός του έργου. Ως έναρξη του \en project \gr έχει οριστεί η 1η Μαρτίου και ως λήξη η 20η Ιουνίου. Αξίζει να σημειωθεί πως η ημερομηνία λήξης του έργου, αποτελεί απλώς μια εκτίμηση, καθώς ενδέχεται να αλλάξει από τους διδάσκοντες. Επίσης, η χρονική διάρκεια του κάθε \en task \gr μέσα στο κάθε \en Sprint Cycle \gr, ενδέχεται να αλλάξει κατά την διάρκεια του κάθε \en Sprint \gr . Τέλος, μιας και σε κάθε παραδοτέο υπάρχουν και προαιρετικά Τεχνικά Κείμενα, ενδέχεται να προστεθούν στο μέλλον.
 	
 	
+		\begin{figure}[htbp!]
+			
+			\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{gantt.jpg}
+			\caption{Αρχικός Χρονοπρογραμματισμός Έργου}
+			
+			
+		\end{figure}
+	
+		Ως τυπικά υποέργα (\en tasks \gr), έχουμε τα Τεχνικά Κείμενα που πρέπει να παραδοθούν σε κάθε ένα από τα παραδοτέα. Τα \en tasks \gr, φαίνονται στο διάγραμμα, αν και μπορεί η λίστα με τα \en tasks \gr κάθε παραδοτέου, να μεταβληθεί στο μέλλον, λόγω προσθήκης προαιρετικών υποέργων. 
+		
+		Στο τέλος κάθε παραδοτέου (και άρα κάθε \en Sprint Cycle \gr) έχουμε ένα \en Milestone \gr. Συγκεκριμένα, έχουμε :
+		
+		\begin{enumerate}
+			\item Ανάλυση Απαιτήσεων Εφαρμογής (\en Requirements Engineering\gr)
+			\item Σχεδιασμός Γενικής Αρχιτεκτονικής και Λειτουργιών Συστήματος και Αρχική Υλοποίηση
+			\item Σχεδιασμός Αναλυτικότερης Αρχιτεκτονικής Συστήματος και επέκταση υλοποίησης
+			\item Επέκταση υλοποίησης και προσθήκη όλων των απαραίτητων \en features \gr
+			\item \en Testing \gr Υλοποίησης
+			\item Τελικές αλλαγές στο σύστημα και παράδοση στον πελάτη
+		\end{enumerate}
+		\newpage
+		
+		
+		\center{\textbf{\en Pert Chart \gr Έργου}}
+		\flushleft
+		Στην εικόνα 2 παρατίθεται το αρχικό \en Pert Chart \gr, όπως αυτό προκύπτει από το αντίστοιχο \en Gantt Chart\gr. Μια αρχική εκτίμηση για το \en Critical Path \gr φαίνεται με κόκκινες ακμές.
+		
+		\begin{figure}[htbp!]
+			
+			\includegraphics[width=\textwidth, height=\textheight, keepaspectratio ]{pert.png}
+						\caption{Αρχικό \en Pert Chart \gr Έργου}
+		\end{figure}
+	
+
+
 	
 \end{document}

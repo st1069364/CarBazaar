@@ -1,0 +1,173 @@
+%% Overleaf			
+%% Software Manual and Technical Document Template	
+%% 									
+%% This provides an example of a software manual created in Overleaf.
+
+\documentclass{../ol-softwaremanual}
+
+% Packages used in this example
+\usepackage{graphicx}  % for including images
+\usepackage{microtype} % for typographical enhancements
+\usepackage{minted}    % for code listings
+\usepackage{amsmath}   % for equations and mathematics
+\setminted{style=friendly,fontsize=\small}
+\renewcommand{\listoflistingscaption}{List of Code Listings}
+\usepackage{hyperref}  % for hyperlinks
+\usepackage[a4paper,top=4.2cm,bottom=4.2cm,left=3.5cm,right=3.5cm]{geometry} % for setting page size and margins
+
+\usepackage[english, greek]{babel}
+
+\usepackage{subfig}
+
+
+% Custom macros used in this example document
+\newcommand{\doclink}[2]{\href{#1}{#2}\footnote{\url{#1}}}
+\newcommand{\cs}[1]{\texttt{\textbackslash #1}}
+
+\begin{document}
+
+
+\begin{titlepage}
+
+
+% Frontmatter data; appears on title page
+\title{\en Project Plan \\}
+\version{0.1}
+\softwarelogo{\includegraphics[scale=0.4]{img/CarBazaar_whiteback.png}}
+\end{titlepage}
+
+
+\maketitle
+
+\newpage
+
+\center{\textbf{Μέλη Ομάδας}}
+
+\vspace{20pt}
+
+
+
+\begin{table}[htbp!]
+
+\begin{tabular}{llll}
+Μεμελετζόγλου Χαρίλαος & 1069364 & \en st1069364@ceid.upatras.gr & 4o Έτος   \\ 
+\\ Λέκκας Γεώργιος      &      1067430    &   \en st1067430@ceid.upatras.gr & 4o Έτος  \\
+\\ Γιαννουλάκης Ανδρέας        &   1067387       & \en st1067387@ceid.upatras.gr & 4o Έτος           \\
+\\ Κανελλόπουλος Ιωακείμ        &  1070914        &    \en st1070914@ceid.upatras.gr & 4o Έτος        \\ 
+\end{tabular}
+\end{table}
+
+\center{\textbf{Υπεύθυνοι Παρόντος Τεχνικού Κειμένου}}
+
+\vspace{20pt}
+
+\begin{table}[htbp!]
+\begin{tabular}{ll}
+Μεμελετζόγλου Χαρίλαος & \en Peer Reviewer \\
+\\ Λέκκας Γεώργιος      &   \en  Editor \\
+\\ Γιαννουλάκης Ανδρέας & \en Contributor \\
+\\ Καννελόπουλος Ιαωκείμ & \en Contributor \\ 
+\end{tabular}
+\end{table}
+
+
+\vspace{20pt}
+
+\center{\textbf{Εργαλεία που χρησιμοποιήθηκαν}}
+
+\vspace{20pt}
+\flushleft
+Χρησιμοποιήθηκε το \en \doclink{https://www.overleaf.com/}{Overleaf} \gr για την συγγραφή του \LaTeX\ κώδικα. \break
+
+Για την δημιουργία του λογότυπου, χρησιμοποιήθηκε το εργαλείο \en \doclink{https://www.adobe.com/express/create/logo}{Adobe Express} . \gr \break
+
+Για την ανάπτυξη του έργου χρησιμοποιείται η γλώσσα προγραμματισμού \en Python \gr και για την συγγραφή του κώδικα, το \en IDE \doclink{https://www.jetbrains.com/pycharm/}{PyCharm} \gr και το \en \doclink{https://code.visualstudio.com/}{VSCode} \gr .         \\ \break
+
+Για την δημιουργία του \en Gantt Chart, \gr χρησιμοποιήθηκε το \en \doclink{https://instagantt.com/}{Instagantt} \gr και για την δημιουργία του \en Pert Chart \gr, το \en \doclink{https://www.smartdraw.com/}{Smartdraw} \gr. \break 
+
+Για την επικοινωνία των μελών της ομάδας, χρησιμοποιείται το \en \doclink{ https://www.discord.com/}{Discord} \gr . \linebreak 
+
+
+Για τον διαμοιρασμό και την παρακολούθηση της διαδικασίας ανάπτυξης, χρησιμοποιείται το \en Github \gr.
+
+
+
+\newpage
+
+\center{\textbf{Υποθετικός μακροπρόθεσμος χρονοπρογραμματισμός του Έργου}}
+\flushleft
+
+\vspace{20pt}
+
+Έστω ότι η ομάδα μας αποφασίζει να συνεχίσει την ενασχόλησή της με το έργο και μετά το πέρας του εαρινού εξαμήνου.Καθώς προχωράμε σε μία ολοκληρωμένη υλοποίηση του είναι λογικό πωσ τα \en tasks \gr που πρέπει να υλοποιηθούν θα είναι περισσότερα από αυτά που αναφέρθηκαν κατά την διάρκεια του εξαμηνιαίου έργου.
+
+\vspace{20pt}
+
+Τα \en tasks, \gr πχ περισσότερα \en mockup screens\gr,επιλογή επιπλέον προγραμματιστικών εργαλείων,χρονοδιάγραμμα για δοκιμές και ελέγχους λαθών κλπ αποτυπώνονται πάνω στα διαγράμματα \en Gantt \gr και \en Pert \gr μαζί με τις αντίστοιχες ημερομηνίες εφαρμογής τους.
+\vspace{5pt}
+
+\vspace{10pt}
+Στην εικόνα 1 παρατίθεται ο αρχικός χρονοπρογραμματισμός του έργου. Ως έναρξη του \en project \gr έχει οριστεί η 1η Μαρτίου και ως λήξη η 25η Οκτωβρίου.
+
+\vspace{20pt}
+
+\center{\textbf{\en Gantt Chart \gr Έργου}}
+\vspace{50pt}
+		\flushleft
+        \begin{figure}[htbp!]
+			
+			    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{  }
+			    \caption{Θέση διαγράμματος \en Gantt \gr}
+			
+			
+		\end{figure}
+
+\vspace{20pt}
+Αναφορά στα \en milestones \gr από το διάγραμμα \en Gantt. \gr
+\vspace{30pt}
+\center{\textbf{\en Pert Chart \gr Έργου}}
+		\flushleft
+		Στην εικόνα 2 παρατίθεται το \en Pert Chart \gr, όπως αυτό προκύπτει από το αντίστοιχο \en Gantt Chart \gr και αποτυπώνει σχηματικά τα χρονικά πλαίσια ανάμεσα στα \en tasks.\gr
+		
+		\begin{figure}[htbp!]
+			
+			\includegraphics[width=\textwidth, height=\textheight, keepaspectratio ]{}
+						\caption{Θέση \en Pert Chart \gr Έργου}
+		\end{figure}
+
+\newpage
+
+\center{\textbf{Πίνακας ανάθεσης Έργου σε ανθρώπινο δυναμικό}}
+\vspace{20pt}
+\flushleft
+ Στον παρακάτω πίνακα πραγματοποιείται ανάθεση \en των tasks \gr στα μέλη της ομάδας.
+ 
+ \vspace{20pt}
+ 
+ Τα περιεχόμενα του πίνακα προτίθενται προς αλλαγή.
+ \vspace{20pt}
+ \begin{table}[htbp!]
+		
+		\begin{tabular}{|l|l|}
+		\hline
+			\en task 1 \gr & Μεμελετζόγλου Χαρίλαος    \\ 
+			\hline
+			 \en task 2 \gr    &      Λέκκας Γεώργιος      \\
+			\hline
+			 \en task 3  \gr      &   Γιαννουλάκης Ανδρέας        \\
+			\hline
+			 \en task 4 \gr       &  Κανελλόπουλος Ιωακείμ         \\
+			\hline
+		\end{tabular}
+	\end{table}
+
+\vspace{20pt}
+
+\center{\textbf{Εκτίμηση κόστους του έργου}}
+
+\vspace{20pt}
+
+\flushleft
+Ως εκτίμηση κόστους του έργου θα ληφθεί υπόψη το κεφάλαιο που μπορεί να δαπανήσει η ομάδα ώστε να ολοκληρώσει το έργο σύμφωνα με τις προδιαγραφές που έχει θέσει αλλά και τα πιθανά και αναμενόμενα κέρδη που πιστεύουν πως θα τους αποφέρει η εργασία τους.Πρέπει δηλαδή να γίνει ένας υπολογισμός των εξόδων και μία λογική "πρόβλεψη" των αναμενόμενων κερδών του \en Project.\gr
+
+\end{document}

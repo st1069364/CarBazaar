@@ -19,6 +19,8 @@
 
 \usepackage{subfig}
 
+\usepackage{longtable}
+
 
 % Custom macros used in this example document
 \newcommand{\doclink}[2]{\href{#1}{#2}\footnote{\url{#1}}}
@@ -118,18 +120,19 @@
 	
 	Ως ημερομηνία έναρξης του \en project \gr έχει οριστεί η 1η Μαρτίου και ως ημερομηνία λήξης έχουμε, 14/5/2022 . Θεωρούμε πως η ομάδα θα εργάζεται 6 μέρες την εβδομάδα, και πιθανόν να χρειαστούν και κάποιες υπερωρίες προκειμένου να παραδώσουμε στον πελάτη όσο πιο γρήγορα γίνεται το έργο. \\
 	
-	\vspace{10pt}
+	\newpage
 	
 	Στην εικόνα 1 παρατίθεται ο αρχικός χρονοπρογραμματισμός του έργου.
 	
-	\vspace{20pt}
+	\vspace{10pt}
 	
 	\center{\textbf{\en Gantt Chart \gr Έργου}}
-	\vspace{50pt}
+	\vspace{10pt}
 	\flushleft
+	
 	\begin{figure}[htbp!]
 		
-		\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{gantt\_chart\_project\_plan.png}
+		\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/gantt\_chart\_project\_plan.png}
 		\caption{\en Gantt Chart \gr έργου}
 		
 		
@@ -137,14 +140,17 @@
 	
 	\vspace{20pt}
 	Αναφορά στα \en milestones \gr από το διάγραμμα \en Gantt. \gr
-	\vspace{30pt}
+	
+	\newpage 
+	
 	\center{\textbf{\en Pert Chart \gr Έργου}}
 	\flushleft
 	Στην εικόνα 2 παρατίθεται το \en Pert Chart \gr, όπως αυτό προκύπτει από το αντίστοιχο \en Gantt Chart \gr και αποτυπώνει σχηματικά τα χρονικά πλαίσια ανάμεσα στα \en tasks.\gr
 	
+	
 	\begin{figure}[htbp!]
 		
-		\includegraphics[width=\textwidth, height=\textheight, keepaspectratio ]{PertChart\_for\_Projectplan.jpg}
+		\includegraphics[width=\textwidth, height=\textheight, keepaspectratio ]{img/PertChart\_for\_Projectplan.jpg}
 		\caption{ \en Pert Chart \gr Έργου}
 	\end{figure}
 	
@@ -153,28 +159,89 @@
 	\center{\textbf{Πίνακας ανάθεσης Έργου σε ανθρώπινο δυναμικό}}
 	\vspace{20pt}
 	\flushleft
-	Στον παρακάτω πίνακα πραγματοποιείται ανάθεση των \en tasks \gr στα μέλη της ομάδας.
+	Στον παρακάτω πίνακα πραγματοποιείται ανάθεση των \en tasks \gr στα μέλη της ομάδας.		
 	
-	\vspace{20pt}
 	
-	Τα περιεχόμενα του πίνακα προτίθενται προς αλλαγή.
-	\vspace{20pt}
-	\begin{table}[htbp!]
-		
-		\begin{tabular}{|l|l|}
+	\begin{longtable}{| p{.80\textwidth} | p{.30\textwidth} |} 
 			\hline
-			\en task 1 \gr & Μεμελετζόγλου Χαρίλαος    \\ 
+			\en Sprint Planning meeting \gr & Λέκκας Γ. \\ 
 			\hline
-			\en task 2 \gr    &      Λέκκας Γεώργιος      \\
+			\en Sprint Retrospective Meeting \gr & Λέκκας Γ.    \\ 
 			\hline
-			\en task 3  \gr      &   Γιαννουλάκης Ανδρέας        \\
+			\en Requirements Analysis \gr & Όλη η ομάδα    \\ 
 			\hline
-			\en task 4 \gr       &  Κανελλόπουλος Ιωακείμ         \\
+			\en Design Use Cases \gr    &      Όλη η ομάδα     \\
 			\hline
-		\end{tabular}
-	\end{table}
+			\en Create Mockup Screens  \gr      &   Λέκκας Γ.        \\
+			\hline
+			\en Design General System Architecture \gr       &  Μεμελετζόγλου Χ. και Λέκκας Γ.         \\
+			\hline
+			\en Design Mobile App UI / UX \gr       &  Κανελλόπουλος Ι. και Γιαννουλάκης Α.         \\
+			\hline
+			\en Implement Initial version of Mobile App \gr       &  Όλη η ομάδα         \\
+			\hline
+			\en Mobile App Testing \gr       &  Κανελλόπουλος Ι. και Γιαννουλάκης Α.         \\
+			\hline
+			\en App User Manual Creation \gr       &  Λέκκας Γ.         \\
+			\hline
+			\en Extend Requirements \gr       &  Μεμελετζόγλου Χ.         \\
+			\hline
+			\en Mobile App Implementation Continuation \gr       &  Όλη η ομάδα         \\
+			\hline
+			\en User Experience / User Interface Testing \gr       &  Κανελλόπουλος Ι.         \\
+			\hline
+			\en Functional Testing \gr       &  Γιαννουλάκης Α.         \\
+			\hline
+			\en Performance Testing \gr       &  Λέκκας Γ.         \\
+			\hline
+			\en Security Testing \gr       &  Μεμελετζόγλου Χ.         \\
+			\hline
+			\en Device and Platform Testing \gr       &  Κανελλόπουλος Ι.         \\
+			\hline
+			\en Compatibility Testing \gr       &  Λέκκας Γ.         \\
+			\hline
+			\en Mobile App User Manual Update \gr       &  Γιαννουλάκης Α.         \\
+			\hline
+			\en Design Application Backend Architecture \gr       & Μεμελετζόγλου Χ.         \\
+			\hline
+			\en Backend Implementation \gr       &  Κανελλόπουλος Ι. και Μεμελετζόγλου Χ.         \\
+			\hline
+			\en Backend Testing \gr       & Λέκκας Γ. και Γιαννουλάκης Α.       \\
+			\hline
+			\en Integrate Backend w/ Mobile App \gr       &  Όλη η ομάδα         \\
+			\hline
+			\en Penetration Test Backend System \gr       &  Μεμελετζόγλου Χ.        \\
+			\hline
+			\en Backend codebase documentation \gr       &  Κανελλόπουλος Ι.        \\
+			\hline
+			\en Release Application Alpha Version to shareholders and Users \gr       &  Όλη η ομάδα        \\
+			\hline
+			\en Design Website Frontend \gr       &  Κανελλόπουλος Ι.        \\
+			\hline
+			\en Implement Website Frontend \gr       &  Γιαννουλάκης Α.        \\
+			\hline
+			\en Integrate Website Frontend w/ Backend System \gr       &  Όλη η ομάδα        \\
+			\hline
+			\en Website Testing \gr       &  Λέκκας Γ. και Κανελλόπουλος Ι.       \\
+			\hline
+			\en Frontend Codebase documentation \gr       &  Μεμελετζόγλου Χ.       \\
+			\hline
+			\en Release Application and Website Beta Version \gr       &  Όλη η ομάδα        \\
+			\hline
+			\en Testing of the completed App \gr       &  Όλη η ομάδα        \\
+			\hline
+			\en Testing of the completed Website \gr       &   Όλη η ομάδα        \\
+			\hline
+			\en Entire System Penetration Testing \gr       &   Όλη η ομάδα        \\
+			\hline
+			\en Deploy App on AppStore / PlayStore and create Ads \gr       &   Όλη η ομάδα       \\
+			\hline
+			\en Sprint Retrospective Meeting and Project End \gr       &  Λέκκας Γ.        \\
+			\hline
+	\end{longtable}
 	
-	\vspace{20pt}
+	\vspace{30pt}
+	
 	
 	\center{\textbf{Εκτίμηση κόστους του έργου}}
 	

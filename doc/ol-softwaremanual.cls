@@ -39,7 +39,7 @@
 {\Large\@ver\par}
 \vfill
 {\Large \@author\par}
-\@date
+ \en Last Modified : \\ \@date
 \end{titlepage}
 }
 

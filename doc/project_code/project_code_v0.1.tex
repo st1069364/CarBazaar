@@ -1,0 +1,116 @@
+%% Overleaf			
+%% Software Manual and Technical Document Template	
+%% 									
+%% This provides an example of a software manual created in Overleaf.
+
+\documentclass{../ol-softwaremanual}
+
+% Packages used in this example
+\usepackage{graphicx}  % for including images
+\usepackage{microtype} % for typographical enhancements
+\usepackage{minted}    % for code listings
+\usepackage{amsmath}   % for equations and mathematics
+\setminted{style=friendly,fontsize=\small}
+\renewcommand{\listoflistingscaption}{List of Code Listings}
+\usepackage{hyperref}  % for hyperlinks
+\usepackage[a4paper,top=4.2cm,bottom=4.2cm,left=3.5cm,right=3.5cm]{geometry} % for setting page size and margins
+
+\usepackage[english, greek]{babel}
+
+\usepackage{subfig}
+
+
+
+
+% Custom macros used in this example document
+\newcommand{\doclink}[2]{\href{#1}{#2}\footnote{\url{#1}}}
+\newcommand{\cs}[1]{\texttt{\textbackslash #1}}
+
+\begin{document}
+	
+	
+	\begin{titlepage}
+		
+		
+		% Frontmatter data; appears on title page
+		\title{\en Project Code \\}
+		\version{0.1}
+		\softwarelogo{\includegraphics[scale=0.4]{../CarBazaar_logo.png}}
+	\end{titlepage}
+	
+	
+	\maketitle
+	
+	\newpage
+	
+	\center{\textbf{Μέλη Ομάδας}}
+	
+	\vspace{20pt}
+	
+	
+	
+	\begin{table}[htbp!]
+		
+		\begin{tabular}{llll}
+			Μεμελετζόγλου Χαρίλαος & 1069364 & \en st1069364@ceid.upatras.gr & 4o Έτος   \\ 
+			\\ Λέκκας Γεώργιος      &      1067430    &   \en st1067430@ceid.upatras.gr & 4o Έτος  \\
+			\\ Γιαννουλάκης Ανδρέας        &   1067387       & \en st1067387@ceid.upatras.gr & 4o Έτος           \\
+			\\ Κανελλόπουλος Ιωακείμ        &  1070914        &    \en st1070914@ceid.upatras.gr & 4o Έτος        \\ 
+		\end{tabular}
+	\end{table}
+	
+	\center{\textbf{Υπεύθυνοι Παρόντος Τεχνικού Κειμένου}}
+	
+	\vspace{20pt}
+	
+	\begin{table}[htbp!]
+		\begin{tabular}{ll}
+			Μεμελετζόγλου Χαρίλαος & \en Editor \\
+			\\ Λέκκας Γεώργιος      &   \en  Peer Reviewer \\
+			\\ Γιαννουλάκης Ανδρέας & \en Peer Reviewer \\
+			\\ Καννελόπουλος Ιωακείμ & \en Peer Reviewer \\ 
+		\end{tabular}
+	\end{table}
+	
+	
+	
+	\center{\textbf{Εργαλεία που χρησιμοποιήθηκαν}}
+	
+	\vspace{20pt}
+	\flushleft
+	Χρησιμοποιήθηκε το \en \doclink{https://www.overleaf.com/}{Overleaf} \gr και το \en \doclink{https://www.texstudio.org/}{TexStudio} \gr για την συγγραφή του \LaTeX\ κώδικα. \break
+	
+	Για την δημιουργία του \en UI \gr, χρησιμοποιείται το \en \textbf{PyQt} cross-platform Qt Framework \gr. \break
+	
+	Για την συγγραφή του \en Python \gr κώδικα, χρησιμοποιείται το \en IDE \doclink{https://www.jetbrains.com/pycharm/}{PyCharm} \gr και το \en \doclink{https://code.visualstudio.com/}{VSCode} \gr .         \\ \break
+	
+	Για την αποδοτικότερη δημιουργία των οθονών, χρησιμοποιείται το \en \doclink{https://doc.qt.io/qt-5/qtdesigner-manual.html}{QtDesigner} \gr, το οποίο παράγει τα \en .ui \gr, αρχεία που βρίσκονται στο \en src/ui/qt\_ui directory \gr . \break
+		
+	
+	\newpage
+	
+	
+	\center{\textbf{Περιγραφή κώδικα στο \en Github \gr}}
+	
+	\flushleft
+	
+	Στο \en \doclink{https://github.com/st1069364/CarBazaar}{repo} \gr του \en Project \gr, υπάρχει μια πρώτη μετατροπή των \en Mockup \gr σε πραγματικές \en UI \gr οθόνες. \break
+	
+	Ο κώδικας βρίσκεται στο \en \textbf{src} directory \gr . \break
+	
+	Συγκεκριμένα, υπάρχει μια υλοποίηση του \en User Menu \gr χρησιμοποιώντας \en PyQt \gr (αρχείο \en ui/user\_menu\_qt.py) \gr \break 
+	
+	Στο \en directory \textbf{ui/qt\_ui} \gr υπάρχουν τα απαραίτητα \en resources \gr, καθώς και το \en .ui \gr αρχείο που προκύπτει από το \en Qt Designer \gr. \break
+	
+	Επίσης, υπάρχουν υλοποιήσεις των \en User Menu, Login Screen \& Signup Screen \gr, χρησιμοποιώντας \en Tkinter \gr (στο μέλλον θα αντικατασταθούν από \en PyQt \gr εκδοχές). \break
+	
+	
+
+	
+
+	
+	
+	
+	
+	
+\end{document}

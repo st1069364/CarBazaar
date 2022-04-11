@@ -5,3 +5,4 @@ _minted*
 *.synctex.gz
 .idea
 venv
+__*

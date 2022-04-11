@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>resources/user_trans.png</file>
+    <file>resources/CarBazaar_logo_trans.png</file>
+  </qresource>
+</RCC>

@@ -3,3 +3,5 @@ _minted*
 *.log
 *.out
 *.synctex.gz
+.idea
+venv

@@ -1,5 +1,9 @@
 <RCC>
   <qresource prefix="newPrefix">
+    <file>resources/Location1.png</file>
+    <file>resources/time.png</file>
+    <file>resources/home.png</file>
+    <file>resources/packages.png</file>
     <file>resources/help.png</file>
     <file>resources/wishlist.png</file>
     <file>resources/message.png</file>

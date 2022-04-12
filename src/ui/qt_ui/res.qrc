@@ -1,5 +1,19 @@
 <RCC>
   <qresource prefix="newPrefix">
+    <file>resources/help.png</file>
+    <file>resources/wishlist.png</file>
+    <file>resources/message.png</file>
+    <file>resources/transportation.png</file>
+    <file>resources/handshake.png</file>
+    <file>resources/cart.png</file>
+    <file>resources/insurance.png</file>
+    <file>resources/compare.png</file>
+    <file>resources/location.png</file>
+    <file>resources/search.png</file>
+    <file>resources/wheel.png</file>
+    <file>resources/little_car.png</file>
+    <file>resources/spare_part_icon.png</file>
+    <file>resources/listing_icon.png</file>
     <file>resources/user_trans.png</file>
     <file>resources/CarBazaar_logo_trans.png</file>
   </qresource>

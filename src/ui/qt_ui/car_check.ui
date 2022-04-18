@@ -19,7 +19,7 @@
      <rect>
       <x>100</x>
       <y>0</y>
-      <width>161</width>
+      <width>171</width>
       <height>31</height>
      </rect>
     </property>
@@ -39,7 +39,7 @@
      <rect>
       <x>30</x>
       <y>0</y>
-      <width>31</width>
+      <width>41</width>
       <height>31</height>
      </rect>
     </property>
@@ -65,7 +65,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../GitHub/CarBazaar/src/ui/qt_ui/resources/user_trans.png</pixmap>
+     <pixmap resource="app_res.qrc">:/resources/resources/user_trans.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>false</bool>
@@ -84,7 +84,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../GitHub/CarBazaar/src/ui/qt_ui/resources/home.png</pixmap>
+     <pixmap resource="app_res.qrc">:/resources/resources/home.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>false</bool>
@@ -95,7 +95,7 @@
      <rect>
       <x>60</x>
       <y>40</y>
-      <width>101</width>
+      <width>161</width>
       <height>31</height>
      </rect>
     </property>
@@ -116,7 +116,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../GitHub/CarBazaar/src/ui/qt_ui/resources/packages.png</pixmap>
+     <pixmap resource="app_res.qrc">:/resources/resources/packages.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>false</bool>
@@ -155,7 +155,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../GitHub/CarBazaar/src/ui/qt_ui/resources/time.png</pixmap>
+     <pixmap resource="app_res.qrc">:/resources/resources/time.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_8">
@@ -224,7 +224,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../GitHub/CarBazaar/src/ui/qt_ui/resources/Location1.png</pixmap>
+     <pixmap resource="app_res.qrc">:/resources/resources/Location1.png</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_10">
@@ -252,7 +252,7 @@
      <rect>
       <x>50</x>
       <y>540</y>
-      <width>261</width>
+      <width>281</width>
       <height>16</height>
      </rect>
     </property>
@@ -280,7 +280,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../GitHub/CarBazaar/src/ui/qt_ui/resources/map.png</pixmap>
+     <pixmap resource="app_res.qrc">:/resources/resources/map.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>false</bool>
@@ -316,7 +316,7 @@ color: rgb(255, 255, 255);</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../GitHub/CarBazaar/src/ui/qt_ui/resources/arrow.png</pixmap>
+     <pixmap resource="app_res.qrc">:/resources/resources/arrow.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -335,8 +335,8 @@ color: rgb(255, 255, 255);</string>
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Car Engine Check&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Noto Sans'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt;&quot;&gt;Car Engine Check&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_14">
@@ -349,10 +349,10 @@ p, li { white-space: pre-wrap; }
      </rect>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/newPrefix/resources/leftarrow.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../GitHub/CarBazaar/src/ui/qt_ui/resources/leftarrow.png</pixmap>
+     <pixmap resource="app_res.qrc">:/resources/resources/leftarrow.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -365,14 +365,14 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>377</width>
-     <height>21</height>
+     <height>32</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
-  <include location="../GitHub/CarBazaar/src/ui/qt_ui/res.qrc"/>
+  <include location="app_res.qrc"/>
  </resources>
  <connections/>
 </ui>

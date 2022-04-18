@@ -1,0 +1,27 @@
+<RCC>
+  <qresource prefix="/resources">
+    <file>resources/arrow.png</file>
+    <file>resources/CarBazaar_logo_trans.png</file>
+    <file>resources/cart.png</file>
+    <file>resources/compare.png</file>
+    <file>resources/handshake.png</file>
+    <file>resources/help.png</file>
+    <file>resources/home.png</file>
+    <file>resources/insurance.png</file>
+    <file>resources/leftarrow.png</file>
+    <file>resources/listing_icon.png</file>
+    <file>resources/little_car.png</file>
+    <file>resources/location.png</file>
+    <file>resources/Location1.png</file>
+    <file>resources/map.png</file>
+    <file>resources/message.png</file>
+    <file>resources/packages.png</file>
+    <file>resources/search.png</file>
+    <file>resources/spare_part_icon.png</file>
+    <file>resources/time.png</file>
+    <file>resources/transportation.png</file>
+    <file>resources/user_trans.png</file>
+    <file>resources/wheel.png</file>
+    <file>resources/wishlist.png</file>
+  </qresource>
+</RCC>

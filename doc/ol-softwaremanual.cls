@@ -18,6 +18,8 @@
 \newcommand{\en}{\selectlanguage{english}}
 \newcommand{\gr}{\selectlanguage{greek}}
 
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+
 % load the base class with default options
 \LoadClass[12pt,a4paper]{article}
 

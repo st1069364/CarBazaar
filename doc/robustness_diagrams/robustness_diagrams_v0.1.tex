@@ -106,7 +106,9 @@
 	Ακολουθεί αντιστοίχηση των Οντοτήτων των διαγραμμάτων, στις αντίστοιχες κλάσεις του \en Domain Model \gr.
 	
 	\begin{itemize}
+		\item Οντότητα \textit{Αγγελία} : Αντιστοιχεί στην (γενική) κλάση \en \textbf{Listing}\gr
 		\item Οντότητα \textit{Αγγελία Οχήματος} : Αντιστοιχεί στην κλάση \en \textbf{CarListing}\gr
+		\item Οντότητα \textit{Αγγελία Ανταλλακτικού} : Αντιστοιχεί στην κλάση \en \textbf{SparePartListing}\gr
 		\item Οντότητα \textit{Μηνιαία Δόση} : Αντιστοιχεί στην κλάση \en\textbf{MonthlyInstallment}\gr
 		\item Οντότητα \textit{Συναλλαγή} : Αντιστοιχεί στην κλάση \en \textbf{Transaction}\gr
 		\item Οντότητα \en \textit{TransactionLog} \gr : Αντιστοιχεί στην κλάση \en \textbf{TransactionLog}\gr
@@ -115,8 +117,10 @@
 		\item Οντότητα \textit{Ελεγκτής} : Αντιστοιχεί στην κλάση \en \textbf{Inspector}\gr
 		\item Οντότητα \textit{Τοποθεσία} : Αντιστοιχεί στην κλάση \en \textbf{Location}\gr
 		\item Οντότητα \textit{Ανταλλακτικό} : Αντιστοιχεί στην κλάση \en \textbf{SparePart}\gr
-		\item Οντότητα \textit{Αγγελία Ανταλλακτικού} : Αντιστοιχεί στην κλάση \en \textbf{SparePartListing}\gr
 		\item Οντότητα \textit{Φωτογραφία} : Αντιστοιχεί στην κλάση \en \textbf{Photograph}\gr
+		\item Οντότητα \textit{Αναφορά Αγγελίας} : Αντιστοιχεί στην κλάση \en \textbf{ListingReport}\gr
+		\item Οντότητα \textit{Διαφήμιση} : Αντιστοιχεί στην κλάση \en \textbf{Advertisment}\gr
+		\item Οντότητα \textit{Ανταλλαγή Οχήματος} : Αντιστοιχεί στην κλάση \en \textbf{CarExchange}\gr
 	\end{itemize}
 	
 	
@@ -363,7 +367,7 @@
 			\item Ο χρήστης αναρτά τα απαραίτητα έγγραφα		
 			\item Το σύστημα εμφανίζει την οθόνη Ολοκλήρωση Ανταλλαγής, στην οποία αναγράφονται οι λεπτομέρειες της ανταλλαγής, και ζητά από τον χρήστη να επιβεβαιώσει την αποδοχή της ανταλλαγής
 			\item Ο χρήστης αποδέχεται την ανταλλαγή
-			\item Το σύστημα καταχωρεί την ανταλλαγή στο \en \textit{TransactionLog} \gr, αποστέλλει \en email \gr στον χρήστη με τα νομικά έγγραφα της ανταλλαγής και εμφανίζει μήνυμα επιτυχούς ανταλλαγής		
+			\item Το σύστημα δημιουργεί την Οντότητα Ανταλλαγή, καταχωρεί την ανταλλαγή στο \en \textit{TransactionLog} \gr, αποστέλλει \en email \gr στον χρήστη με τα νομικά έγγραφα της ανταλλαγής και εμφανίζει μήνυμα επιτυχούς ανταλλαγής		
 	\end{enumerate}
 	
 	\paragraph{Εναλλακτική Ροή}

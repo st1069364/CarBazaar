@@ -1,4 +1,4 @@
-GLOBAL_STYLE = """QPushButton {
+BUTTON_STYLE = """QPushButton {
     background-color: #d3311b;
     border : none;
     color : white;
@@ -162,7 +162,7 @@ if __name__ == "__main__":
     import sys
 
     app = QtWidgets.QApplication(sys.argv)
-    app.setStyleSheet(GLOBAL_STYLE)
+    app.setStyleSheet(BUTTON_STYLE)
     MainWindow = QtWidgets.QMainWindow()
     MainWindow.setStyleSheet("QMainWindow {background: 'white';}")
     ui = Ui_MainWindow()

@@ -6,108 +6,23 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>377</width>
-    <height>764</height>
+    <width>400</width>
+    <height>881</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Schedule Car Check</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="app_res.qrc">
+    <normaloff>:/resources/resources/CarBazaar_logo_trans.png</normaloff>:/resources/resources/CarBazaar_logo_trans.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="CarCheck">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>0</y>
-      <width>171</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>12</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#d3311b;&quot;&gt;Schedule Car Check&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>0</y>
-      <width>41</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>12</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#d3311b;&quot;&gt;Back&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>300</x>
-      <y>-10</y>
-      <width>31</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="app_res.qrc">:/resources/resources/user_trans.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>-30</x>
-      <y>40</y>
-      <width>61</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="app_res.qrc">:/resources/resources/home.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>40</y>
-      <width>161</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#d3311b;&quot;&gt;Schedule Car Check&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>90</y>
+      <x>30</x>
+      <y>110</y>
       <width>31</width>
       <height>41</height>
      </rect>
@@ -125,8 +40,8 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>100</y>
+      <x>90</x>
+      <y>110</y>
       <width>141</width>
       <height>21</height>
      </rect>
@@ -195,7 +110,7 @@
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>450</y>
+      <y>430</y>
       <width>42</width>
       <height>22</height>
      </rect>
@@ -205,7 +120,7 @@
     <property name="geometry">
      <rect>
       <x>180</x>
-      <y>450</y>
+      <y>430</y>
       <width>42</width>
       <height>22</height>
      </rect>
@@ -214,8 +129,8 @@
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>500</y>
+      <x>70</x>
+      <y>450</y>
       <width>31</width>
       <height>31</height>
      </rect>
@@ -230,8 +145,8 @@
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>510</y>
+      <x>120</x>
+      <y>460</y>
       <width>91</width>
       <height>16</height>
      </rect>
@@ -250,10 +165,10 @@
    <widget class="QLabel" name="label_11">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>540</y>
+      <x>60</x>
+      <y>480</y>
       <width>281</width>
-      <height>16</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
@@ -264,33 +179,17 @@
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#d3311b;&quot;&gt;Please enter your location on the map.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#d3311b;&quot;&gt;Please enter your location on the map&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
-   </widget>
-   <widget class="QLabel" name="label_12">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>560</y>
-      <width>251</width>
-      <height>91</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="app_res.qrc">:/resources/resources/map.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>false</bool>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>670</y>
+      <x>150</x>
+      <y>820</y>
       <width>111</width>
       <height>31</height>
      </rect>
@@ -301,25 +200,6 @@ color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
      <string>Continue</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_13">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>40</y>
-      <width>31</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="app_res.qrc">:/resources/resources/arrow.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
     </property>
    </widget>
    <widget class="QTextEdit" name="textEdit">
@@ -339,38 +219,245 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt;&quot;&gt;Car Engine Check&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_14">
+   <widget class="QWidget" name="widget" native="true">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>21</width>
-      <height>31</height>
+      <x>-10</x>
+      <y>20</y>
+      <width>411</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(235, 235, 235);</string>
+    </property>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>15</y>
+       <width>171</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#d3311b;&quot;&gt;Schedule Car Check&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>15</y>
+       <width>21</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="app_res.qrc">:/resources/resources/leftarrow.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>15</y>
+       <width>67</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#d3311b;&quot;&gt;Back&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_13">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>15</y>
+       <width>67</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="app_res.qrc">:/resources/resources/user_circular.png</pixmap>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>-30</x>
+      <y>70</y>
+      <width>61</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="app_res.qrc">:/resources/resources/leftarrow.png</pixmap>
+     <pixmap resource="app_res.qrc">:/resources/resources/home.png</pixmap>
     </property>
     <property name="scaledContents">
-     <bool>true</bool>
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_15">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>80</y>
+      <width>61</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="app_res.qrc">:/resources/resources/arrow.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_16">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>80</y>
+      <width>151</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#d3311b;&quot;&gt;Schedule Car Check&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_14">
+    <property name="geometry">
+     <rect>
+      <x>-10</x>
+      <y>0</y>
+      <width>431</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="app_res.qrc">:/resources/resources/phone_status_bar.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QWidget" name="widget_2" native="true">
+    <property name="geometry">
+     <rect>
+      <x>-10</x>
+      <y>500</y>
+      <width>411</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(211, 49, 27);</string>
+    </property>
+    <widget class="QWidget" name="widget_3" native="true">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>0</y>
+       <width>360</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(252, 252, 252);</string>
+     </property>
+     <widget class="QTextEdit" name="textEdit_2">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>0</y>
+        <width>181</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="markdown">
+       <string/>
+      </property>
+      <property name="placeholderText">
+       <string>                Search</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_12">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>0</y>
+        <width>67</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="app_res.qrc">:/resources/resources/search_icon.svg</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QQuickWidget" name="quickWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>550</y>
+      <width>400</width>
+      <height>271</height>
+     </rect>
+    </property>
+    <property name="resizeMode">
+     <enum>QQuickWidget::SizeRootObjectToView</enum>
+    </property>
+    <property name="source">
+     <url>
+      <string>file:///home/blackthorn/Documents/Projects/Software_Engineering_Project/src/ui/qml/map.qml</string>
+     </url>
     </property>
    </widget>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>377</width>
-     <height>32</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QQuickWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">QtQuickWidgets/QQuickWidget</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="app_res.qrc"/>
  </resources>

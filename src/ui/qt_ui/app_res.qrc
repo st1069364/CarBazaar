@@ -1,5 +1,10 @@
 <RCC>
   <qresource prefix="/resources">
+    <file>resources/phone_status_bar.png</file>
+    <file>resources/search_icon.svg</file>
+    <file>resources/search_trans.png</file>
+    <file>resources/user_circular.png</file>
+    <file>resources/user_circular.png</file>
     <file>resources/arrow.png</file>
     <file>resources/CarBazaar_logo_trans.png</file>
     <file>resources/cart.png</file>

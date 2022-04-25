@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Post Car Listing</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="app_res.qrc">
+    <normaloff>:/resources/resources/CarBazaar_logo_trans.png</normaloff>:/resources/resources/CarBazaar_logo_trans.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label_4">

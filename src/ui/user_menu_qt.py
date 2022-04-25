@@ -1,10 +1,10 @@
+from PyQt5 import QtCore, QtGui, QtWidgets
+
 BUTTON_STYLE = """QPushButton {
     background-color: #d3311b;
     border : none;
     color : white;
 }"""
-
-from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_MainWindow(object):
@@ -158,7 +158,7 @@ class Ui_MainWindow(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.PlaceholderText, brush)
         MainWindow.setPalette(palette)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("src/ui/qt_ui/../../Downloads/CarBazaar_logo.png"), QtGui.QIcon.Normal,
+        icon.addPixmap(QtGui.QPixmap(":/resources/resources/CarBazaar_logo_trans.png"), QtGui.QIcon.Normal,
                        QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setAutoFillBackground(False)

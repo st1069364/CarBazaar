@@ -456,8 +456,8 @@
    <string>CarBazaar</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>../../Downloads/CarBazaar_logo.png</normaloff>../../Downloads/CarBazaar_logo.png</iconset>
+   <iconset resource="app_res.qrc">
+    <normaloff>:/resources/resources/CarBazaar_logo_trans.png</normaloff>:/resources/resources/CarBazaar_logo_trans.png</iconset>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>

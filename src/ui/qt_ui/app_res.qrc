@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="/resources">
+    <file>resources/upload_clip.png</file>
     <file>../qml/map.qml</file>
     <file>resources/phone_status_bar.png</file>
     <file>resources/search_icon.svg</file>

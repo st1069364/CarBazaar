@@ -20,10 +20,11 @@ class CarTransmission(enum.Enum):  # transmission type enum
 
 
 class CarFuel(enum.Enum):  # fuel type enum
-    Gas = 1,
-    Petrol = 2,
-    Electric = 3,
-    Hybrid = 4
+    Diesel = 1,
+    Gas = 2,
+    Petrol = 3,
+    Electric = 4,
+    Hybrid = 5
 
 
 class Car(object):
@@ -37,7 +38,7 @@ class Car(object):
         self.__power: int = 0
         self.__transmission = transmission_type
         self.__fuel_type = fuel_type
-        self.__city_consumption:int = 0
+        self.__city_consumption: int = 0
         self.__motorway_consumption: int = 0
         self.__color: str = ''
         self._interior_color: str = ''
@@ -52,13 +53,14 @@ class SparePart(object):
         self.__category: str = ''
         self.__number: str = ''
 
+
 class Listing(object):
     def __init__(self):
         self.__id: int = 0
         self.__title: str = ''
         self.__description: str = ''
         self.__publish_date: datetime = None
-        self.__creator: User =  None
+        self.__creator: User = None
         self.__location: Location = None
         self.__photos: List[Photograph] = []
 
@@ -102,7 +104,7 @@ class TransactionType(enum.Enum):
 
 
 class Transaction(object):
-    def  __init__(self, payment_type: PaymentType, transaction_purpose: TransactionType):
+    def __init__(self, payment_type: PaymentType, transaction_purpose: TransactionType):
         self.__id: str = ''
         self.__timestamp: datetime = None
         self.__payment_method = payment_type

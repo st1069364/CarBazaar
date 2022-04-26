@@ -463,7 +463,7 @@
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="button1">
+   <widget class="QPushButton" name="post_car_lst_button">
     <property name="geometry">
      <rect>
       <x>0</x>

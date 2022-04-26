@@ -634,7 +634,7 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_6">
+   <widget class="QPushButton" name="continue_button">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -845,7 +845,7 @@
  </widget>
  <resources>
   <include location="app_res.qrc"/>
-  <include location="../../../../../../app_res.qrc"/>
+  <include location="app_res.qrc"/>
  </resources>
  <connections/>
 </ui>

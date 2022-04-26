@@ -651,7 +651,7 @@
      <string>Continue</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="continue_button_2">
+   <widget class="QPushButton" name="skip_button">
     <property name="geometry">
      <rect>
       <x>40</x>

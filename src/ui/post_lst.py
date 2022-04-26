@@ -79,6 +79,17 @@ class Screen4(QtWidgets.QMainWindow, PostListingScreen):
         self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
                                        "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
 
+class Screen5(QtWidgets.QMainWindow, PostListingScreen):
+    def __init__(self):
+        super(Screen5, self).__init__()
+        loadUi("qt_ui/post_lst_5.ui", self)
+
+        self.continue_button.clicked.connect(super().continue_button_clicked)
+        self.back_button.clicked.connect(super().back_button_pressed)
+        self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
+                                       "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
+        self.upload_button.clicked.connect(super().file_upload)
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)  # create Qt Application and pass the command-line args
@@ -92,12 +103,14 @@ if __name__ == "__main__":
     screen_2 = Screen2()
     screen_3 = Screen3()
     screen_4 = Screen4()
+    screen_5 = Screen5()
 
     # add the widgets to the StackedWidget
     stack_widget.addWidget(main_window)
     stack_widget.addWidget(screen_2)
     stack_widget.addWidget(screen_3)
     stack_widget.addWidget(screen_4)
+    stack_widget.addWidget(screen_5)
 
     # fix the dimensions
     stack_widget.setFixedWidth(400)

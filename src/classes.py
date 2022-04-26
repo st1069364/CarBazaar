@@ -132,35 +132,56 @@ class Photograph(object):
         self.__file_name: str = photo_file_name
         self.__size: int = photo_size
 
+
 class CarExchange(object):
-    def __init__(self)
-        self.__car_details:  Car = None
+    def __init__(self):
+        self.__car_details: Car = None
         self.__legal_documents: List[VehicleDocument] = []
         self.__transaction_id: int = 0
-        self.__dealerships: Dealership_store = None
+        self.__dealerships: DealershipStore = None
+
 
 class InsurancePlan(object):
-    def __init__(self,ins_code)
+    def __init__(self, ins_code):
         self.__transaction_code: str = ins_code
         self.__price: float = 0.0
         self.__car_details: Car = None
 
-class Companies(enum.Enum):
-    Opel = 1,
-    Nissan = 2,
-    Volvo = 3,
-    Toyota = 4
+
+class CarCompanies(enum.Enum):
+    Alfa_Romeo = 1,
+    Audi = 2,
+    BMW = 3,
+    Chevrolet = 4,
+    Citroen = 5,
+    Dodge = 6,
+    Ferrari = 7,
+    Ford = 8,
+    Hyundai = 9,
+    Jaguar = 10,
+    Mazda = 11,
+    Mercedes_Benz = 12,
+    Mitsubishi = 13,
+    Nissan = 14,
+    Opel = 15,
+    Peugeot = 16,
+    Porsche = 17,
+    Subaru = 18,
+    Toyota = 19,
+    Volkswagen = 20,
+    Volvo = 21,
+
 
 class Dealership(object):
-    def __init__(self,specific_comp: Companies)
-        self.__dealership_name: str = dlrs_name
+    def __init__(self, specific_comp: CarCompanies):
+        self.__dealership_name: str = ''
         self.__car_companies = specific_comp
 
+
 class DealershipStore(object):
-    def __init__(self)
+    def __init__(self):
         self.__location: Location = None
         self.__email: str = ''
         self.__telephone: str = ''
         self.__store_name: str = ''
         self.__store_owner: str = ''
-

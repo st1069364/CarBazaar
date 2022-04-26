@@ -94,8 +94,7 @@ class Ui_MainWindow(object):
         self.quickWidget = QtQuickWidgets.QQuickWidget(self.centralwidget)
         self.quickWidget.setGeometry(QtCore.QRect(0, 190, 401, 541))
         self.quickWidget.setResizeMode(QtQuickWidgets.QQuickWidget.SizeRootObjectToView)
-        self.quickWidget.setSource(
-            QtCore.QUrl("file:///home/blackthorn/Documents/Projects/Software_Engineering_Project/src/ui/qml/map.qml"))
+        self.quickWidget.setSource(QtCore.QUrl("qrc:/resources/qml/map.qml"))
         self.quickWidget.setObjectName("quickWidget")
         self.button1_6 = QtWidgets.QPushButton(self.centralwidget)
         self.button1_6.setGeometry(QtCore.QRect(100, 810, 181, 31))

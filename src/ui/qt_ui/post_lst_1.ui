@@ -291,7 +291,7 @@
     </property>
     <property name="source">
      <url>
-      <string>file:///home/blackthorn/Documents/Projects/Software_Engineering_Project/src/ui/qml/map.qml</string>
+      <string>qrc:/resources/qml/map.qml</string>
      </url>
     </property>
    </widget>

@@ -131,3 +131,36 @@ class Photograph(object):
     def __init__(self, photo_file_name, photo_size):
         self.__file_name: str = photo_file_name
         self.__size: int = photo_size
+
+class CarExchange(object):
+    def __init__(self)
+        self.__car_details:  Car = None
+        self.__legal_documents: List[VehicleDocument] = []
+        self.__transaction_id: int = 0
+        self.__dealerships: Dealership_store = None
+
+class InsurancePlan(object):
+    def __init__(self,ins_code)
+        self.__transaction_code: str = ins_code
+        self.__price: float = 0.0
+        self.__car_details: Car = None
+
+class Companies(enum.Enum):
+    Opel = 1,
+    Nissan = 2,
+    Volvo = 3,
+    Toyota = 4
+
+class Dealership(object):
+    def __init__(self,specific_comp: Companies)
+        self.__dealership_name: str = dlrs_name
+        self.__car_companies = specific_comp
+
+class DealershipStore(object):
+    def __init__(self)
+        self.__location: Location = None
+        self.__email: str = ''
+        self.__telephone: str = ''
+        self.__store_name: str = ''
+        self.__store_owner: str = ''
+

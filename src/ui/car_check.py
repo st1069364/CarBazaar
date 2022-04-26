@@ -149,8 +149,7 @@ class Ui_MainWindow(object):
         self.quickWidget = QtQuickWidgets.QQuickWidget(self.centralwidget)
         self.quickWidget.setGeometry(QtCore.QRect(0, 550, 400, 271))
         self.quickWidget.setResizeMode(QtQuickWidgets.QQuickWidget.SizeRootObjectToView)
-        self.quickWidget.setSource(
-            QtCore.QUrl("file:///home/blackthorn/Documents/Projects/Software_Engineering_Project/src/ui/qml/map.qml"))
+        self.quickWidget.setSource(QtCore.QUrl("qrc:/resources/qml/map.qml"))
         self.quickWidget.setObjectName("quickWidget")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)

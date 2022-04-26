@@ -295,7 +295,7 @@
      </url>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_6">
+   <widget class="QPushButton" name="continue_button">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -466,7 +466,7 @@
    <zorder>label_10</zorder>
    <zorder>textEdit_2</zorder>
    <zorder>label_11</zorder>
-   <zorder>button1_6</zorder>
+   <zorder>continue_button</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

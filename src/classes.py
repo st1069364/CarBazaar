@@ -185,3 +185,36 @@ class DealershipStore(object):
         self.__telephone: str = ''
         self.__store_name: str = ''
         self.__store_owner: str = ''
+
+class TestDrive(object):
+    def __init__(self,lst_code):
+        self.__listings_id: str = lst_code
+        self.__date: datetime = None
+        self.__time: Time = None
+        self.__listing_car: Car = None
+
+class Message(object):
+    def __init__(self):
+        self.__message: str = ''
+        self.__sender_name: str = ''
+
+class Transporter(object):
+    def __init__(self):
+        self.__firstname: str = ''
+        self.__lastname: str = ''
+        self.__email: str = ''
+        self.__location: Location = None
+
+class Transportation_type(enum.Enum):
+    express = 1,
+    normal = 2
+   
+class CarTransportation(object):
+    def __init__(self,trs_code,trs_method: Transportation_type):
+        self.__transaction_code: str = trs_code
+        self.__location: Location = None
+        self.__transportation_method = trs_method
+        self.__transporter_details: Transporter = None
+        self.car_details: Car = None
+        self.__delivery_point: str = ''
+        self.__transportation_time: datetime = None

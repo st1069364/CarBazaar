@@ -519,7 +519,7 @@
      <rect>
       <x>0</x>
       <y>160</y>
-      <width>401</width>
+      <width>399</width>
       <height>271</height>
      </rect>
     </property>
@@ -870,7 +870,7 @@
  </widget>
  <resources>
   <include location="app_res.qrc"/>
-  <include location="../../../../../../app_res.qrc"/>
+  <include location="app_res.qrc"/>
  </resources>
  <connections/>
 </ui>

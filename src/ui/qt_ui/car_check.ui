@@ -40,7 +40,7 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>90</x>
+      <x>120</x>
       <y>110</y>
       <width>141</width>
       <height>21</height>
@@ -60,8 +60,8 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>190</y>
+      <x>30</x>
+      <y>175</y>
       <width>31</width>
       <height>31</height>
      </rect>
@@ -76,8 +76,8 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>200</y>
+      <x>110</x>
+      <y>180</y>
       <width>191</width>
       <height>16</height>
      </rect>
@@ -96,8 +96,8 @@
    <widget class="QCalendarWidget" name="calendarWidget">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>230</y>
+      <x>40</x>
+      <y>210</y>
       <width>312</width>
       <height>183</height>
      </rect>
@@ -109,8 +109,8 @@
    <widget class="QSpinBox" name="spinBox">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>430</y>
+      <x>150</x>
+      <y>410</y>
       <width>42</width>
       <height>22</height>
      </rect>
@@ -119,8 +119,8 @@
    <widget class="QSpinBox" name="spinBox_2">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>430</y>
+      <x>210</x>
+      <y>410</y>
       <width>42</width>
       <height>22</height>
      </rect>
@@ -129,8 +129,8 @@
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>450</y>
+      <x>30</x>
+      <y>440</y>
       <width>31</width>
       <height>31</height>
      </rect>
@@ -145,9 +145,9 @@
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>460</y>
-      <width>91</width>
+      <x>150</x>
+      <y>440</y>
+      <width>101</width>
       <height>16</height>
      </rect>
     </property>
@@ -166,7 +166,7 @@
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>480</y>
+      <y>460</y>
       <width>281</width>
       <height>21</height>
      </rect>
@@ -183,23 +183,6 @@
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>820</y>
-      <width>111</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(211, 49, 27);
-color: rgb(255, 255, 255);</string>
-    </property>
-    <property name="text">
-     <string>Continue</string>
     </property>
    </widget>
    <widget class="QWidget" name="widget" native="true">
@@ -350,7 +333,7 @@ color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>-10</x>
-      <y>500</y>
+      <y>480</y>
       <width>411</width>
       <height>51</height>
      </rect>
@@ -413,35 +396,65 @@ color: rgb(255, 255, 255);</string>
      </widget>
     </widget>
    </widget>
-   <widget class="QQuickWidget" name="quickWidget" native="true">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>550</y>
-      <width>400</width>
-      <height>271</height>
-     </rect>
-    </property>
-    <property name="source" stdset="0">
-     <url>
-      <string>file:///home/blackthorn/Documents/Projects/Software_Engineering_Project/src/ui/qml/map.qml</string>
-     </url>
-    </property>
-   </widget>
    <widget class="QComboBox" name="comboBox">
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>150</y>
-      <width>111</width>
+      <y>140</y>
+      <width>151</width>
       <height>22</height>
      </rect>
     </property>
     <item>
      <property name="text">
+      <string>Basic Check</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
       <string>Car Engine Check</string>
      </property>
     </item>
+    <item>
+     <property name="text">
+      <string>Thorough Check</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>820</y>
+      <width>111</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(211, 49, 27);
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>Continue</string>
+    </property>
+   </widget>
+   <widget class="QQuickWidget" name="quickWidget">
+    <property name="geometry">
+     <rect>
+      <x>-1</x>
+      <y>530</y>
+      <width>401</width>
+      <height>281</height>
+     </rect>
+    </property>
+    <property name="resizeMode">
+     <enum>QQuickWidget::SizeRootObjectToView</enum>
+    </property>
+    <property name="source">
+     <url>
+      <string>qrc:/resources/qml/map.qml</string>
+     </url>
+    </property>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

@@ -10,9 +10,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(389, 881)
+        MainWindow.resize(400, 881)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/resources/resources/CarBazaar_logo_trans.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/resources/resources/CarBazaar_logo_trans.png"), QtGui.QIcon.Normal,
+                       QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -87,7 +88,7 @@ class Ui_MainWindow(object):
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(130, 680, 111, 31))
         self.pushButton.setStyleSheet("background-color: rgb(211, 49, 27);\n"
-"color: rgb(255, 255, 255);")
+                                      "color: rgb(255, 255, 255);")
         self.pushButton.setObjectName("pushButton")
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
         self.tableWidget.setGeometry(QtCore.QRect(50, 160, 301, 251))
@@ -150,13 +151,20 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Schedule Car Check"))
-        self.label_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#d3311b;\">Back</span></p></body></html>"))
-        self.CarCheck.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#d3311b;\">Schedule Car Check</span></p></body></html>"))
-        self.label_4.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#d3311b;\">Schedule Car Check</span></p></body></html>"))
-        self.label_5.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#dd3333;\">Inspector suggestion</span></p></body></html>"))
-        self.label_6.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:11pt; font-weight:600; color:#dd3333;\">Inspector Suggestion based on your location:</span></p></body></html>"))
-        self.label_7.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:11pt; font-weight:600; color:#dd3333;\">Continue with the recommended Inspector?</span></p></body></html>"))
-        self.label_8.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:11pt; font-weight:600; color:#dd3333;\">Otherwise, toggle the switch below</span></p><p align=\"center\"><span style=\" font-size:11pt; font-weight:600; color:#dd3333;\">to choose your own Inspector</span></p></body></html>"))
+        self.label_2.setText(_translate("MainWindow",
+                                        "<html><head/><body><p><span style=\" color:#d3311b;\">Back</span></p></body></html>"))
+        self.CarCheck.setText(_translate("MainWindow",
+                                         "<html><head/><body><p><span style=\" color:#d3311b;\">Schedule Car Check</span></p></body></html>"))
+        self.label_4.setText(_translate("MainWindow",
+                                        "<html><head/><body><p><span style=\" color:#d3311b;\">Schedule Car Check</span></p></body></html>"))
+        self.label_5.setText(_translate("MainWindow",
+                                        "<html><head/><body><p><span style=\" color:#dd3333;\">Inspector suggestion</span></p></body></html>"))
+        self.label_6.setText(_translate("MainWindow",
+                                        "<html><head/><body><p><span style=\" font-size:11pt; font-weight:600; color:#dd3333;\">Inspector Suggestion based on your location:</span></p></body></html>"))
+        self.label_7.setText(_translate("MainWindow",
+                                        "<html><head/><body><p><span style=\" font-size:11pt; font-weight:600; color:#dd3333;\">Continue with the recommended Inspector?</span></p></body></html>"))
+        self.label_8.setText(_translate("MainWindow",
+                                        "<html><head/><body><p align=\"center\"><span style=\" font-size:11pt; font-weight:600; color:#dd3333;\">Otherwise, toggle the switch below</span></p><p align=\"center\"><span style=\" font-size:11pt; font-weight:600; color:#dd3333;\">to choose your own Inspector</span></p></body></html>"))
         self.pushButton.setText(_translate("MainWindow", "Continue"))
         item = self.tableWidget.verticalHeaderItem(0)
         item.setText(_translate("MainWindow", "Name"))
@@ -193,10 +201,13 @@ class Ui_MainWindow(object):
         item = self.tableWidget.item(7, 0)
         item.setText(_translate("MainWindow", "90% positive"))
         self.tableWidget.setSortingEnabled(__sortingEnabled)
+
+
 import app_res_rc
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     app.setStyleSheet(BUTTON_STYLE)
     MainWindow = QtWidgets.QMainWindow()

@@ -19,7 +19,7 @@
      <rect>
       <x>20</x>
       <y>20</y>
-      <width>31</width>
+      <width>41</width>
       <height>31</height>
      </rect>
     </property>
@@ -45,7 +45,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="../GitHub/CarBazaar/src/ui/qt_ui/app_res.qrc">:/resources/resources/leftarrow.png</pixmap>
+     <pixmap resource="app_res.qrc">:/resources/resources/leftarrow.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -84,7 +84,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="../GitHub/CarBazaar/src/ui/qt_ui/app_res.qrc">:/resources/resources/user_trans.png</pixmap>
+     <pixmap resource="app_res.qrc">:/resources/resources/user_trans.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>false</bool>
@@ -103,7 +103,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="../GitHub/CarBazaar/src/ui/qt_ui/app_res.qrc">:/resources/resources/arrow.png</pixmap>
+     <pixmap resource="app_res.qrc">:/resources/resources/arrow.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -114,7 +114,7 @@
      <rect>
       <x>60</x>
       <y>60</y>
-      <width>121</width>
+      <width>141</width>
       <height>31</height>
      </rect>
     </property>
@@ -135,7 +135,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="../GitHub/CarBazaar/src/ui/qt_ui/app_res.qrc">:/resources/resources/home.png</pixmap>
+     <pixmap resource="app_res.qrc">:/resources/resources/home.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>false</bool>
@@ -144,7 +144,7 @@
    <widget class="QLabel" name="label_15">
     <property name="geometry">
      <rect>
-      <x>170</x>
+      <x>200</x>
       <y>60</y>
       <width>31</width>
       <height>31</height>
@@ -154,7 +154,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="../GitHub/CarBazaar/src/ui/qt_ui/app_res.qrc">:/resources/resources/arrow.png</pixmap>
+     <pixmap resource="app_res.qrc">:/resources/resources/arrow.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -163,9 +163,9 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>230</x>
       <y>60</y>
-      <width>121</width>
+      <width>151</width>
       <height>31</height>
      </rect>
     </property>
@@ -178,7 +178,7 @@
      <rect>
       <x>20</x>
       <y>110</y>
-      <width>341</width>
+      <width>351</width>
       <height>21</height>
      </rect>
     </property>
@@ -234,8 +234,8 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>670</y>
+      <x>130</x>
+      <y>680</y>
       <width>111</width>
       <height>31</height>
      </rect>
@@ -251,9 +251,9 @@ color: rgb(255, 255, 255);</string>
    <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>50</x>
       <y>160</y>
-      <width>231</width>
+      <width>301</width>
       <height>251</height>
      </rect>
     </property>
@@ -373,23 +373,14 @@ color: rgb(255, 255, 255);</string>
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="../GitHub/CarBazaar/src/ui/qt_ui/app_res.qrc">:/resources/resources/phone_status_bar.png</pixmap>
+     <pixmap resource="app_res.qrc">:/resources/resources/phone_status_bar.png</pixmap>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>389</width>
-     <height>21</height>
-    </rect>
-   </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
+  <include location="app_res.qrc"/>
   <include location="../GitHub/CarBazaar/src/ui/qt_ui/app_res.qrc"/>
  </resources>
  <connections/>

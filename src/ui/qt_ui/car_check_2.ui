@@ -11,7 +11,14 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Schedule Car Check</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="app_res.qrc">
+    <normaloff>:/resources/resources/CarBazaar_logo_trans.png</normaloff>:/resources/resources/CarBazaar_logo_trans.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label_2">
@@ -215,7 +222,7 @@
    <widget class="QSlider" name="horizontalSlider">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>160</x>
       <y>610</y>
       <width>41</width>
       <height>22</height>
@@ -268,6 +275,9 @@ color: rgb(255, 255, 255);</string>
       <width>0</width>
       <height>0</height>
      </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(235, 235, 235);</string>
     </property>
     <row>
      <property name="text">
@@ -381,7 +391,7 @@ color: rgb(255, 255, 255);</string>
  </widget>
  <resources>
   <include location="app_res.qrc"/>
-  <include location="../GitHub/CarBazaar/src/ui/qt_ui/app_res.qrc"/>
+  <include location="app_res.qrc"/>
  </resources>
  <connections/>
 </ui>

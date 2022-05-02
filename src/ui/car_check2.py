@@ -4,7 +4,6 @@ BUTTON_STYLE = """QPushButton {
     color : white;
 }"""
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -12,6 +11,10 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(389, 881)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/resources/resources/CarBazaar_logo_trans.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        MainWindow.setWindowIcon(icon)
+        MainWindow.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
@@ -74,7 +77,7 @@ class Ui_MainWindow(object):
         self.label_8.setGeometry(QtCore.QRect(50, 520, 271, 61))
         self.label_8.setObjectName("label_8")
         self.horizontalSlider = QtWidgets.QSlider(self.centralwidget)
-        self.horizontalSlider.setGeometry(QtCore.QRect(150, 610, 41, 22))
+        self.horizontalSlider.setGeometry(QtCore.QRect(160, 610, 41, 22))
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
@@ -90,6 +93,7 @@ class Ui_MainWindow(object):
         self.tableWidget.setGeometry(QtCore.QRect(50, 160, 301, 251))
         self.tableWidget.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.tableWidget.setBaseSize(QtCore.QSize(0, 0))
+        self.tableWidget.setStyleSheet("background-color: rgb(235, 235, 235);")
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(1)
         self.tableWidget.setRowCount(8)
@@ -145,7 +149,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Schedule Car Check"))
         self.label_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#d3311b;\">Back</span></p></body></html>"))
         self.CarCheck.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#d3311b;\">Schedule Car Check</span></p></body></html>"))
         self.label_4.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#d3311b;\">Schedule Car Check</span></p></body></html>"))

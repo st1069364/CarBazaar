@@ -4,7 +4,6 @@ BUTTON_STYLE = """QPushButton {
     color : white;
 }"""
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -15,6 +14,7 @@ class Ui_MainWindow(object):
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/resources/resources/CarBazaar_logo_trans.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
+        MainWindow.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label_5 = QtWidgets.QLabel(self.centralwidget)
@@ -37,7 +37,7 @@ class Ui_MainWindow(object):
         self.label_7.setPixmap(QtGui.QPixmap(":/resources/resources/time.png"))
         self.label_7.setObjectName("label_7")
         self.label_8 = QtWidgets.QLabel(self.centralwidget)
-        self.label_8.setGeometry(QtCore.QRect(110, 180, 191, 16))
+        self.label_8.setGeometry(QtCore.QRect(110, 180, 201, 16))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -46,7 +46,7 @@ class Ui_MainWindow(object):
         self.label_8.setObjectName("label_8")
         self.calendarWidget = QtWidgets.QCalendarWidget(self.centralwidget)
         self.calendarWidget.setGeometry(QtCore.QRect(40, 210, 312, 183))
-        self.calendarWidget.setAutoFillBackground(True)
+        self.calendarWidget.setAutoFillBackground(False)
         self.calendarWidget.setObjectName("calendarWidget")
         self.spinBox = QtWidgets.QSpinBox(self.centralwidget)
         self.spinBox.setGeometry(QtCore.QRect(150, 410, 42, 22))
@@ -106,12 +106,12 @@ class Ui_MainWindow(object):
         self.label_4.setScaledContents(False)
         self.label_4.setObjectName("label_4")
         self.label_15 = QtWidgets.QLabel(self.centralwidget)
-        self.label_15.setGeometry(QtCore.QRect(20, 80, 61, 20))
+        self.label_15.setGeometry(QtCore.QRect(30, 79, 61, 20))
         self.label_15.setText("")
         self.label_15.setPixmap(QtGui.QPixmap(":/resources/resources/arrow.png"))
         self.label_15.setObjectName("label_15")
         self.label_16 = QtWidgets.QLabel(self.centralwidget)
-        self.label_16.setGeometry(QtCore.QRect(50, 80, 151, 22))
+        self.label_16.setGeometry(QtCore.QRect(60, 79, 151, 22))
         self.label_16.setObjectName("label_16")
         self.label_14 = QtWidgets.QLabel(self.centralwidget)
         self.label_14.setGeometry(QtCore.QRect(-10, 0, 431, 22))

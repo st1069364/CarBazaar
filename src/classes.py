@@ -65,12 +65,12 @@ class Listing(object):
         self.__photos: List[Photograph] = []
 
 
-class ProductCondition(enum.Enum):
+class ProductCondition(enum.Enum):   # product condition enum
     Used = 1,
     New = 2
 
 
-class VehicleDocument(object):
+class VehicleDocument(object):            
     def __init__(self):
         self.__issuer: str = ''
         self.__doc_id: str = ''
@@ -97,13 +97,13 @@ class SparePartListing(object):
         self.__price: float = 0.0
 
 
-class PaymentType(enum.Enum):
+class PaymentType(enum.Enum):    #payment type enum
     Cash = 1,
     Debit = 2,
     Credit = 3
 
 
-class TransactionType(enum.Enum):
+class TransactionType(enum.Enum):       #transaction type enum
     Payment = 1,
     Exchange = 2,
     Transfer = 3
@@ -168,7 +168,7 @@ class InsurancePlan(object):
         self.__car_details: Car = None
 
 
-class CarCompanies(enum.Enum):
+class CarCompanies(enum.Enum):      #companies enum
     Alfa_Romeo = 1,
     Audi = 2,
     BMW = 3,
@@ -230,11 +230,11 @@ class Transporter(object):
         self.__location: Location = None
         self.__trasportations_list: List[CarTransportation] = []
 
-class Transportation_type(enum.Enum):
+class Transportation_type(enum.Enum):       #transportation type enum
     express = 1,
     standard = 2
 
-class Transportation_status(enum.Enum):
+class Transportation_status(enum.Enum):     #transportation status enum
     Pending = 1,
     Ongoing = 2,
     Completed = 3

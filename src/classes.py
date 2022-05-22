@@ -64,6 +64,12 @@ class Listing(object):
         self.__location: Location = None
         self.__photos: List[Photograph] = []
 
+    def set_listing_title(self, new_title):
+        self.__title = new_title
+
+    def get_listing_title(self):
+        return self.__title
+
 
 class ProductCondition(enum.Enum):   # product condition enum
     Used = 1,
@@ -76,7 +82,7 @@ class VehicleDocument(object):
         self.__doc_id: str = ''
 
 
-class CarListing(object):
+class CarListing(Listing):
     def __init__(self, car_status: ProductCondition):
         self.__vehicle: Car = None
         self.__car_condition = car_status
@@ -90,7 +96,7 @@ class CarListingStatisticsLog(object):
         self.__popular_listings: List[CarListing] = []
 
 
-class SparePartListing(object):
+class SparePartListing(Listing):
     def __init__(self, part: SparePart, part_status: ProductCondition):
         self.__listing_part = part
         self.__condition = part_status
@@ -252,7 +258,7 @@ class CarTransportation(object):
 class CarComparison(object):
     def __init__(self):
         self.__car_listings: List[CarListing] = []
-        self.__criteria: List[]= []
+        self.__criteria: List[str]= []
         self.__price_range: float = (0.0,0.0) # have not checked for this
         self.__comp_results: List[Car] = []
         self.__recommended_car: Car = None
@@ -260,9 +266,9 @@ class CarComparison(object):
 class CarSearch(object):
     def __init__(self,srch_rad):
         self.__search_results: List[CarListing] = []
-        self.__criteria: List[]= []
+        self.__criteria: List[str]= []
         self.__location: Location = None
-        self.__search_radious: int = srch_rad
+        self.__search_radius: int = srch_rad
         self.__price_range: float = (0.0,0.0) # have not checked for this
 
 class MonthlyInstallment(object):
@@ -282,6 +288,6 @@ class PushNotification(object):
 class ListingDeletionForm(object):
     def __init__(self):
         self.__listing_report: ListingReport = None
-        self.__text = str = ''
+        self.__text: str = ''
         self.__creation_date: datetime.date = datetime.date.today()
 

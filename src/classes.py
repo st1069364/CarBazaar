@@ -78,10 +78,16 @@ class VehicleDocument(object):
 
 class CarListing(object):
     def __init__(self, car_status: ProductCondition):
-        self.__listing_car: Car = None
+        self.__vehicle: Car = None
         self.__car_condition = car_status
         self.__docs: List[VehicleDocument] = []
         self.__price: float = 0.0
+
+class CarListingStatisticsLog(object):
+    def __init__(self):
+        self.__search_log: List[CarSearch] = []
+        self.__comparison_log: List[CarComparison] = []
+        self.__popular_listings: List[CarListing] = []
 
 
 class SparePartListing(object):
@@ -114,11 +120,22 @@ class Transaction(object):
         self.__merchant: User = None
         self.__product_id: int = 0
 
+class TransactionLog(object):
+    def __init__(self):
+        self.__name: str = ''
+        self.__ttransaction_list: List[Transaction] = [] 
+
+class Invoice(object):
+    def __init__(self):
+        self.transaction: Transaction = None
+        self.__invoice_code: int = 0
+        self.__text: str = ''
+        self._recipient_email: str = ''
 
 class Review(object):
     def __init__(self, text, num_stars, review_writer):
         self.__text: str = text
-        self.__start: int = num_stars
+        self.__stars: int = num_stars
         self.__writer: User = review_writer
 
 
@@ -135,10 +152,13 @@ class Photograph(object):
 
 class CarExchange(object):
     def __init__(self):
-        self.__car_details: Car = None
+        self.__vehiicle: Car = None
+        self.__car_owner: User = None
+        self.__exchange_reward: float = 0.0
         self.__legal_documents: List[VehicleDocument] = []
-        self.__transaction_id: int = 0
+        self.__transaction: Transaction = None
         self.__dealerships: DealershipStore = None
+        self.__chosen_store: DealershipStore = None
 
 
 class InsurancePlan(object):
@@ -175,6 +195,8 @@ class CarCompanies(enum.Enum):
 class Dealership(object):
     def __init__(self, specific_comp: CarCompanies):
         self.__dealership_name: str = ''
+        self.__tax_ID: int = 0
+        self.__stores: List[DealershipStore] = []
         self.__car_companies = specific_comp
 
 
@@ -185,13 +207,14 @@ class DealershipStore(object):
         self.__telephone: str = ''
         self.__store_name: str = ''
         self.__store_owner: str = ''
+        self.__cars_list: List[Car] = []
 
 class TestDrive(object):
     def __init__(self,lst_code):
         self.__listings_id: str = lst_code
         self.__date: datetime = None
-        self.__time: Time = None
-        self.__listing_car: Car = None
+   #     self.__time: Time = None
+        self.__user: User = None
 
 class Message(object):
     def __init__(self):
@@ -200,21 +223,65 @@ class Message(object):
 
 class Transporter(object):
     def __init__(self):
-        self.__firstname: str = ''
-        self.__lastname: str = ''
-        self.__email: str = ''
+        self.__transporter_id: int = 0
+        #self.__firstname: str = ''
+        #self.__lastname: str = ''
+        #self.__email: str = ''
         self.__location: Location = None
+        self.__trasportations_list: List[CarTransportation] = []
 
 class Transportation_type(enum.Enum):
     express = 1,
-    normal = 2
+    standard = 2
+
+class Transportation_status(enum.Enum):
+    Pending = 1,
+    Ongoing = 2,
+    Completed = 3
    
 class CarTransportation(object):
-    def __init__(self,trs_code,trs_method: Transportation_type):
-        self.__transaction_code: str = trs_code
-        self.__location: Location = None
+    def __init__(self,trs_status: Transportation_status,trs_method: Transportation_type):
+        self.__transaction: Transaction = None
+        self.__delivery_location: Location = None
+        self.__transportation_status = trs_status
         self.__transportation_method = trs_method
-        self.__transporter_details: Transporter = None
-        self.car_details: Car = None
-        self.__delivery_point: str = ''
+        self.__transporter: Transporter = None
+        self.__vehicle: Car = None
         self.__transportation_time: datetime = None
+
+class CarComparison(object):
+    def __init__(self):
+        self.__car_listings: List[CarListing] = []
+        self.__criteria: List[]= []
+        self.__price_range: float = (0.0,0.0) # have not checked for this
+        self.__comp_results: List[Car] = []
+        self.__recommended_car: Car = None
+
+class CarSearch(object):
+    def __init__(self,srch_rad):
+        self.__search_results: List[CarListing] = []
+        self.__criteria: List[]= []
+        self.__location: Location = None
+        self.__search_radious: int = srch_rad
+        self.__price_range: float = (0.0,0.0) # have not checked for this
+
+class MonthlyInstallment(object):
+    def __init__(self):
+        self.__transaction: Transaction = None
+        self.__price: float = 0.0
+        self.__due_date: datetime = None
+
+
+class PushNotification(object):
+    def __init__(self):
+        self.__creator: User = None
+        self.__text: str = ''
+        self.__issue_time: datetime = None
+        self.__recipients: List[User] = []
+
+class ListingDeletionForm(object):
+    def __init__(self):
+        self.__listing_report: ListingReport = None
+        self.__text = str = ''
+        self.__creation_date: datetime.date = datetime.date.today()
+

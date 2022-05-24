@@ -65,28 +65,24 @@ class MainWindow(QtWidgets.QMainWindow, PostListingScreen):
                                        "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
 
     def continue_button_clicked(self):
-        screen_5.car_info_table.setItem(0,0, QTableWidgetItem(self.category_box.currentText()))
-        screen_5.car_info_table.setItem(0,1, QTableWidgetItem(self.company_box.currentText()))
-        screen_5.car_info_table.setItem(0,2, QTableWidgetItem(self.model_box.currentText()))
+        screen_5.car_info_table.setItem(0, 0, QTableWidgetItem(self.category_box.currentText()))
+        screen_5.car_info_table.setItem(0, 1, QTableWidgetItem(self.company_box.currentText()))
+        # screen_5.car_info_table.setItem(0, 2, QTableWidgetItem(self.model_box.currentText()))
 
-        screen_5.car_info_table.setItem(0, 4, QTableWidgetItem(self.year_box.value()))
-        screen_5.car_info_table.setItem(0, 5, QTableWidgetItem(self.mileage_box.toPlainText()))
-        screen_5.car_info_table.setItem(0, 6, QTableWidgetItem(self.condition_box.currentText()))
-        screen_5.car_info_table.setItem(0, 7, QTableWidgetItem(self.engine_box.toPlainText()))
-        screen_5.car_info_table.setItem(0, 8, QTableWidgetItem(self.power_box.toPlainText()))
-        screen_5.car_info_table.setItem(0, 9, QTableWidgetItem(self.transmission_box.currentText()))
-        screen_5.car_info_table.setItem(0, 10, QTableWidgetItem(self.fuel_box.currentText()))
-        screen_5.car_info_table.setItem(0, 11, QTableWidgetItem(self.ccons_box.toPlainText()))
-        screen_5.car_info_table.setItem(0, 12, QTableWidgetItem(self.mcons_box.toPlainText()))
+        screen_5.car_info_table.setItem(0, 3, QTableWidgetItem(str(self.year_box.value())))
+        screen_5.car_info_table.setItem(0, 4, QTableWidgetItem(self.mileage_box.toPlainText()))
+        screen_5.car_info_table.setItem(0, 5, QTableWidgetItem(self.condition_box.currentText()))
+        screen_5.car_info_table.setItem(0, 6, QTableWidgetItem(self.engine_box.toPlainText()))
+        screen_5.car_info_table.setItem(0, 7, QTableWidgetItem(self.power_box.toPlainText()))
+        screen_5.car_info_table.setItem(0, 8, QTableWidgetItem(self.transmission_box.currentText()))
+        screen_5.car_info_table.setItem(0, 9, QTableWidgetItem(self.fuel_box.currentText()))
+        screen_5.car_info_table.setItem(0, 10, QTableWidgetItem(self.ccons_box.toPlainText()))
+        screen_5.car_info_table.setItem(0, 11, QTableWidgetItem(self.mcons_box.toPlainText()))
 
-        screen_5.car_info_table.setItem(0, 13, QTableWidgetItem(self.color_box.currentText()))
-        screen_5.car_info_table.setItem(0, 14, QTableWidgetItem(self.int_color_box.currentText()))
-        screen_5.car_info_table.setItem(0, 15, QTableWidgetItem(self.ndoors_box.currentText()))
-        screen_5.car_info_table.setItem(0, 16, QTableWidgetItem(self.reg_plate_box.toPlainText()))
-
-        print(self.reg_plate_box.toPlainText())
-
-
+        screen_5.car_info_table.setItem(0, 12, QTableWidgetItem(self.color_box.currentText()))
+        screen_5.car_info_table.setItem(0, 13, QTableWidgetItem(self.int_color_box.currentText()))
+        screen_5.car_info_table.setItem(0, 14, QTableWidgetItem(self.ndoors_box.currentText()))
+        screen_5.car_info_table.setItem(0, 15, QTableWidgetItem(self.reg_plate_box.toPlainText()))
 
         super().continue_button_clicked()
 
@@ -146,8 +142,14 @@ class Screen4(QtWidgets.QMainWindow, PostListingScreen):
 
     def continue_button_clicked(self):
         screen_5.car_descr_box.setText(self.description_box.toPlainText())
-        screen_5.listing_title_bar.setText(self.listing_title_box.toPlainText())
-        screen_5.listing_title_bar.adjustSize()
+
+        if self.listing_title_box.toPlainText():
+            screen_5.listing_title_bar.move(115, screen_5.listing_title_bar.y())
+            screen_5.listing_title_bar.setAlignment(Qt.AlignCenter)
+            screen_5.listing_title_bar.setStyleSheet("color: #d3311b")
+            screen_5.listing_title_bar.setText(self.listing_title_box.toPlainText())
+            screen_5.listing_title_bar.adjustSize()
+
         super(Screen4, self).continue_button_clicked()
     # listing_title = self.get_listing_title()
     # lst = Listing()
@@ -170,6 +172,7 @@ class Screen5(QtWidgets.QMainWindow, PostListingScreen):
         self.label.setScaledContents(True)
 
         self.label.setText('No images were added')
+        self.label.setAlignment(Qt.AlignCenter)
 
         self.post_button.clicked.connect(self.post_listing_button_pressed)
         self.back_button.clicked.connect(super().back_button_pressed)
@@ -180,10 +183,9 @@ class Screen5(QtWidgets.QMainWindow, PostListingScreen):
         self.next_image_button.clicked.connect(self.show_next_image)
         self.prev_image_button.clicked.connect(self.show_prev_image)
 
-        self.car_info_table.setColumnWidth(0, 80)
-        # header = self.car_info_table.horizontalHeader()
+        header = self.car_info_table.horizontalHeader()
+        header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
         # header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
-        # header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
         self.car_info_table.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)  # no edit on table cells
 
     def setup_images(self):

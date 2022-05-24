@@ -12,6 +12,9 @@ class User(object):
         self.__email: str = ''
         self.__telephone: str = ''
         self.__reg_date: datetime.date = datetime.date.today()
+        self.__listings: List[Listing] = []
+        self.__car_purchases: List[Car] = []
+        self.__points: int = 0
 
     def set_first_name(self, new_first_name):
         self.__first_name = new_first_name
@@ -28,7 +31,7 @@ class User(object):
     def set_username(self, new_username):
         self.__username = new_username
 
-    def get_first_name(self):
+    def get_username(self):
         return self.__username
 
     def set_email(self, new_email):
@@ -42,6 +45,27 @@ class User(object):
 
     def get_telephone(self):
         return self.__telephone
+
+    def get_user_listings(self):
+        return self.__listings
+
+    def add_listing(self, new_lst):
+        self.__listings.append(new_lst)
+
+    def get_car_purchase_history(self):
+        return self.__car_purchases
+
+    def get_points(self):
+        return self.__points
+
+    def set_points(self, new_amount):
+        self.__points = new_amount
+
+    def redeem_points(self, amount):
+        if self.__points >= amount:
+            self.__points -= amount
+        else:
+            print('Cannot redeem that many points !!')
 
 
 class CarTransmission(enum.Enum):  # transmission type enum
@@ -75,7 +99,9 @@ class Car(object):
         self.__num_doors: int = 0
         self.__registration_plate: str = ''
 
-    def set_car_info(self,new_company,new_model,new_category,new_release_year,new_mileage,new_engine,new_power,new_transmission,new_fuel_type,new_city_consumption,new_motorway_consumption,new_color,new_interior_color,new_num_doors,new_registration_plate):
+    def set_car_info(self, new_company, new_model, new_category, new_release_year, new_mileage, new_engine, new_power,
+                     new_transmission, new_fuel_type, new_city_consumption, new_motorway_consumption, new_color,
+                     new_interior_color, new_num_doors, new_registration_plate):
         self.__company = new_company
         self.__model = new_model
         self.__category = new_category
@@ -108,7 +134,7 @@ class Car(object):
         return self.__interior_color
         return self.__num_doors
         return self.__registration_plate
-    
+
 
 class SparePart(object):
     def __init__(self):
@@ -117,7 +143,7 @@ class SparePart(object):
         self.__category: str = ''
         self.__number: str = ''
 
-    def set_spare_part_info(self,new_brand,new_type,new_number):
+    def set_spare_part_info(self, new_brand, new_type, new_number):
         self.__brand = new_brand
         self.__type = new_type
         self.__number = new_number
@@ -163,15 +189,15 @@ class Listing(object):
         return self.__description
 
 
-class ProductCondition(enum.Enum):   # product condition enum
+class ProductCondition(enum.Enum):  # product condition enum
     Used = 1,
     New = 2
 
 
-class CarDocument(object):            
+class CarDocument(object):
     def __init__(self):
         self.__issuer: str = ''
-        self.__doc_id: str = ''      #setters/getters?
+        self.__doc_id: str = ''  # setters/getters?
 
 
 class CarListing(Listing):
@@ -184,13 +210,14 @@ class CarListing(Listing):
     def set_car(self, new_car):
         self.__vehicle = new_car
 
+
 class CarListingsStatisticsLog(object):
     def __init__(self):
         self.__search_log: List[CarSearch] = []
         self.__comparison_log: List[CarComparison] = []
         self.__popular_listings: List[CarListing] = []
 
-    def get_popular_cars(self,CarListing):         #needs corrections
+    def get_popular_cars(self, CarListing):  # needs corrections
         return self.CarListing.__popular_listings
 
 
@@ -204,13 +231,13 @@ class SparePartListing(Listing):
         self.__spare_part = new_spare_part
 
 
-class PaymentType(enum.Enum):    #payment type enum
+class PaymentType(enum.Enum):  # payment type enum
     Cash = 1,
     Debit = 2,
     Credit = 3
 
 
-class TransactionType(enum.Enum):       #transaction type enum
+class TransactionType(enum.Enum):  # transaction type enum
     Payment = 1,
     Exchange = 2,
     Transfer = 3
@@ -236,10 +263,12 @@ class Transaction(object):
         return self.__merchant
         return self.__product_id
 
+
 class TransactionLog(object):
     def __init__(self):
         self.__name: str = ''
-        self.__ttransaction_list: List[Transaction] = [] 
+        self.__ttransaction_list: List[Transaction] = []
+
 
 class Invoice(object):
     def __init__(self):
@@ -248,11 +277,12 @@ class Invoice(object):
         self.__text: str = ''
         self._recipient_email: str = ''
 
-    def get_invoice(self,Transaction):
+    def get_invoice(self, Transaction):
         return self.Transaction.__transaction
         return self.__invoice_code
         return self.__text
         return self.__recipient_email
+
 
 class Review(object):
     def __init__(self, text, num_stars, review_writer):
@@ -260,13 +290,13 @@ class Review(object):
         self.__stars: int = num_stars
         self.__writer: User = review_writer
 
-    def set_review_info(self, new_text,new_stars,new_writer,new_creation_date):
+    def set_review_info(self, new_text, new_stars, new_writer, new_creation_date):
         self.__text = new_text
         self.__stars = new_stars
         self.__writer = new_writer
         self.__creation_date = new_creation_date
 
-    def get_review(self,User,Date):
+    def get_review(self, User, Date):
         return self.__text
         return self.__stars
         return self.User.__writer
@@ -277,11 +307,12 @@ class Location(object):
     def __init__(self, location_coordinates: Tuple[float, float]):
         self.__coordinates: Tuple[float, float] = location_coordinates
 
-    def set_location(self,new_coordinates):
+    def set_location(self, new_coordinates):
         self.__coordinates = new_coordinates
 
     def get_location(self):
         return self.__coordinates
+
 
 class Photograph(object):
     def __init__(self, photo_file_name, photo_size):
@@ -299,14 +330,15 @@ class CarExchange(object):
         self.__dealerships: DealershipStore = None
         self.__chosen_store: DealershipStore = None
 
-    def get_dealerships(self,DealershipStore):
+    def get_dealerships(self, DealershipStore):
         return self.DealershipStore.__dealerships
 
-    def set_car_info(self,new_vehicle):
+    def set_car_info(self, new_vehicle):
         self.__vehicle = new_vehicle
 
-    def set_docs(self,new_docs):
+    def set_docs(self, new_docs):
         self.__legal_documents = new_docs
+
 
 class InsurancePlan(object):
     def __init__(self, ins_code):
@@ -315,7 +347,7 @@ class InsurancePlan(object):
         self.__car_details: Car = None
 
 
-class CarCompanies(enum.Enum):      #companies enum
+class CarCompanies(enum.Enum):  # companies enum
     Alfa_Romeo = 1,
     Audi = 2,
     BMW = 3,
@@ -360,66 +392,72 @@ class DealershipStore(object):
         return self.Location.__location
         return self.__store_name
 
-    def set_store_info(self,new_location,new_email,new_telephone,new_store_name,new_store_owner):
+    def set_store_info(self, new_location, new_email, new_telephone, new_store_name, new_store_owner):
         self.__location = new_location
         self.__email = new_email
         self.__telephne = new_telephone
         self.__store_name = new_store_name
         self.__store_owner = new_store_owner
 
+
 class TestDrive(object):
-    def __init__(self,lst_code):
+    def __init__(self, lst_code):
         self.__listings_id: str = lst_code
         self.__date: datetime = None
-   #     self.__time: Time = None
+        #     self.__time: Time = None
         self.__user: User = None
 
-    def set_test_drive_info(self,new_listing,new_date,new_user):
+    def set_test_drive_info(self, new_listing, new_date, new_user):
         self.__listing = new_listing
         self.__date = new_date
         self.__user = new_user
+
 
 class Message(object):
     def __init__(self):
         self.__message: str = ''
         self.__sender_name: str = ''
 
-    def set_message_info(self,new_sender,new_recipient,new_text,new_timestamp):
+    def set_message_info(self, new_sender, new_recipient, new_text, new_timestamp):
         self.__sender = new_sender
         self.__recipient = new_recipient
         self.__text = new_text
         self.__creation_timestamp = new_timestamp
 
-    def get_message(self,User):
+    def get_message(self, User):
         return self.User.__sender
         return self.User.__recipient
         return self.__text
 
+
 class Transporter(object):
     def __init__(self):
         self.__transporter_id: int = 0
-        #self.__firstname: str = ''
-        #self.__lastname: str = ''
-        #self.__email: str = ''
+        # self.__firstname: str = ''
+        # self.__lastname: str = ''
+        # self.__email: str = ''
         self.__location: Location = None
         self.__trasportations_list: List[CarTransportation] = []
 
-    def get_message(self,CarTransportation):
+    def get_message(self, CarTransportation):
         return self.__transporter_id
         return self.__location
         return self.CarTransportation.__transportations_list
 
-class Transportation_type(enum.Enum):       #transportation type enum
+
+class Transportation_type(enum.Enum):  # transportation type enum
     express = 1,
     standard = 2
 
-class Transportation_status(enum.Enum):     #transportation status enum
+
+class Transportation_status(enum.Enum):  # transportation status enum
     Pending = 1,
     Ongoing = 2,
     Completed = 3
-   
+
+
 class CarTransportation(object):
-    def __init__(self,trs_status: Transportation_status,trs_method: Transportation_type):
+    def __init__(self, trs_status: Transportation_status, trs_method: Transportation_type):
         self.__transaction: Transaction = None
         self.__delivery_location: Location = None
         self.__transportation_status = trs_status
@@ -428,30 +466,33 @@ class CarTransportation(object):
         self.__vehicle: Car = None
         self.__transportation_time: datetime = None
 
-    def set_transportation_info(self,new_delivery_location,new_status,new_package,new_transporter,new_vehicle,new_transportation_time):
+    def set_transportation_info(self, new_delivery_location, new_status, new_package, new_transporter, new_vehicle,
+                                new_transportation_time):
         self.__delivery_location = new_delivery_location
         self.__status = new_status
         self.__package = new_package
         self.__transporter = new_transporter
-        self.__vehicle= new_vehicle
+        self.__vehicle = new_vehicle
         self.__transportation_time = new_transportation_time
 
 
 class CarComparison(object):
     def __init__(self):
         self.__car_listings: List[CarListing] = []
-        self.__criteria: List[str]= []
-        self.__price_range: float = (0.0,0.0) # have not checked for this
+        self.__criteria: List[str] = []
+        self.__price_range: float = (0.0, 0.0)  # have not checked for this
         self.__comp_results: List[Car] = []
         self.__recommended_car: Car = None
 
+
 class CarSearch(object):
-    def __init__(self,srch_rad):
+    def __init__(self, srch_rad):
         self.__search_results: List[CarListing] = []
-        self.__criteria: List[str]= []
+        self.__criteria: List[str] = []
         self.__location: Location = None
         self.__search_radius: int = srch_rad
-        self.__price_range: float = (0.0,0.0) # have not checked for this
+        self.__price_range: float = (0.0, 0.0)  # have not checked for this
+
 
 class MonthlyInstallment(object):
     def __init__(self):
@@ -459,10 +500,10 @@ class MonthlyInstallment(object):
         self.__price: float = 0.0
         self.__due_date: datetime = None
 
-    def set_installment_price(self,new_price):
+    def set_installment_price(self, new_price):
         self.__price = new_price
 
-    def get_installment_info(self,Transaction,Date):
+    def get_installment_info(self, Transaction, Date):
         return self.Transaction.__transaction
         return self.__price
         return self.Date.__due_date
@@ -475,9 +516,9 @@ class PushNotification(object):
         self.__issue_time: datetime = None
         self.__recipients: List[User] = []
 
+
 class ListingDeletionForm(object):
     def __init__(self):
         self.__listing_report: ListingReport = None
         self.__text: str = ''
         self.__creation_date: datetime.date = datetime.date.today()
-

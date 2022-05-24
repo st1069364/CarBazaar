@@ -118,23 +118,13 @@ class Car(object):
         self.__num_doors = new_num_doors
         self.__registration_plate = new_registration_plate
 
-    def get_spare_part_info(self):
-        return self.__company
-        return self.__model
-        return self.__category
-        return self.__release_year
-        return self.__mileage
-        return self.__engine
-        return self.__power
-        return self.__transmission
-        return self.__fuel_type
-        return self.__city_consumption
-        return self.__motorway_consumption
-        return self.__color
-        return self.__interior_color
-        return self.__num_doors
-        return self.__registration_plate
 
+    def get_car_info(self):
+        car_info = [__company,__model,__category,__release_year,__mileage,__engine,__power,__transmission,__fuel_type,__city_consumption,__motorway_consumption,__color,__interior_color,__num_doors,__registration_plate]
+        
+        for var in car_info
+          return self.car_info[var]
+    
 
 class SparePart(object):
     def __init__(self):
@@ -149,9 +139,8 @@ class SparePart(object):
         self.__number = new_number
 
     def get_spare_part_info(self):
-        return self.__brand
-        return self.__type
-        return self.__number
+        spare_part_info = [__brand,__type,__number]
+        return self.spare_part_info
 
     def set_spare_part_category(self, new_category):
         self.__category = new_category
@@ -217,8 +206,8 @@ class CarListingsStatisticsLog(object):
         self.__comparison_log: List[CarComparison] = []
         self.__popular_listings: List[CarListing] = []
 
-    def get_popular_cars(self, CarListing):  # needs corrections
-        return self.CarListing.__popular_listings
+    def get_popular_cars(self):         
+        return self.__popular_listings
 
 
 class SparePartListing(Listing):
@@ -255,13 +244,10 @@ class Transaction(object):
         self.__product_id: int = 0
 
     def get_transaction_info(self):
-        return self.__id
-        return self.__timestamp
-        return self.__payment_method
-        return self.__type
-        return self.__customer
-        return self.__merchant
-        return self.__product_id
+        transaction_info = [__id,__timestamp,__payment_method,__type,__customer,__merchant,__product_id]
+        
+        for var in transaction_info
+          return self.transaction_info[var]
 
 
 class TransactionLog(object):
@@ -277,12 +263,12 @@ class Invoice(object):
         self.__text: str = ''
         self._recipient_email: str = ''
 
-    def get_invoice(self, Transaction):
-        return self.Transaction.__transaction
-        return self.__invoice_code
-        return self.__text
-        return self.__recipient_email
+    def get_invoice(self):
+        invoice = [__transaction,__invoice_code,__text,__recipient_email]
 
+        for var in invoice
+          return self.invoice[var]
+        
 
 class Review(object):
     def __init__(self, text, num_stars, review_writer):
@@ -296,11 +282,11 @@ class Review(object):
         self.__writer = new_writer
         self.__creation_date = new_creation_date
 
-    def get_review(self, User, Date):
-        return self.__text
-        return self.__stars
-        return self.User.__writer
-        return self.Date.__creation_date
+    def get_review(self):
+        review = [__text,__stars,__writer,__creation_date]
+
+        for var in review
+          return self.review[var]
 
 
 class Location(object):
@@ -330,8 +316,8 @@ class CarExchange(object):
         self.__dealerships: DealershipStore = None
         self.__chosen_store: DealershipStore = None
 
-    def get_dealerships(self, DealershipStore):
-        return self.DealershipStore.__dealerships
+    def get_dealerships(self):
+        return self.__dealerships
 
     def set_car_info(self, new_vehicle):
         self.__vehicle = new_vehicle
@@ -341,7 +327,7 @@ class CarExchange(object):
 
 
 class InsurancePlan(object):
-    def __init__(self, ins_code):
+    def __init__(self,ins_code):
         self.__transaction_code: str = ins_code
         self.__price: float = 0.0
         self.__car_details: Car = None
@@ -389,8 +375,10 @@ class DealershipStore(object):
         self.__cars_list: List[Car] = []
 
     def get_store(self):
-        return self.Location.__location
-        return self.__store_name
+        store_details = [__location,__store_name]
+
+        for var in store_details
+          return self.store_details[var]
 
     def set_store_info(self, new_location, new_email, new_telephone, new_store_name, new_store_owner):
         self.__location = new_location
@@ -424,10 +412,12 @@ class Message(object):
         self.__text = new_text
         self.__creation_timestamp = new_timestamp
 
-    def get_message(self, User):
-        return self.User.__sender
-        return self.User.__recipient
-        return self.__text
+
+    def get_message(self):
+        message = [__sender,__recipient,__text]
+
+        for var in message
+          return self.message[var]
 
 
 class Transporter(object):
@@ -439,10 +429,11 @@ class Transporter(object):
         self.__location: Location = None
         self.__trasportations_list: List[CarTransportation] = []
 
-    def get_message(self, CarTransportation):
-        return self.__transporter_id
-        return self.__location
-        return self.CarTransportation.__transportations_list
+    def get_transporter_info(self):
+        transporter_info = [__transporter_id,__location,__transportations_list]
+
+        for var in transporter_info
+          return self.transporter_info[var]
 
 
 class Transportation_type(enum.Enum):  # transportation type enum
@@ -503,11 +494,13 @@ class MonthlyInstallment(object):
     def set_installment_price(self, new_price):
         self.__price = new_price
 
-    def get_installment_info(self, Transaction, Date):
-        return self.Transaction.__transaction
-        return self.__price
-        return self.Date.__due_date
 
+    def get_installment_info(self):
+        installment_info = [__transaction,__price,__due_date]
+
+        for var in installment_info
+          return self.installment_info[var]
+        
 
 class PushNotification(object):
     def __init__(self):

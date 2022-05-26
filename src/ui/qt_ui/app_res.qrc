@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="/resources">
+    <file>resources/green_check.png</file>
     <file>resources/white_checkmark.png</file>
     <file>resources/upload_clip.png</file>
     <file>../qml/map.qml</file>

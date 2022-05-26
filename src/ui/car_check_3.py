@@ -9,7 +9,6 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import app_res_rc
 
 BUTTON_STYLE = """QPushButton {
     background-color: #d3311b;

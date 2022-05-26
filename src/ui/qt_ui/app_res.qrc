@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="/resources">
+    <file>resources/phone.png</file>
+    <file>resources/info.png</file>
     <file>resources/green_check.png</file>
     <file>resources/white_checkmark.png</file>
     <file>resources/upload_clip.png</file>

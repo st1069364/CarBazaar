@@ -7,17 +7,25 @@ import re
 
 #################### "database" ###########################################
 system_posted_listings = []
+
+system_car_search_log = []  # due to deletion of CarListingsStatisticsLog class
+system_car_comparison_log = []  # due to deletion of CarListingsStatisticsLog class
+system_popular_listings = []  # due to deletion of CarListingsStatisticsLog class
+
+system_transaction_log = []  # due to deletion of TransactionLog class
+
 system_registered_listing_reports = []
+
 system_scheduled_test_drives = []
 system_scheduled_car_inspections = []
 system_scheduled_car_transportations = []
+
 system_registered_stores = []
 system_registered_dealerships = []
 system_registered_users = []
 
 
 ###########################################################################
-
 
 ##################### USER types ##########################################
 class User(object):
@@ -117,7 +125,7 @@ class Transporter(User):
         transporter_info.append(self.__completed_transportations)
         return transporter_info
 
-    def get_transporter_location(self) -> Tuple[float, float]:
+    def get_transporter_location(self) -> "Location":
         return self.__location
 
     def add_transportation(self, new_transportation):
@@ -133,10 +141,11 @@ class Transporter(User):
 
 
 class Inspector(User):
-    def __init__(self):
+    def __init__(self, location):
         super(Inspector, self).__init__()
         self.__inspector_id: int = random.randint(6000, 8000)  # assume inspector IDs are within this range
         # self.__inspection_list: List["CarInspection"] = []
+        self.__location = location
         self.__pending_inspections: List["CarInspection"] = []
         self.__completed_inspections: List["CarInspection"] = []
 
@@ -147,12 +156,18 @@ class Inspector(User):
         inspector_info.append(self.__completed_inspections)
         return inspector_info
 
-    def add_inspection(self, new_inspection):
+    def get_inspector_location(self) -> "Location":
+        return self.__location
+
+    def add_inspection(self, new_inspection) -> bool:
         # add the inspection only if it's not already in the list and
         # if the Inspector has less than 10 inspections (assuming that each inspector can have at most
         # 10 pending car inspections)
         if new_inspection not in self.__pending_inspections and len(self.__pending_inspections) < 10:
             self.__pending_inspections.append(new_inspection)
+            return True
+
+        return False
 
     def complete_inspection(self, completed_inspection):
         if completed_inspection not in self.__completed_inspections:
@@ -551,6 +566,13 @@ class Transaction(object):
                             self.__type, self.__customer, self.__merchant, self.__product_id]
         return transaction_info
 
+    def register_transaction(self) -> bool:
+        if self not in system_transaction_log:
+            system_transaction_log.append(self)
+            return True
+        else:
+            return False
+
 
 class TransactionLog(object):
     def __init__(self):
@@ -740,9 +762,17 @@ class CarInspection(object):
         self.__inspection_time: datetime.date
         self.__docs: List["CarDocument"] = []
         self.__inspection_type: InspectionType
-        self.__location: Location = None
 
-    def set_car_check_info(self, executor, trans, car_lst, status, check_time, docs, check_type, location):
+    def set_car_check_location(self, check_location):
+        self.__location = check_location
+
+    def set_car_check_inspector(self, check_inspector) -> bool:
+        if check_inspector in system_registered_users:
+            return True
+
+        return False
+
+    def set_car_check_info(self, executor, trans, car_lst, status, check_time, docs, check_type):
         self.__inspector = executor
         self.__transaction = trans
         self.__car_listing = car_lst
@@ -750,7 +780,6 @@ class CarInspection(object):
         self.__inspection_time = check_time
         self.__docs = docs
         self.__inspection_type = check_type
-        self.__location = location
 
     def register_car_inspection(self) -> bool:
         if self not in system_scheduled_car_inspections:
@@ -758,6 +787,14 @@ class CarInspection(object):
             return True  # return true, adding a non-existing car inspection
         else:
             return False  # return false, as an attempt to add an already-existing car inspection, was made
+
+    def find_inspector(self):
+        for user in system_registered_users:
+            if isinstance(user, Inspector):
+                if user.get_inspector_location() == self.__car_listing.get_listing_location():
+                    if user.add_inspection(self):
+                        self.__inspector = user
+                        break
 
 
 class CarTransportation(object):
@@ -797,8 +834,9 @@ class CarTransportation(object):
         for user in system_registered_users:
             if isinstance(user, Transporter):
                 if user.get_transporter_location() == self.__car_listing.get_listing_location():
-                    self.__transporter = user
-                    break
+                    if user.add_transportation(self):
+                        self.__transporter = user
+                        break
 
 
 class CarComparison(object):
@@ -820,6 +858,13 @@ class CarComparison(object):
         # self.__car_listings = listings
         self.__criteria = comp_criteria
         self.__price_range = comp_price_range
+
+    def register_car_comparison(self) -> bool:
+        if self not in system_car_comparison_log:
+            system_car_comparison_log.append(self)
+            return True
+        else:
+            return False
 
     def find_recommended_car(self):  # choose a car at random for the recommended one
         self.__recommended_car = self.__car_listings[random.randint(0, len(self.__car_listings) - 1)].get_car()
@@ -848,18 +893,42 @@ class CarSearch(object):
         self.__search_radius = search_radius
         self.__price_range = search_price_range
 
-    def find_search_results(self):  # just check for car category, company, model and price
+    def register_car_search(self) -> bool:
+        if self not in system_car_search_log:
+            system_car_search_log.append(self)
+            return True
+        else:
+            return False
 
-        for lst in system_posted_listings:
-            if isinstance(lst, CarListing):  # check is Listing is a CarListing
-                car_info = lst.get_car().get_car_info()
+    def generate_search_results(self):  # just check for car category, company, model and price
+        if self.__criteria:  # if the user entered search criteria, search for the appropriate car listings
+            for lst in system_posted_listings:
+                if isinstance(lst, CarListing):  # check is Listing is a CarListing
+                    car_info = lst.get_car().get_car_info()
 
-                # same category, company, model
-                if self.__criteria[0] == car_info[0] and self.__criteria[1] == car_info[1] and self.__criteria[2] == \
-                        car_info[2]:
-                    # car price within price range
-                    if float(self.__criteria[16]) <= lst.get_price() <= float(self.__criteria[17]):
-                        self.__search_results.append(lst)
+                    # same category, company, model
+                    if self.__criteria[0] == car_info[0] and self.__criteria[1] == car_info[1] and self.__criteria[2] == \
+                            car_info[2]:
+                        # car price within price range
+                        if float(self.__criteria[16]) <= lst.get_price() <= float(self.__criteria[17]):
+                            self.__search_results.append(lst)
+        else:  # the user didn't enter any criteria, fetch popular car listings
+            self.__search_results = system_popular_listings
+
+    def get_search_results_list(self):
+        return self.__search_results
+
+    def update_popular_listings(self):
+        for car_search in system_car_search_log:
+            car_listings = car_search.get_search_results_list()
+            for listing in car_listings:
+                listing_count = 0
+                for curr_search in system_car_search_log:
+                    if listing in curr_search.get_search_results_list():
+                        listing_count += 1
+                        if listing_count >= 3:
+                            if listing not in system_popular_listings:
+                                system_popular_listings.append(listing)
 
 
 class CarExchange(object):
@@ -898,30 +967,6 @@ class CarExchange(object):
 
     def set_docs(self, new_docs):
         self.__legal_documents = new_docs
-
-
-class CarListingsStatisticsLog(object):
-    def __init__(self):
-        self.__search_log: List["CarSearch"] = []
-        self.__comparison_log: List["CarComparison"] = []
-        self.__popular_listings: List["CarListing"] = []
-
-    def get_popular_car_listings(self):
-        return self.__popular_listings
-
-    def register_car_search(self, new_search) -> bool:
-        if new_search not in self.__search_log:
-            self.__search_log.append(new_search)
-            return True
-        else:
-            return False
-
-    def register_car_comparison(self, new_comp) -> bool:
-        if new_comp not in self.__comparison_log:
-            self.__comparison_log.append(new_comp)
-            return True
-        else:
-            return False
 
 
 class Advertisement(object):

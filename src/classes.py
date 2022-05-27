@@ -348,19 +348,22 @@ class SparePart(object):
         self.__brand: str = ''
         self.__type: str = ''
         self.__category: str = ''
-        self.__number: str = ''
+        self.__code: str = ''
 
-    def set_spare_part_info(self, new_brand, new_type, new_number):
+    def set_spare_part_info(self, new_brand, new_type, new_code):
         self.__brand = new_brand
         self.__type = new_type
-        self.__number = new_number
+        self.__code = new_code
 
-    def get_spare_part_info(self):
-        spare_part_info = [self.__brand, self.__type, self.__category, self.__number]
-        return spare_part_info
+    # def get_spare_part_info(self):
+    #     spare_part_info = [self.__brand, self.__type, self.__category, self.__code]
+    #     return spare_part_info
 
-    def is_spare_part_number_valid(self) -> bool:
-        match = re.search(r"PA[1-4]", self.__number)
+    def get_spare_part(self):
+        return self
+
+    def is_spare_part_code_valid(self) -> bool:
+        match = re.search(r"PA[1-4]", self.__code)
         if match:
             return True  # spare part number is valid as it is either PA1 or PA2 or PA3 or PA4
         else:
@@ -371,7 +374,7 @@ class SparePart(object):
     # the prefix 'PA2' for the car's braking system and the prefix 'PA3' for the fuel gauge.
     # A prefix of 'PA4' corresponds to a general spare part
     def add_part_to_category(self):
-        part_code_prefix = self.__number[:2]
+        part_code_prefix = self.__code[:2]
 
         if part_code_prefix == 'PA1':
             self.__category = 'Engine'
@@ -424,12 +427,13 @@ class Listing(object):
     def get_listing(self) -> "Listing":
         return self
 
-    def post_listing(self):
+    def post_listing(self) -> bool:
         if self not in system_posted_listings:
             system_posted_listings.append(self)
             self.__creator.add_listing(self)  # add listing to user's list of listings
+            return True  # listing post success
         else:
-            raise Exception('Listing is already posted !!')
+            return False  # listing post failure, i.e. it is already posted
 
     def delete_listing(self):
         if self in system_posted_listings:
@@ -478,13 +482,9 @@ class SparePartListing(Listing):
         self.__condition: ProductCondition
         self.__price: float = 0.0
 
-    def set_spare_part(self, new_spare_part):
-        self.__listing_part = new_spare_part
-
-    def set_condition(self, part_condition):
+    def set_spare_part_listing_info(self, spare_part, part_condition, part_price):
+        self.__listing_part = spare_part
         self.__condition = part_condition
-
-    def set_price(self, part_price):
         self.__price = part_price
 
 

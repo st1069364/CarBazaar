@@ -13,6 +13,7 @@ system_scheduled_car_inspections = []
 system_scheduled_car_transportations = []
 system_registered_stores = []
 system_registered_dealerships = []
+system_registered_users = []
 
 
 ###########################################################################
@@ -84,11 +85,12 @@ class User(object):
     def set_points(self, new_amount):
         self.__points = new_amount
 
-    def redeem_points(self, amount):
+    def redeem_points(self, amount) -> bool:
         if self.__points >= amount:
             self.__points -= amount
+            return True
         else:
-            raise Exception('Cannot redeem that many points !!')
+            return False
 
     def get_user_info(self):
         user_info = [self.__first_name, self.__last_name, self.__username,
@@ -114,6 +116,9 @@ class Transporter(User):
         transporter_info.append(self.__pending_transportations)
         transporter_info.append(self.__completed_transportations)
         return transporter_info
+
+    def get_transporter_location(self) -> Tuple[float, float]:
+        return self.__location
 
     def add_transportation(self, new_transportation):
         # add the transportation only if it's not already in the list and
@@ -310,7 +315,7 @@ class Car(object):
                     self.__color, self.__interior_color, self.__num_doors, self.__registration_plate]
         return car_info
 
-    def compute_car_price(self) -> float:
+    def calculate_car_price(self) -> float:
         # mileage coefficient, used for calculating the amount that will be removed from the car's price
         mileage_coefficient = 0.25
 
@@ -338,7 +343,7 @@ class Car(object):
             return price - (mileage_coefficient * self.__mileage)
 
     def compare_price(self, comp_price) -> bool:
-        if abs(comp_price - self.compute_car_price()) > 2000:
+        if abs(comp_price - self.calculate_car_price()) > 2000:
             return False  # user price is 2K above, i.e.  too high
         else:
             return True  # user entered price is ok
@@ -413,6 +418,9 @@ class Listing(object):
     def get_listing_title(self):
         return self.__title
 
+    def get_listing_location(self) -> Tuple[float, float]:
+        return self.__location
+
     def set_photos(self, new_photos):
         self.__photos = new_photos
 
@@ -444,6 +452,7 @@ class Listing(object):
         else:
             return False
 
+
 class ProductCondition(enum.Enum):  # product condition enum
     Used = 1,
     New = 2
@@ -455,7 +464,7 @@ class CarListing(Listing):
         self.__vehicle: Car = None
         self.__car_condition = car_status
         self.__docs: List["CarDocument"] = []
-        self.__price: float = self.__vehicle.compute_car_price()  # default price is the system recommended one
+        self.__price: float = self.__vehicle.calculate_car_price()  # default price is the system recommended one
 
     def set_car(self, new_car):
         self.__vehicle = new_car
@@ -555,6 +564,13 @@ class TransactionLog(object):
         else:
             return False  # transaction already exists, return failure
 
+    def is_transaction_id_valid(self, check_id) -> bool:
+        for transaction in self.__transaction_list:
+            if transaction.__id == check_id:
+                return True  # transaction found in transaction log, thus the given ID is valid
+
+        return False  # a transaction with the given ID, was not found in the Transaction Log, i.e. the ID is not valid
+
 
 class MonthlyInstallment(object):
     def __init__(self):
@@ -613,6 +629,11 @@ class InsurancePlan(object):
     def get_insurance_plan_info(self):
         plan_info = [self.__name, self.__plan_id, self.__type, self.__price, self.__num_months]
         return plan_info
+
+    def calculate_insurance_plan_price(self, points):
+        discount_coefficient = 0.1  # 10 % discount on the plan's price
+        plan_price = random.randint(50, 250)  # assume that the price range for the Insurance Plans is [50€, 250€]
+        return plan_price - (discount_coefficient * points)  # apply discount
 
 
 class Location(object):
@@ -746,25 +767,38 @@ class CarTransportation(object):
         self.__status: OperationStatus
         self.__package: TransportationType
         self.__transporter: Transporter = None
-        self.__vehicle: Car = None
+        self.__car_listing: CarListing = None
         self.__transportation_time: datetime = None
 
-    def set_transportation_info(self, trans, new_delivery_location, new_status, new_package, new_transporter,
-                                new_vehicle, new_transportation_time):
+    def estimate_transportation_duration(self, transportation_package: TransportationType) -> int:
+        if transportation_package == 'standard':
+            return 3  # assume that the standard transportation package, has an estimated delivery time of 3 days
+        elif transportation_package == 'express':
+            return 1  # assume that the express transportation package, has an estimated delivery time of 1 day
+
+    def set_transportation_info(self, trans, new_delivery_location, new_status, new_package,
+                                new_car_listing):
         self.__transaction = trans
         self.__delivery_location = new_delivery_location
         self.__status = new_status
         self.__package = new_package
-        self.__transporter = new_transporter
-        self.__vehicle = new_vehicle
-        self.__transportation_time = new_transportation_time
+        self.__car_listing = new_car_listing
+        self.__transportation_time = self.estimate_transportation_duration(new_package)
 
     def register_car_transportation(self) -> bool:
         if self not in system_scheduled_car_transportations:
             system_scheduled_car_transportations.append(self)
+            self.__transporter.add_transportation(self)  # also add the transportation, to the transporter's list
             return True  # registering a new car transportation
         else:
             return False  # return false, as an attempt to add an already-existing car transportation was made
+
+    def find_transporter(self):
+        for user in system_registered_users:
+            if isinstance(user, Transporter):
+                if user.get_transporter_location() == self.__car_listing.get_listing_location():
+                    self.__transporter = user
+                    break
 
 
 class CarComparison(object):
@@ -1017,31 +1051,32 @@ class ListingDeletionForm(object):
 
 
 if __name__ == "__main__":
-    sp = SparePart()
-    sp.set_spare_part_info('theBrand', 'Pipe', 'PA1')
+    # sp = SparePart()
+    # sp.set_spare_part_info('theBrand', 'Pipe', 'PA1')
+    #
+    # print(sp.get_spare_part_info())
+    #
+    # print(sp.is_spare_part_number_valid())
 
-    print(sp.get_spare_part_info())
-
-    print(sp.is_spare_part_number_valid())
-
-    # # test_user = User()
     #
     # ll = Location((34.5, 35.5))
     # #
     # test_user = Transporter(ll)
-    # test_user.set_name('john', 'doe')
-    # test_user.set_username('jdoe91823')
-    # test_user.set_email('jdoe@gmail.com')
-    # test_user.set_telephone('2610987567')
-    #
-    # # print(test_user.get_name())
-    #
-    # print(test_user.get_transporter_info())
-    #
-    # tt = Transaction()
-    # tt.set_transaction_info('Cash', 1234.55, 'Payment', test_user,
-    #                         test_user, 666)
-    # print(tt.get_transaction_info())
+    test_user = User()
+    test_user.set_name('john', 'doe')
+    test_user.set_username('jdoe91823')
+    test_user.set_email('jdoe@gmail.com')
+    test_user.set_telephone('2610987567')
+
+    print(test_user.get_user_info())
+
+    tt = Transaction()
+    tt.set_transaction_info('Cash', 1234.55, 'Payment', test_user,
+                            test_user, 666)
+    print(tt.get_transaction_info())
+
+    plan = InsurancePlan()
+    # plan.set_insurance_plan_info('Test Plan', 'Premium', )
 
     # print(test_user.get_user_info())
 
@@ -1073,4 +1108,4 @@ if __name__ == "__main__":
     # cc.set_car_info('Alfa Romeo', 'Giulietta', 'Hatchback', 2005, 5000, 123, 32, 'Manual',
     #                 'Diesel', 555, 666, 'Red', 'Black', 5, 'AXE1234')
     #
-    # print(cc.compute_car_price())
+    # print(cc.calculate_car_price())

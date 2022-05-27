@@ -7,6 +7,7 @@ import re
 
 #################### "database" ###########################################
 system_posted_listings = []
+system_registered_listing_reports = []
 system_scheduled_test_drives = []
 system_scheduled_car_inspections = []
 system_scheduled_car_transportations = []
@@ -435,13 +436,13 @@ class Listing(object):
         else:
             return False  # listing post failure, i.e. it is already posted
 
-    def delete_listing(self):
+    def delete_listing(self) -> bool:
         if self in system_posted_listings:
             system_posted_listings.remove(self)
             self.__creator.delete_listing(self)  # remove listing from user's list of listings
+            return True
         else:
-            raise Exception('Listing is not posted, cannot delete it !')
-
+            return False
 
 class ProductCondition(enum.Enum):  # product condition enum
     Used = 1,
@@ -980,11 +981,25 @@ class ListingReport(object):
     def get_listing_report(self):
         return self
 
+    def is_listing_report_id_valid(self, search_id) -> bool:
+        for report in system_registered_listing_reports:
+            if report.__report_id == search_id:
+                return True  # a ListingReport with the given ID was found, return True
+
+        return False  # no ListingReport found with the given ID, thus the given ID is invalid
+
     def get_listing_report_status(self):
         return self.__status
 
     def set_status_checked(self):
         self.__status = 'Checked'
+
+    def register_listing_report(self) -> bool:
+        if self not in system_registered_listing_reports:
+            system_registered_listing_reports.append(self)
+            return True
+        else:
+            return False
 
 
 class ListingDeletionForm(object):

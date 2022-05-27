@@ -3,6 +3,7 @@ import datetime  # for dates
 from typing import List, Tuple
 import random
 import string
+import re
 
 #################### "database" ###########################################
 system_posted_listings = []
@@ -359,12 +360,16 @@ class SparePart(object):
         return spare_part_info
 
     def is_spare_part_number_valid(self) -> bool:
-        pass
+        match = re.search(r"PA[1-4]", self.__number)
+        if match:
+            return True  # spare part number is valid as it is either PA1 or PA2 or PA3 or PA4
+        else:
+            return False  # spare part number is not valid
 
     # Assume that the Spare Part code has a prefix which consists of the first 3 characters.
     # Also, assume that the Spare Parts for the car's engine, have the prefix 'PA1',
     # the prefix 'PA2' for the car's braking system and the prefix 'PA3' for the fuel gauge.
-    # Every other Spare Part code prefix, corresponds to a generic part
+    # A prefix of 'PA4' corresponds to a general spare part
     def add_part_to_category(self):
         part_code_prefix = self.__number[:2]
 
@@ -374,7 +379,7 @@ class SparePart(object):
             self.__category = 'Braking System'
         elif part_code_prefix == 'PA3':
             self.__category = 'Fuel Gauge'
-        else:
+        elif part_code_prefix == 'PA4':
             self.__category = 'General'
 
     def get_spare_part_category(self):
@@ -997,23 +1002,30 @@ class ListingDeletionForm(object):
 
 
 if __name__ == "__main__":
-    # test_user = User()
+    sp = SparePart()
+    sp.set_spare_part_info('theBrand', 'Pipe', 'PA1')
 
-    ll = Location((34.5, 35.5))
+    print(sp.get_spare_part_info())
+
+    print(sp.is_spare_part_number_valid())
+
+    # # test_user = User()
     #
-    test_user = Transporter(ll)
-    test_user.set_name('john', 'doe')
-    test_user.set_username('jdoe91823')
-    test_user.set_email('jdoe@gmail.com')
-    test_user.set_telephone('2610987567')
-
-    # print(test_user.get_name())
-
-    print(test_user.get_transporter_info())
-
-    tt = Transaction()
-    tt.set_transaction_info('Cash', 1234.55, 'Payment', test_user,
-                            test_user, 666)
+    # ll = Location((34.5, 35.5))
+    # #
+    # test_user = Transporter(ll)
+    # test_user.set_name('john', 'doe')
+    # test_user.set_username('jdoe91823')
+    # test_user.set_email('jdoe@gmail.com')
+    # test_user.set_telephone('2610987567')
+    #
+    # # print(test_user.get_name())
+    #
+    # print(test_user.get_transporter_info())
+    #
+    # tt = Transaction()
+    # tt.set_transaction_info('Cash', 1234.55, 'Payment', test_user,
+    #                         test_user, 666)
     # print(tt.get_transaction_info())
 
     # print(test_user.get_user_info())

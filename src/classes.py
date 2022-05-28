@@ -12,8 +12,6 @@ system_car_search_log = []  # due to deletion of CarListingsStatisticsLog class
 system_car_comparison_log = []  # due to deletion of CarListingsStatisticsLog class
 system_popular_listings = []  # due to deletion of CarListingsStatisticsLog class
 
-system_transaction_log = []  # due to deletion of TransactionLog class
-
 system_registered_listing_reports = []
 
 system_scheduled_test_drives = []
@@ -552,6 +550,9 @@ class Transaction(object):
         self.__merchant: User = None
         self.__product_id: int
 
+    def get_transaction_id(self):
+        return self.__id
+
     def set_transaction_info(self, t_method, t_amount, t_type, t_cust,
                              t_merch, t_prod_id):
         self.__payment_method = t_method
@@ -566,32 +567,26 @@ class Transaction(object):
                             self.__type, self.__customer, self.__merchant, self.__product_id]
         return transaction_info
 
-    def register_transaction(self) -> bool:
-        if self not in system_transaction_log:
-            system_transaction_log.append(self)
-            return True
-        else:
-            return False
-
 
 class TransactionLog(object):
-    def __init__(self):
-        self.__name: str = 'System-wide Transaction Log'
-        self.__transaction_list: List[Transaction] = []
+    name: str = 'System-wide Transaction Log'
+    transaction_list: List[Transaction] = []
 
+    @staticmethod  # ?
     def register_transaction(self, new_transaction) -> bool:
-        if new_transaction not in self.__transaction_list:
-            self.__transaction_list.append(new_transaction)
+        if new_transaction not in TransactionLog.transaction_list:
+            TransactionLog.transaction_list.append(new_transaction)
             return True  # transaction doesn't exist, return register success
         else:
             return False  # transaction already exists, return failure
 
-    def is_transaction_id_valid(self, check_id) -> bool:
-        for transaction in self.__transaction_list:
-            if transaction.__id == check_id:
+    @staticmethod
+    def is_transaction_id_valid(check_id) -> bool:
+        for transaction in TransactionLog.transaction_list:
+            if transaction.get_transaction_id() == check_id:
                 return True  # transaction found in transaction log, thus the given ID is valid
 
-        return False  # a transaction with the given ID, was not found in the Transaction Log, i.e. the ID is not valid
+        return False  # a transaction with the given ID, was not found in the Transaction Log, i.e.
 
 
 class MonthlyInstallment(object):
@@ -772,8 +767,7 @@ class CarInspection(object):
 
         return False
 
-    def set_car_check_info(self, executor, trans, car_lst, status, check_time, docs, check_type):
-        self.__inspector = executor
+    def set_car_inspection_info(self, trans, car_lst, status, check_time, docs, check_type):
         self.__transaction = trans
         self.__car_listing = car_lst
         self.__status = status
@@ -784,6 +778,7 @@ class CarInspection(object):
     def register_car_inspection(self) -> bool:
         if self not in system_scheduled_car_inspections:
             system_scheduled_car_inspections.append(self)
+            self.__inspector.add_inspection(self)
             return True  # return true, adding a non-existing car inspection
         else:
             return False  # return false, as an attempt to add an already-existing car inspection, was made

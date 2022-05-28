@@ -301,6 +301,7 @@ class Car(object):
         self.__interior_color: str = ''
         self.__num_doors: int = 0
         self.__registration_plate: str = ''
+        self.__estimated_price: float = 0.0
 
     def set_car_info(self, new_category, new_company, new_model, new_release_year, new_mileage, new_engine, new_power,
                      new_transmission_type, new_fuel_type, new_city_consumption, new_motorway_consumption, new_color,
@@ -334,7 +335,8 @@ class Car(object):
 
         # if car release year is up to 2000, price range is 500 € to 2K €
         if self.__release_year <= 2000:
-            return round(random.uniform(500, 2000), 2)
+            self.__estimated_price = round(random.uniform(500, 2000), 2)
+            return self.__estimated_price
 
         # if car was released between 2001 and 2010, the price range is from 6K to 12K
         elif 2001 <= self.__release_year <= 2010:
@@ -346,17 +348,17 @@ class Car(object):
             high_price = 50000
 
         # calculate the car's price (random value for simplicity)
-        price = round(random.uniform(low_price, high_price), 2)
+        self.__estimated_price = round(random.uniform(low_price, high_price), 2)
         # if the car is new, i.e. has a zero mileage, just return the price, no need to subtract anything
         if self.__mileage == 0:
-            return price
+            return self.__estimated_price
         # the car is not new, subtract an amount from the car's price, due its non-zero mileage
         # The amount to be subtracted is calculated by multiplying the car's mileage with the mileage coefficient
         else:
-            return price - (mileage_coefficient * self.__mileage)
+            return self.__estimated_price - (mileage_coefficient * self.__mileage)
 
     def compare_price(self, comp_price) -> bool:
-        if abs(comp_price - self.calculate_car_price()) > 2000:
+        if abs(comp_price - self.__estimated_price) > 2000:
             return False  # user price is 2K above, i.e.  too high
         else:
             return True  # user entered price is ok
@@ -434,8 +436,8 @@ class Listing(object):
     def get_listing_location(self) -> Tuple[float, float]:
         return self.__location
 
-    def set_photos(self, new_photos):
-        self.__photos = new_photos
+    def set_photos(self, photos_list):
+        self.__photos = photos_list
 
     def get_photos(self):
         return self.__photos

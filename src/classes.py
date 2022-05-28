@@ -8,10 +8,6 @@ import re
 #################### "database" ###########################################
 system_posted_listings = []
 
-system_car_search_log = []  # due to deletion of CarListingsStatisticsLog class
-system_car_comparison_log = []  # due to deletion of CarListingsStatisticsLog class
-system_popular_listings = []  # due to deletion of CarListingsStatisticsLog class
-
 system_registered_listing_reports = []
 
 system_scheduled_test_drives = []
@@ -574,8 +570,8 @@ class TransactionLog(object):
     name: str = 'System-wide Transaction Log'
     transaction_list: List[Transaction] = []
 
-    @staticmethod  # ?
-    def register_transaction(self, new_transaction) -> bool:
+    @staticmethod
+    def register_transaction(new_transaction) -> bool:
         if new_transaction not in TransactionLog.transaction_list:
             TransactionLog.transaction_list.append(new_transaction)
             return True  # transaction doesn't exist, return register success
@@ -860,31 +856,12 @@ class CarComparison(object):
         self.__criteria = comp_criteria
         self.__price_range = comp_price_range
 
-    def register_car_comparison(self) -> bool:
-        if self not in system_car_comparison_log:
-            system_car_comparison_log.append(self)
-            return True
-        else:
-            return False
-
     def find_recommended_car(self):  # choose a car at random for the recommended one
         self.__recommended_car = self.__car_listings[random.randint(0, len(self.__car_listings) - 1)].get_car()
 
     def create_comp_results(self):
         for car_lst in self.__car_listings:
             self.__comp_results.append(car_lst.get_car())
-
-    def update_popular_listings(self):
-        for car_comparison in system_car_comparison_log:
-            car_listings = car_comparison.get_car_list()
-            for listing in car_listings:
-                listing_count = 0
-                for curr_comp in system_car_comparison_log:
-                    if listing in curr_comp.get_car_list():
-                        listing_count += 1
-                        if listing_count >= 3:
-                            if listing not in system_popular_listings:
-                                system_popular_listings.append(listing)
 
 
 class CarSearch(object):
@@ -906,13 +883,6 @@ class CarSearch(object):
         self.__search_radius = search_radius
         self.__price_range = search_price_range
 
-    def register_car_search(self) -> bool:
-        if self not in system_car_search_log:
-            system_car_search_log.append(self)
-            return True
-        else:
-            return False
-
     def generate_search_results(self):  # just check for car category, company, model and price
         if self.__criteria:  # if the user entered search criteria, search for the appropriate car listings
             for lst in system_posted_listings:
@@ -926,22 +896,10 @@ class CarSearch(object):
                         if float(self.__criteria[16]) <= lst.get_price() <= float(self.__criteria[17]):
                             self.__search_results.append(lst)
         else:  # the user didn't enter any criteria, fetch popular car listings
-            self.__search_results = system_popular_listings
+            self.__search_results = CarListingsStatisticsLog.get_popular_car_listings()
 
     def get_search_results_list(self):
         return self.__search_results
-
-    def update_popular_listings(self):
-        for car_search in system_car_search_log:
-            car_listings = car_search.get_search_results_list()
-            for listing in car_listings:
-                listing_count = 0
-                for curr_search in system_car_search_log:
-                    if listing in curr_search.get_search_results_list():
-                        listing_count += 1
-                        if listing_count >= 3:
-                            if listing not in system_popular_listings:
-                                system_popular_listings.append(listing)
 
 
 class CarExchange(object):
@@ -980,6 +938,60 @@ class CarExchange(object):
 
     def set_docs(self, new_docs):
         self.__legal_documents = new_docs
+
+
+class CarListingsStatisticsLog(object):
+    car_search_log: List[CarSearch] = []
+    car_comparison_log: List[CarComparison] = []
+    popular_car_listings: List[CarListing] = []
+
+    @staticmethod
+    def get_popular_car_listings():
+        return CarListingsStatisticsLog.popular_car_listings
+
+    @staticmethod
+    def register_car_search(new_car_search) -> bool:
+        if new_car_search not in CarListingsStatisticsLog.car_search_log:
+            CarListingsStatisticsLog.car_search_log.append(new_car_search)
+            CarListingsStatisticsLog.update_popular_car_listings(new_car_search)
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def register_car_comparison(new_car_comparison) -> bool:
+        if new_car_comparison not in CarListingsStatisticsLog.car_comparison_log:
+            CarListingsStatisticsLog.car_comparison_log.append(new_car_comparison)
+            CarListingsStatisticsLog.update_popular_car_listings(new_car_comparison)
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def update_popular_car_listings(operation):
+        if isinstance(operation, CarSearch):
+            for car_search in CarListingsStatisticsLog.car_search_log:
+                car_listings = car_search.get_search_results_list()
+                for listing in car_listings:
+                    listing_count = 0
+                    for curr_search in CarListingsStatisticsLog.car_search_log:
+                        if listing in curr_search.get_search_results_list():
+                            listing_count += 1
+                            if listing_count >= 3:
+                                if listing not in CarListingsStatisticsLog.popular_car_listings:
+                                    CarListingsStatisticsLog.popular_car_listings.append(listing)
+
+        elif isinstance(operation, CarComparison):
+            for car_comparison in CarListingsStatisticsLog.car_comparison_log:
+                car_listings = car_comparison.get_car_list()
+                for listing in car_listings:
+                    listing_count = 0
+                    for curr_comp in CarListingsStatisticsLog.car_comparison_log:
+                        if listing in curr_comp.get_car_list():
+                            listing_count += 1
+                            if listing_count >= 3:
+                                if listing not in CarListingsStatisticsLog.popular_car_listings:
+                                    CarListingsStatisticsLog.popular_car_listings.append(listing)
 
 
 class Advertisement(object):

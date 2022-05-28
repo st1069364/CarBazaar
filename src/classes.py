@@ -18,6 +18,8 @@ system_registered_stores = []
 system_registered_dealerships = []
 system_registered_users = []
 
+system_registered_cars = []
+
 
 ###########################################################################
 
@@ -359,6 +361,12 @@ class Car(object):
         else:
             return True  # user entered price is ok
 
+    def is_car_valid(self) -> bool:
+        if self in system_registered_cars:
+            return True
+        else:
+            return False
+
 
 class SparePart(object):
     def __init__(self):
@@ -480,6 +488,9 @@ class CarListing(Listing):
     def set_car(self, new_car):
         self.__vehicle = new_car
 
+    def get_car(self):
+        return self.__vehicle
+
     def set_docs(self, doc_list):
         self.__docs = doc_list
 
@@ -491,9 +502,6 @@ class CarListing(Listing):
 
     def create_3D_model(self):
         pass
-
-    def get_car(self):
-        return self.__vehicle
 
 
 class SparePartListing(Listing):
@@ -841,25 +849,20 @@ class CarComparison(object):
         self.__comp_results: List[Car] = []
         self.__recommended_car: Car = None
 
-    def add_listing(self, lst_to_compare) -> bool:
-        if lst_to_compare not in self.__car_listings:
-            self.__car_listings.append(lst_to_compare)
-            return True
-        else:
-            return False
+    def set_listings_to_compare(self, listings):
+        self.__car_listings = listings
 
-    def get_car_list(self):
+    def get_car_listings(self):
         return self.__car_listings
 
-    def set_car_comparison_info(self, listings, comp_criteria, comp_price_range):
-        # self.__car_listings = listings
+    def set_car_comparison_info(self, comp_criteria, comp_price_range):
         self.__criteria = comp_criteria
         self.__price_range = comp_price_range
 
     def find_recommended_car(self):  # choose a car at random for the recommended one
         self.__recommended_car = self.__car_listings[random.randint(0, len(self.__car_listings) - 1)].get_car()
 
-    def create_comp_results(self):
+    def generate_comparison_results(self):  # just append the cars to the results list, no actual comparison is made
         for car_lst in self.__car_listings:
             self.__comp_results.append(car_lst.get_car())
 
@@ -898,6 +901,8 @@ class CarSearch(object):
         else:  # the user didn't enter any criteria, fetch popular car listings
             self.__search_results = CarListingsStatisticsLog.get_popular_car_listings()
 
+        CarListingsStatisticsLog.register_car_search(self)
+
     def get_search_results_list(self):
         return self.__search_results
 
@@ -905,6 +910,7 @@ class CarSearch(object):
 class CarExchange(object):
     def __init__(self):
         self.__vehicle: Car = None
+        self.__car_estimated_price: float = 0.0
         self.__car_owner: User = None
         self.__exchange_reward: float = 0.0
         self.__legal_documents: List["CarDocument"] = []
@@ -912,7 +918,7 @@ class CarExchange(object):
         self.__dealerships: List["DealershipStore"] = None
         self.__chosen_store: DealershipStore = None
 
-    def find_stores(self):
+    def find_stores(self) -> List[DealershipStore]:
         exchange_car_info = self.__vehicle.get_car_info()
         for store in system_registered_stores:
             cars_list = store.get_cars_list()
@@ -922,19 +928,19 @@ class CarExchange(object):
                 if car_info[1] == exchange_car_info[1] and car_info[2] == exchange_car_info[2]:
                     self.__dealerships.append(store)
 
-    def choose_store(self, reward, store):
-        self.__exchange_reward = reward
-        self.__chosen_store = store
+        return self.__dealerships
 
-    def set_car_exchange_info(self, exchange_car, exchange_owner):
+    def set_chosen_store(self, store, exchange_reward):
+        self.__chosen_store = store
+        self.__exchange_reward = exchange_reward
+
+    def set_car_info(self, exchange_car, exchange_car_price, exchange_car_owner):
         self.__vehicle = exchange_car
-        self.__car_owner = exchange_owner
+        self.__car_estimated_price = exchange_car_price
+        self.__car_owner = exchange_car_owner
 
     def set_transaction(self, exchange_transaction):
         self.__transaction = exchange_transaction
-
-    def get_dealerships(self):
-        return self.__dealerships
 
     def set_docs(self, new_docs):
         self.__legal_documents = new_docs

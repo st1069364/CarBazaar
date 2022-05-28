@@ -758,11 +758,12 @@ class CarInspection(object):
         self.__docs: List["CarDocument"] = []
         self.__inspection_type: InspectionType
 
-    def set_car_check_location(self, check_location):
+    def set_car_inspection_location(self, check_location):
         self.__location = check_location
 
-    def set_car_check_inspector(self, check_inspector) -> bool:
+    def set_car_inspection_inspector(self, check_inspector) -> bool:
         if check_inspector in system_registered_users:
+            self.__inspector = check_inspector
             return True
 
         return False
@@ -789,7 +790,7 @@ class CarInspection(object):
                 if user.get_inspector_location() == self.__car_listing.get_listing_location():
                     if user.add_inspection(self):
                         self.__inspector = user
-                        break
+                        return user.get_inspector_info()
 
 
 class CarTransportation(object):
@@ -849,6 +850,9 @@ class CarComparison(object):
         else:
             return False
 
+    def get_car_list(self):
+        return self.__car_listings
+
     def set_car_comparison_info(self, listings, comp_criteria, comp_price_range):
         # self.__car_listings = listings
         self.__criteria = comp_criteria
@@ -867,6 +871,18 @@ class CarComparison(object):
     def create_comp_results(self):
         for car_lst in self.__car_listings:
             self.__comp_results.append(car_lst.get_car())
+
+    def update_popular_listings(self):
+        for car_comparison in system_car_comparison_log:
+            car_listings = car_comparison.get_car_list()
+            for listing in car_listings:
+                listing_count = 0
+                for curr_comp in system_car_comparison_log:
+                    if listing in curr_comp.get_car_list():
+                        listing_count += 1
+                        if listing_count >= 3:
+                            if listing not in system_popular_listings:
+                                system_popular_listings.append(listing)
 
 
 class CarSearch(object):

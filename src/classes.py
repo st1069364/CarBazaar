@@ -482,11 +482,11 @@ class CarListing(Listing):
     def set_car(self, new_car):
         self.__vehicle = new_car
 
-    def update_price(self, new_price):
-        if self.__vehicle.compare_price(new_price):
-            self.__price = new_price
-        else:
-            raise Exception('Price too high !')
+    def set_docs(self, doc_list):
+        self.__docs = doc_list
+
+    def set_car_price(self, new_price):
+        self.__price = new_price
 
     def get_price(self):
         return self.__price

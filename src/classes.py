@@ -1,5 +1,6 @@
 import enum  # for enumerations
 import datetime  # for dates
+from dateutil.relativedelta import relativedelta
 from typing import List, Tuple
 import random
 import string
@@ -367,6 +368,9 @@ class Car(object):
         else:
             return False
 
+    def calculate_circulation_tax(self) -> float:
+        return random.randint(50, 1300)
+
 
 class SparePart(object):
     def __init__(self):
@@ -471,6 +475,14 @@ class Listing(object):
         else:
             return False
 
+    @staticmethod
+    def is_listing_id_valid(search_id) -> bool:
+        for listing in system_posted_listings:
+            if listing.__id == search_id:
+                return True
+
+        return False
+
 
 class ProductCondition(enum.Enum):  # product condition enum
     Used = 1,
@@ -497,7 +509,7 @@ class CarListing(Listing):
     def set_car_price(self, new_price):
         self.__price = new_price
 
-    def get_price(self):
+    def get_car_price(self):
         return self.__price
 
     def create_3D_model(self):
@@ -599,19 +611,25 @@ class MonthlyInstallment(object):
     def __init__(self):
         self.__transaction: Transaction = None
         self.__price: float = 0.0
-        self.__due_date: datetime
+        self.__product_price: float = 0.0
+        self.__due_date: datetime = datetime.date.today() + relativedelta(months=+1)  # set due date to 1 month from now
 
-    def set_installment_price(self, new_price):
-        self.__price = new_price
+    def set_product_price(self, new_price):
+        self.__product_price = new_price
 
-    def set_installment_info(self, inst_trans, inst_price, inst_date):
+    def set_transaction(self, inst_trans):
         self.__transaction = inst_trans
-        self.__price = inst_price
-        self.__due_date = inst_date
 
     def get_installment_info(self):
-        installment_info = [self.__transaction, self.__price, self.__due_date]
-        return installment_info
+        return [self.__transaction, self.__price, self.__product_price, self.__due_date]
+
+    def calculate_installment_price(self, user_salary) -> float:
+        if 0.2 * user_salary > self.__product_price:
+            self.__price = random.randint(0, int(self.__product_price / 5))
+        else:
+            self.__price = random.randint(0, 0.2 * user_salary)
+
+        return self.__price
 
 
 class Invoice(object):
@@ -866,6 +884,7 @@ class CarComparison(object):
         for car_lst in self.__car_listings:
             self.__comp_results.append(car_lst.get_car())
 
+        CarListingsStatisticsLog.register_car_comparison(self)
 
 class CarSearch(object):
     def __init__(self):
@@ -1091,7 +1110,8 @@ class ListingReport(object):
     def get_listing_report(self):
         return self
 
-    def is_listing_report_id_valid(self, search_id) -> bool:
+    @staticmethod
+    def is_listing_report_id_valid(search_id) -> bool:
         for report in system_registered_listing_reports:
             if report.__report_id == search_id:
                 return True  # a ListingReport with the given ID was found, return True

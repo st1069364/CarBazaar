@@ -104,6 +104,10 @@ class User(object):
                      self.__points]
         return user_info
 
+    def add_purchased_car(self, new_car):
+        if new_car not in self.__car_purchases:
+            self.__car_purchases.append(new_car)
+
 
 class Transporter(User):
     def __init__(self, location):
@@ -885,6 +889,7 @@ class CarComparison(object):
             self.__comp_results.append(car_lst.get_car())
 
         CarListingsStatisticsLog.register_car_comparison(self)
+
 
 class CarSearch(object):
     def __init__(self):

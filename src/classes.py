@@ -387,12 +387,8 @@ class SparePart(object):
         self.__type = new_type
         self.__code = new_code
 
-    # def get_spare_part_info(self):
-    #     spare_part_info = [self.__brand, self.__type, self.__category, self.__code]
-    #     return spare_part_info
-
-    def get_spare_part(self):
-        return self
+    def get_spare_part_info(self):
+        return [self.__brand, self.__type, self.__category, self.__code]
 
     def is_spare_part_code_valid(self) -> bool:
         match = re.search(r"PA[1-4]", self.__code)
@@ -405,7 +401,7 @@ class SparePart(object):
     # Also, assume that the Spare Parts for the car's engine, have the prefix 'PA1',
     # the prefix 'PA2' for the car's braking system and the prefix 'PA3' for the fuel gauge.
     # A prefix of 'PA4' corresponds to a general spare part
-    def add_part_to_category(self):
+    def add_spare_part_to_category(self):
         part_code_prefix = self.__code[:2]
 
         if part_code_prefix == 'PA1':

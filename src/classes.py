@@ -705,6 +705,11 @@ class Photograph(object):
         self.__file_name: str = photo_file_name
         self.__size: int = photo_size
 
+    # assume that it is called inside the 'Upload File' use case
+    def set_photograph_info(self, fname, size):
+        self.__file_name = fname
+        self.__size = size
+
 
 class CarCompanies(enum.Enum):  # companies enum
     Alfa_Romeo = 1,

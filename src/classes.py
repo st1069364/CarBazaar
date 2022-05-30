@@ -7,6 +7,9 @@ import string
 import re
 
 #################### "database" ###########################################
+
+# The following lists model the behavior of the equivalent database tables, therefore they are used
+# as the application's backend
 system_posted_listings = []
 
 system_registered_listing_reports = []
@@ -76,11 +79,12 @@ class User(object):
         else:
             return False
 
-    def delete_listing(self, del_lst):
-        if del_lst in self.__listings:
+    def delete_listing(self, del_lst) -> bool:
+        if del_lst in self.__listings:  # check if listing exists is the user's list
             self.__listings.remove(del_lst)
+            return True
         else:
-            raise Exception('Invalid listing')
+            return False
 
     def get_car_purchase_history(self) -> List["Car"]:
         return self.__car_purchases
@@ -101,7 +105,7 @@ class User(object):
     def get_user_info(self):
         user_info = [self.__first_name, self.__last_name, self.__username,
                      self.__user_id, self.__email, self.__telephone,
-                     self.__reg_date, self.__listings, self.__car_purchases,
+                     str(self.__reg_date), self.__listings, self.__car_purchases,
                      self.__points]
         return user_info
 
@@ -129,12 +133,15 @@ class Transporter(User):
     def get_transporter_location(self) -> "Location":
         return self.__location
 
-    def add_transportation(self, new_transportation):
+    def add_transportation(self, new_transportation) -> bool:
         # add the transportation only if it's not already in the list and
         # if the transporter has less than 10 transportations (assuming that each transporter can have at most
         # 10 pending transportations)
         if new_transportation not in self.__pending_transportations and len(self.__pending_transportations) < 10:
             self.__pending_transportations.append(new_transportation)
+            return True
+
+        return False
 
     def complete_transportation(self, completed_transport):
         if completed_transport not in self.__completed_transportations:
@@ -186,7 +193,10 @@ class InsuranceCompanyEmployee(User):
         self.__company_position = position
 
     def get_ins_company_employee_info(self) -> List:
-        employee_info = [self.__employee_id, self.__job_title, self.__company_position]
+        employee_info = super().get_user_info()
+        employee_info.append(self.__employee_id)
+        employee_info.append(self.__job_title)
+        employee_info.append(self.__company_position)
         return employee_info
 
 
@@ -206,14 +216,14 @@ class Dealership(User):
         if self not in system_registered_dealerships:
             system_registered_dealerships.append(self)
             return True  # registration success
-        else:
-            return False
+
+        return False
 
     def is_company_registered(self) -> bool:
         if self in system_registered_dealerships:
-            return True
-        else:
-            return False
+            return True  # company is already registered
+
+        return False
 
 
 ##################### END USER types ##########################################
@@ -232,7 +242,7 @@ class DealershipStore(object):
                          self.__store_name, self.__store_owner, self.__cars_list]
         return store_details
 
-    def get_store(self):  # keep the above or this one
+    def get_store(self):
         return self
 
     def set_store_info(self, new_location, new_email, new_telephone, new_store_name, new_store_owner, cars_list):
@@ -250,14 +260,14 @@ class DealershipStore(object):
         if self not in system_registered_stores:
             system_registered_stores.append(self)
             return True  # registration success
-        else:
-            return False
+
+        return False
 
     def is_store_registered(self) -> bool:
         if self in system_registered_stores:
             return True
-        else:
-            return False
+
+        return False
 
 
 class Wishlist(object):
@@ -368,11 +378,18 @@ class Car(object):
     def is_car_valid(self) -> bool:
         if self in system_registered_cars:
             return True
-        else:
-            return False
+
+        return False
 
     def calculate_circulation_tax(self) -> float:
-        return random.randint(50, 1300)
+        if 300 <= self.__engine <= 1200:  # assume that cars with engine of 300 to 1200 cc the tax is 135 €
+            return 135
+        elif 1200 <= self.__engine <= 1700:  # assume that cars with engine of 1200 to 1700 cc the tax is 280 €
+            return 280
+        elif 1700 <= self.__engine <= 2500:  # assume that cars with engine of 1700 to 2500 cc the taxis 690 €
+            return 690
+        elif self.__engine >= 2500:  # assume that cars with engine of more than 2500 cc the tax is 1500 €
+            return 1500
 
 
 class SparePart(object):
@@ -433,7 +450,7 @@ class Listing(object):
         self.__creator = creator
         self.__location = location
 
-    def get_listing_location(self) -> Tuple[float, float]:
+    def get_listing_location(self) -> "Location":
         return self.__location
 
     def set_photos(self, photos_list):
@@ -453,22 +470,22 @@ class Listing(object):
             system_posted_listings.append(self)
             self.__creator.add_listing(self)  # add listing to user's list of listings
             return True  # listing post success
-        else:
-            return False  # listing post failure, i.e. it is already posted
+
+        return False  # listing post failure, i.e. it is already posted
 
     def delete_listing(self) -> bool:
         if self in system_posted_listings:
             system_posted_listings.remove(self)
             self.__creator.delete_listing(self)  # remove listing from user's list of listings
             return True
-        else:
-            return False
+
+        return False  # listing was not found, therefore the deletion cannot take place
 
     @staticmethod
     def is_listing_id_valid(search_id) -> bool:
         for listing in system_posted_listings:
             if listing.__id == search_id:
-                return True
+                return True  # listing found in the "DB"
 
         return False
 
@@ -519,7 +536,6 @@ class SparePartListing(Listing):
 
 
 ##################### END Listing types ##########################################
-
 
 class CarDocument(object):
     def __init__(self):
@@ -574,6 +590,12 @@ class Transaction(object):
         return transaction_info
 
 
+# This class is used to model the behavior of some DB tables, that would contain transaction records
+# The class won't ever be instantiated, as we assume it is a Database and thus that it is already initialized.
+# Since the class won't be instantiated, all of its methods have the **@staticmethod** decorator, so that they can
+# be called from other classes, without having to get an instance of the TransactionLog class.
+# Also, the class has some **class** attributes, and no **instance** attributes, since an __init__ method won't ever
+# be called
 class TransactionLog(object):
     name: str = 'System-wide Transaction Log'
     transaction_list: List[Transaction] = []
@@ -583,8 +605,8 @@ class TransactionLog(object):
         if new_transaction not in TransactionLog.transaction_list:
             TransactionLog.transaction_list.append(new_transaction)
             return True  # transaction doesn't exist, return register success
-        else:
-            return False  # transaction already exists, return failure
+
+        return False  # transaction already exists, return failure
 
     @staticmethod
     def is_transaction_id_valid(check_id) -> bool:
@@ -612,10 +634,14 @@ class MonthlyInstallment(object):
         return [self.__transaction, self.__price, self.__product_price, self.__due_date]
 
     def calculate_installment_price(self, user_salary) -> float:
+        # if the 20% of the user's salary is greater than the product's price, then we cannot use that percentage
+        # of the user's salary, as an upper bound for the randint function, as in the following "else" clause.
+        # Therefore, set the upper bound equal to the product's price divided by 5 
         if 0.2 * user_salary > self.__product_price:
             self.__price = random.randint(0, int(self.__product_price / 5))
         else:
             self.__price = random.randint(0, 0.2 * user_salary)
+            # assume that the installment's price can be at most equal to 20% of the user's salary
 
         return self.__price
 
@@ -735,8 +761,8 @@ class TestDrive(object):
         if self not in system_scheduled_test_drives:
             system_scheduled_test_drives.append(self)
             return True  # new test drive added
-        else:
-            return False  # attempt to register an already-existing test drive, to the schedules ones
+
+        return False  # attempt to register an already-existing test drive, to the schedules ones
 
     def is_date_available(self) -> bool:
         for test_drive in system_scheduled_test_drives:
@@ -798,13 +824,15 @@ class CarInspection(object):
             system_scheduled_car_inspections.append(self)
             self.__inspector.add_inspection(self)
             return True  # return true, adding a non-existing car inspection
-        else:
-            return False  # return false, as an attempt to add an already-existing car inspection, was made
+
+        return False  # return false, as an attempt to add an already-existing car inspection, was made
 
     def find_inspector(self):
         for user in system_registered_users:
             if isinstance(user, Inspector):
+                # inspector's location is the same as the car's location
                 if user.get_inspector_location() == self.__car_listing.get_listing_location():
+                    # if the inspector has less than 10 pending inspections
                     if user.add_inspection(self):
                         self.__inspector = user
                         return user.get_inspector_info()
@@ -840,13 +868,15 @@ class CarTransportation(object):
             system_scheduled_car_transportations.append(self)
             self.__transporter.add_transportation(self)  # also add the transportation, to the transporter's list
             return True  # registering a new car transportation
-        else:
-            return False  # return false, as an attempt to add an already-existing car transportation was made
+
+        return False  # return false, as an attempt to add an already-existing car transportation was made
 
     def find_transporter(self):
         for user in system_registered_users:
             if isinstance(user, Transporter):
+                # transporter's location is the same as the car's location
                 if user.get_transporter_location() == self.__car_listing.get_listing_location():
+                    # if the transporter has less than 10 pending transportations
                     if user.add_transportation(self):
                         self.__transporter = user
                         break
@@ -1121,8 +1151,8 @@ class ListingReport(object):
         if self not in system_registered_listing_reports:
             system_registered_listing_reports.append(self)
             return True
-        else:
-            return False
+
+        return False
 
 
 class ListingDeletionForm(object):

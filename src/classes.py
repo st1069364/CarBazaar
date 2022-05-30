@@ -69,11 +69,12 @@ class User(object):
     def get_user_listings(self) -> List["Listing"]:
         return self.__listings
 
-    def add_listing(self, new_lst):
+    def add_listing(self, new_lst) -> bool:
         if new_lst not in self.__listings:
             self.__listings.append(new_lst)
+            return True
         else:
-            raise Exception('This listing has been already added')
+            return False
 
     def delete_listing(self, del_lst):
         if del_lst in self.__listings:
@@ -114,7 +115,6 @@ class Transporter(User):
         super(Transporter, self).__init__()
         self.__transporter_id: int = random.randint(2000, 4000)  # assume transporter IDs are within this range
         self.__location: Location = location
-        # self.__transportations_list: List["CarTransportation"] = []
         self.__pending_transportations: List["CarTransportation"] = []
         self.__completed_transportations: List["CarTransportation"] = []
 
@@ -145,7 +145,6 @@ class Inspector(User):
     def __init__(self, location):
         super(Inspector, self).__init__()
         self.__inspector_id: int = random.randint(6000, 8000)  # assume inspector IDs are within this range
-        # self.__inspection_list: List["CarInspection"] = []
         self.__location = location
         self.__pending_inspections: List["CarInspection"] = []
         self.__completed_inspections: List["CarInspection"] = []

@@ -428,17 +428,10 @@ class Listing(object):
         self.__location: Location = None
         self.__photos: List[Photograph] = []
 
-    def set_listing_info(self, title, descr, creator, location):
+    def set_listing_info(self, title, creator, location):
         self.__title = title
-        self.__description = descr
         self.__creator = creator
         self.__location = location
-
-    def set_listing_title(self, new_title):
-        self.__title = new_title
-
-    def get_listing_title(self):
-        return self.__title
 
     def get_listing_location(self) -> Tuple[float, float]:
         return self.__location
@@ -451,9 +444,6 @@ class Listing(object):
 
     def set_description(self, new_description):
         self.__description = new_description
-
-    def get_description(self):
-        return self.__description
 
     def get_listing(self) -> "Listing":
         return self
@@ -541,8 +531,7 @@ class CarDocument(object):
         self.__doc_id = new_id
 
     def get_doc_info(self):
-        doc_info = [self.__issuer, self.__doc_id]
-        return doc_info
+        return [self.__issuer, self.__doc_id]
 
 
 class PaymentType(enum.Enum):  # payment type enum
@@ -667,8 +656,7 @@ class InsurancePlan(object):
         self.__num_months = plan_duration
 
     def get_insurance_plan_info(self):
-        plan_info = [self.__name, self.__plan_id, self.__type, self.__price, self.__num_months]
-        return plan_info
+        return [self.__name, self.__plan_id, self.__type, self.__price, self.__num_months]
 
     def calculate_insurance_plan_price(self, points):
         discount_coefficient = 0.1  # 10 % discount on the plan's price
@@ -785,6 +773,7 @@ class CarInspection(object):
         self.__inspection_time: datetime.date
         self.__docs: List["CarDocument"] = []
         self.__inspection_type: InspectionType
+        self.__location: Location = None
 
     def set_car_inspection_location(self, check_location):
         self.__location = check_location
@@ -867,7 +856,7 @@ class CarComparison(object):
     def __init__(self):
         self.__car_listings: List["CarListing"] = []
         self.__criteria: List[str] = []
-        self.__price_range: (float, float) = (0.0, 0.0)
+        self.__price_range: Tuple[float, float] = (0.0, 0.0)
         self.__comp_results: List[Car] = []
         self.__recommended_car: Car = None
 
@@ -897,7 +886,7 @@ class CarSearch(object):
         self.__criteria: List[str] = []
         self.__location: Location = None
         self.__search_radius: int
-        self.__price_range: (float, float) = (0.0, 0.0)
+        self.__price_range: Tuple[float, float] = (0.0, 0.0)
 
     # __criteria has: [category, company, model, year, mileage_from, mileage_to,
     #                 engine_from, engine_to, power_from, power_to, condition
@@ -1031,16 +1020,14 @@ class Advertisement(object):
         self.__photos: List["Photograph"] = []
         self.__creation_date: datetime = None
 
-    def set_ad_info(self, creator, text, date):
+    def set_ad_info(self, creator, text, date, photos_list):
         self.__creator = creator
         self.__text = text
+        self.__photos = photos_list
         self.__creation_date = date
 
-    def get_ad(self):
-        return self
-
-    def add_photo(self, new_photo):
-        self.__photos.append(new_photo)
+    def get_ad_info(self):
+        return [self.__creator.get_user_info(), self.__text, self.__photos, str(self.__creation_date)]
 
 
 class PushNotification(object):
@@ -1055,8 +1042,8 @@ class PushNotification(object):
         self.__text = text
         self.__issue_time = time
 
-    def get_notification(self):
-        return self
+    def get_notification_info(self):
+        return [self.__creator.get_user_info(), self.__text, str(self.__issue_time), self.__recipients]
 
     def add_recipient(self, recp):
         self.__recipients.append(recp)
@@ -1075,8 +1062,9 @@ class Message(object):
         self.__text = new_text
         self.__creation_timestamp = new_timestamp
 
-    def get_message(self):
-        return self
+    def get_message_info(self):
+        return [self.__sender.get_user_info(), self.__recipient.get_user_info(), self.__text,
+                str(self.__creation_timestamp)]
 
 
 class Review(object):
@@ -1092,8 +1080,8 @@ class Review(object):
         self.__writer = new_writer
         self.__creation_date = new_creation_date
 
-    def get_review(self):
-        return self
+    def get_review_info(self):
+        return [self.__text, self.__stars, self.__writer.get_user_info(), str(self.__creation_date)]
 
 
 class ListingReport(object):

@@ -102,7 +102,7 @@ class User(object):
         else:
             return False
 
-    def get_user_info(self):
+    def get_user_info(self) -> List:
         user_info = [self.__first_name, self.__last_name, self.__username,
                      self.__user_id, self.__email, self.__telephone,
                      str(self.__reg_date), self.__listings, self.__car_purchases,
@@ -237,7 +237,7 @@ class DealershipStore(object):
         self.__store_owner: str = ''
         self.__cars_list: List["Car"] = []
 
-    def get_store_info(self):
+    def get_store_info(self) -> List:
         store_details = [self.__location, self.__email, self.__telephone,
                          self.__store_name, self.__store_owner, self.__cars_list]
         return store_details
@@ -245,7 +245,7 @@ class DealershipStore(object):
     def get_store(self):
         return self
 
-    def set_store_info(self, new_location, new_email, new_telephone, new_store_name, new_store_owner, cars_list):
+    def set_store_info(self, new_location, new_email, new_telephone, new_store_owner):
         self.__location = new_location
         self.__email = new_email
         self.__telephone = new_telephone
@@ -338,7 +338,7 @@ class Car(object):
         self.__num_doors = new_num_doors
         self.__registration_plate = new_registration_plate
 
-    def get_car_info(self):
+    def get_car_info(self) -> List:
         car_info = [self.__category, self.__company, self.__model, self.__release_year,
                     self.__mileage, self.__engine, self.__power, self.__transmission,
                     self.__fuel_type, self.__city_consumption, self.__motorway_consumption,
@@ -408,7 +408,7 @@ class SparePart(object):
         self.__type = new_type
         self.__code = new_code
 
-    def get_spare_part_info(self):
+    def get_spare_part_info(self) -> List:
         return [self.__brand, self.__type, self.__category, self.__code]
 
     def is_spare_part_code_valid(self) -> bool:
@@ -553,7 +553,7 @@ class CarDocument(object):
         self.__issuer = issue_authority
         self.__doc_id = new_id
 
-    def get_doc_info(self):
+    def get_doc_info(self) -> List:
         return [self.__issuer, self.__doc_id]
 
 
@@ -594,7 +594,7 @@ class Transaction(object):
         self.__merchant = t_merch
         self.__product_id = t_prod_id
 
-    def get_transaction_info(self):
+    def get_transaction_info(self) -> List:
         transaction_info = [self.__id, self.__timestamp, self.__payment_method,
                             self.__type, self.__customer, self.__merchant, self.__product_id]
         return transaction_info
@@ -646,7 +646,7 @@ class MonthlyInstallment(object):
     def set_transaction(self, inst_trans):
         self.__transaction = inst_trans
 
-    def get_installment_info(self):
+    def get_installment_info(self) -> List:
         return [self.__transaction, self.__price, self.__product_price, self.__due_date]
 
     def calculate_installment_price(self, user_salary) -> float:
@@ -697,7 +697,7 @@ class InsurancePlan(object):
         self.__price = plan_price
         self.__num_months = plan_duration
 
-    def get_insurance_plan_info(self):
+    def get_insurance_plan_info(self) -> List:
         return [self.__name, self.__plan_id, self.__type, self.__price, self.__num_months]
 
     def calculate_insurance_plan_price(self, points):
@@ -713,7 +713,7 @@ class Location(object):
     def set_location(self, new_coordinates: Tuple[float, float]):
         self.__coordinates = new_coordinates
 
-    def get_location(self) -> Tuple[float, float]:
+    def get_location_coordinates(self) -> Tuple[float, float]:
         return self.__coordinates
 
     def check_location_validity(self, check_coordinates: Tuple[float, float]) -> bool:
@@ -841,7 +841,7 @@ class CarInspection(object):
 
         return False  # return false, as an attempt to add an already-existing car inspection, was made
 
-    def find_inspector(self):
+    def find_inspector(self) -> List:
         for user in system_registered_users:
             if isinstance(user, Inspector):
                 # inspector's location is the same as the location the user entered
@@ -880,10 +880,10 @@ class CarTransportation(object):
         elif transportation_package == 'express':
             return 1  # assume that the express transportation package, has an estimated delivery time of 1 day
 
-    def set_transportation_info(self, new_delivery_location, new_package):
+    def set_transportation_info(self, new_delivery_location,  transportation_package: TransportationType):
         self.__delivery_location = new_delivery_location
-        self.__package = new_package
-        self.__transportation_time = self.estimate_transportation_duration(new_package)
+        self.__package = transportation_package
+        self.__transportation_time = self.estimate_transportation_duration(transportation_package)
 
     def register_car_transportation(self) -> bool:
         if self not in system_scheduled_car_transportations:
@@ -893,7 +893,7 @@ class CarTransportation(object):
 
         return False  # return false, as an attempt to add an already-existing car transportation was made
 
-    def find_transporter(self):
+    def find_transporter(self) -> List:
         for user in system_registered_users:
             if isinstance(user, Transporter):
                 # transporter's location is the same as the car's location
@@ -901,7 +901,7 @@ class CarTransportation(object):
                     # if the transporter has less than 10 pending transportations
                     if user.add_transportation(self):
                         self.__transporter = user
-                        break
+                        return user.get_transporter_info()
 
 
 class CarComparison(object):
@@ -968,7 +968,7 @@ class CarSearch(object):
 
         CarListingsStatisticsLog.register_car_search(self)
 
-    def get_search_results_list(self):
+    def get_search_results_list(self) -> List[CarListing]:
         return self.__search_results
 
 
@@ -1017,7 +1017,7 @@ class CarListingsStatisticsLog(object):
     popular_car_listings: List[CarListing] = []
 
     @staticmethod
-    def get_popular_car_listings():
+    def get_popular_car_listings() -> List[CarListing]:
         return CarListingsStatisticsLog.popular_car_listings
 
     @staticmethod
@@ -1094,7 +1094,7 @@ class PushNotification(object):
         self.__text = text
         self.__issue_time = time
 
-    def get_notification_info(self):
+    def get_notification_info(self) -> List:
         return [self.__creator.get_user_info(), self.__text, str(self.__issue_time), self.__recipients]
 
     def add_recipient(self, recp):
@@ -1114,7 +1114,7 @@ class Message(object):
         self.__text = new_text
         self.__creation_timestamp = new_timestamp
 
-    def get_message_info(self):
+    def get_message_info(self) -> List:
         return [self.__sender.get_user_info(), self.__recipient.get_user_info(), self.__text,
                 str(self.__creation_timestamp)]
 
@@ -1132,7 +1132,7 @@ class Review(object):
         self.__writer = new_writer
         self.__creation_date = new_creation_date
 
-    def get_review_info(self):
+    def get_review_info(self) -> List:
         return [self.__text, self.__stars, self.__writer.get_user_info(), str(self.__creation_date)]
 
 
@@ -1152,7 +1152,7 @@ class ListingReport(object):
         self.__text = report_text
         self.__report_auditor = report_auditor
 
-    def get_listing_report(self):
+    def get_listing_report(self) -> "ListingReport":
         return self
 
     @staticmethod
@@ -1187,7 +1187,7 @@ class ListingDeletionForm(object):
         self.__listing_report = listing_report
         self.__text = text
 
-    def get_deletion_form(self):
+    def get_deletion_form(self) -> "ListingDeletionForm":
         return self
 
 

@@ -249,8 +249,12 @@ class DealershipStore(object):
         self.__location = new_location
         self.__email = new_email
         self.__telephone = new_telephone
-        self.__store_name = new_store_name
         self.__store_owner = new_store_owner
+
+    def set_store_name(self, title):
+        self.__store_name = title
+
+    def set_store_cars_list(self, cars_list):
         self.__cars_list = cars_list
 
     def get_cars_list(self):
@@ -382,13 +386,13 @@ class Car(object):
         return False
 
     def calculate_circulation_tax(self) -> float:
-        if 300 <= self.__engine <= 1200:  # assume that cars with engine of 300 to 1200 cc the tax is 135 €
+        if 300 <= self.__engine <= 1200:  # assume that for cars with engine of 300 to 1200 cc the tax is 135 €
             return 135
-        elif 1200 <= self.__engine <= 1700:  # assume that cars with engine of 1200 to 1700 cc the tax is 280 €
+        elif 1200 <= self.__engine <= 1700:  # assume that for cars with engine of 1200 to 1700 cc the tax is 280 €
             return 280
-        elif 1700 <= self.__engine <= 2500:  # assume that cars with engine of 1700 to 2500 cc the taxis 690 €
+        elif 1700 <= self.__engine <= 2500:  # assume that for cars with engine of 1700 to 2500 cc the taxis 690 €
             return 690
-        elif self.__engine >= 2500:  # assume that cars with engine of more than 2500 cc the tax is 1500 €
+        elif self.__engine >= 2500:  # assume that for cars with engine of more than 2500 cc the tax is 1500 €
             return 1500
 
 
@@ -444,6 +448,9 @@ class Listing(object):
         self.__creator: User = None
         self.__location: Location = None
         self.__photos: List[Photograph] = []
+
+    def get_listing_id(self) -> int:
+        return self.__id
 
     def set_listing_info(self, title, creator, location):
         self.__title = title
@@ -575,6 +582,9 @@ class Transaction(object):
     def get_transaction_id(self):
         return self.__id
 
+    def get_transaction_product_id(self) -> int:
+        return self.__product_id
+
     def set_transaction_info(self, t_method, t_amount, t_type, t_cust,
                              t_merch, t_prod_id):
         self.__payment_method = t_method
@@ -615,6 +625,12 @@ class TransactionLog(object):
                 return True  # transaction found in transaction log, thus the given ID is valid
 
         return False  # a transaction with the given ID, was not found in the Transaction Log, i.e.
+
+    @staticmethod
+    def find_transaction(transaction_id) -> Transaction:
+        for transaction in TransactionLog.transaction_list:
+            if transaction.get_transaction_id() == transaction_id:
+                return transaction
 
 
 class MonthlyInstallment(object):
@@ -795,7 +811,7 @@ class CarInspection(object):
         self.__inspector: Inspector = None
         self.__transaction: Transaction = None
         self.__car_listing: CarListing = None
-        self.__status: OperationStatus
+        self.__status: OperationStatus = OperationStatus.Pending
         self.__inspection_time: datetime.date
         self.__docs: List["CarDocument"] = []
         self.__inspection_type: InspectionType
@@ -811,12 +827,10 @@ class CarInspection(object):
 
         return False
 
-    def set_car_inspection_info(self, trans, car_lst, status, check_time, docs, check_type):
+    def set_car_inspection_info(self, trans, car_lst, check_time, check_type):
         self.__transaction = trans
         self.__car_listing = car_lst
-        self.__status = status
         self.__inspection_time = check_time
-        self.__docs = docs
         self.__inspection_type = check_type
 
     def register_car_inspection(self) -> bool:
@@ -830,8 +844,8 @@ class CarInspection(object):
     def find_inspector(self):
         for user in system_registered_users:
             if isinstance(user, Inspector):
-                # inspector's location is the same as the car's location
-                if user.get_inspector_location() == self.__car_listing.get_listing_location():
+                # inspector's location is the same as the location the user entered
+                if user.get_inspector_location() == self.__location:
                     # if the inspector has less than 10 pending inspections
                     if user.add_inspection(self):
                         self.__inspector = user
@@ -840,13 +854,25 @@ class CarInspection(object):
 
 class CarTransportation(object):
     def __init__(self):
-        self.__transaction: Transaction = None
+        self.__car_transaction: Transaction = None
         self.__delivery_location: Location = None
-        self.__status: OperationStatus
+        self.__status: OperationStatus = OperationStatus.Pending
         self.__package: TransportationType
         self.__transporter: Transporter = None
         self.__car_listing: CarListing = None
         self.__transportation_time: datetime = None
+
+    def set_car_purchase_transaction(self, transaction_id):
+        self.__car_transaction = TransactionLog.find_transaction(transaction_id)
+        self.find_car()
+
+    def find_car(self):
+        for listing in system_posted_listings:
+            if isinstance(listing, CarListing):
+                if listing.get_listing_id() == self.__car_transaction.get_transaction_product_id():
+                    self.__car_listing = listing
+
+        self.find_transporter()
 
     def estimate_transportation_duration(self, transportation_package: TransportationType) -> int:
         if transportation_package == 'standard':
@@ -854,13 +880,9 @@ class CarTransportation(object):
         elif transportation_package == 'express':
             return 1  # assume that the express transportation package, has an estimated delivery time of 1 day
 
-    def set_transportation_info(self, trans, new_delivery_location, new_status, new_package,
-                                new_car_listing):
-        self.__transaction = trans
+    def set_transportation_info(self, new_delivery_location, new_package):
         self.__delivery_location = new_delivery_location
-        self.__status = new_status
         self.__package = new_package
-        self.__car_listing = new_car_listing
         self.__transportation_time = self.estimate_transportation_duration(new_package)
 
     def register_car_transportation(self) -> bool:

@@ -13,13 +13,16 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label_16">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>150</x>
       <y>80</y>
-      <width>171</width>
+      <width>241</width>
       <height>21</height>
      </rect>
     </property>
@@ -40,28 +43,12 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="label_6">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>80</y>
-      <width>41</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="app_res.qrc">:/resources/resources/dots.png</pixmap>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_17">
     <property name="geometry">
      <rect>
       <x>100</x>
       <y>80</y>
-      <width>61</width>
+      <width>41</width>
       <height>20</height>
      </rect>
     </property>
@@ -75,7 +62,7 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>120</x>
       <y>160</y>
       <width>151</width>
       <height>31</height>
@@ -99,17 +86,17 @@
    <widget class="QTextBrowser" name="textBrowser">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>80</x>
       <y>220</y>
       <width>241</width>
       <height>41</height>
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="submit_button">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>140</x>
       <y>310</y>
       <width>111</width>
       <height>31</height>
@@ -155,7 +142,7 @@ color: rgb(255, 255, 255);</string>
       <x>50</x>
       <y>490</y>
       <width>291</width>
-      <height>161</height>
+      <height>201</height>
      </rect>
     </property>
     <property name="maximumSize">
@@ -171,7 +158,7 @@ color: rgb(255, 255, 255);</string>
      </size>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(235, 235, 235);</string>
+     <string notr="true"/>
     </property>
     <row>
      <property name="text">
@@ -210,7 +197,7 @@ color: rgb(255, 255, 255);</string>
     </column>
     <item row="0" column="0">
      <property name="text">
-      <string>Alpha Romeo-Guillietta</string>
+      <string>Opel - Corsa</string>
      </property>
     </item>
     <item row="1" column="0">
@@ -234,11 +221,11 @@ color: rgb(255, 255, 255);</string>
      </property>
     </item>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="continue_button">
     <property name="geometry">
      <rect>
       <x>140</x>
-      <y>740</y>
+      <y>820</y>
       <width>111</width>
       <height>31</height>
      </rect>
@@ -306,7 +293,7 @@ color: rgb(255, 255, 255);</string>
       <rect>
        <x>150</x>
        <y>15</y>
-       <width>121</width>
+       <width>161</width>
        <height>22</height>
       </rect>
      </property>
@@ -501,6 +488,22 @@ color: rgb(255, 255, 255);</string>
     </property>
     <property name="pixmap">
      <pixmap resource="app_res.qrc">:/resources/resources/arrow.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>80</y>
+      <width>41</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="app_res.qrc">:/resources/resources/dots.png</pixmap>
     </property>
    </widget>
   </widget>

@@ -75,8 +75,22 @@
 	
 	\center{\textbf{Αλλαγές στην έκδοση \en v0.5 \gr}}
 	\vspace{10pt}
+	\flushleft
 	
-	Ανανεωμένες \en Mockup Screens \gr για τα \en Use Cases \gr \en"\gr Ανάρτηση Αγγελίας Πώλησης Οχήματος\en"\gr,\en"\gr Αγορά Οχήματος\en"\gr , \en"\gr Έλεγχος Οχήματος\en"\gr , \en"\gr Αναζήτηση Κοντινών Αντιπροσωπειών\en"\gr , \en"\gr Αναζήτηση Οχήματος\en"\gr , \en"\gr Ανάρτηση Αγγελίας Πώλησης Ανταλλακτικού\en"\gr , \en"\gr Προγραμματισμός \en Test Drive \gr \en"\gr ώστε να συμβαδίζουν με την νέα έκδοση της Περίπτωσης Χρήσης.
+	Ανανεωμένες \en Mockup Screens \gr για τα παρακάτω \en Use Cases \gr, ώστε να συμβαδίζουν με τις νέες εκδόσεις των Περιπτώσεων Χρήσης.
+	\begin{itemize}
+		\item \en"\gr Ανάρτηση Αγγελίας Πώλησης Οχήματος\en"\gr
+		\item \en"\gr Αγορά Οχήματος\en"\gr
+		\item \en"\gr Προγραμματισμός Ελέγχου Οχήματος\en"\gr
+		\item \en"\gr Αναζήτηση Κοντινών Αντιπροσωπειών\en"\gr
+		\item \en"\gr Αναζήτηση Οχήματος\en"\gr
+		\item \en"\gr Ανάρτηση Αγγελίας Πώλησης Ανταλλακτικού\en"\gr 
+		\item \en"\gr Προγραμματισμός \en Test Drive"\gr
+	\end{itemize}
+	
+	Επίσης, προστέθηκαν \en screenshots \gr, από όλες τις οθόνες που εμφανίζονται στο \en use case "\gr Ανάρτηση Αγγελίας Πώλησης Οχήματος\en"\gr, στην ενότητα \en"\gr Υλοποιημένες με Κώδικα Οθόνες\en"\gr. \break
+	
+	Τέλος, προστέθηκαν \en screenshots \gr, και των υπόλοιπων υλοποιημένων οθονών(\en work in progress\gr) του \en use case "\gr Προγραμματισμός Ελέγχου Οχήματος\en"\gr.
 
 
 	\vspace{10pt}	
@@ -401,18 +415,15 @@
 	
 	\begin{figure}[htbp!]
 		\centering
-		\subfloat[Υλοποίηση της οθόνης \en\#1 \gr της Ανάρτησης Αγγελίας Οχήματος χρησιμοποιώντας \en PyQt]
-		{{\includegraphics[scale=0.3]{img/ui\_screens/post_lst_1.png}}}%
+		\subfloat[Οθόνη \en\#1 :\gr Εισαγωγή στοιχείων οχήματος]{{\includegraphics[scale=0.285]{img/ui\_screens/post\_lst\_1.png}}}%
 		\qquad
-		\subfloat[Οθόνη \en\#2 :\gr Εισαγωγή στοιχείων οχήματος]{{\includegraphics[scale=0.285]{img/ui\_screens/post\_lst\_2.png}}}%
+		\subfloat[Οθόνη \en\#2 :\gr Ανάρτηση εγγράφων πιστοποίησης κατάστασης οχήματος και φωτογραφιών]{{\includegraphics[scale=0.29]{img/ui\_screens/post\_lst\_2.png}}}%
 		\qquad
-		\subfloat[Οθόνη \en\#3 :\gr Ανάρτηση εγγράφων πιστοποίησης κατάστασης οχήματος]{{\includegraphics[scale=0.285]{img/ui\_screens/post\_lst\_3.png}}}%
+		\subfloat[Οθόνη \en\#3 :\gr Τιμή οχήματος]{{\includegraphics[scale=0.285]{img/ui\_screens/post\_lst\_3.png}}}%
 		\qquad
-		\subfloat[Οθόνη \en\#4 :\gr Τιμή οχήματος]{{\includegraphics[scale=0.285]{img/ui\_screens/post\_lst\_4.png}}}%
+		\subfloat[Οθόνη \en\#4 :\gr Εισαγωγή περιγραφής οχήματος, τίτλου και τοποθεσίας]{{\includegraphics[scale=0.285]{img/ui\_screens/post\_lst\_4.png}}}%
 		\qquad
-		\subfloat[Οθόνη \en\#5 :\gr Εισαγωγή περιγραφής οχήματος]{{\includegraphics[scale=0.285]{img/ui\_screens/post\_lst\_5.png}}}%
-		\qquad
-		\subfloat[Οθόνη \en\#6 :\gr Προεπισκόπηση Αγγελίας (\en To be added soon \gr)]{{\includegraphics[scale=0.285]{example-image}}}%
+		\subfloat[Οθόνη \en\#5 :\gr Προεπισκόπηση Αγγελίας]{{\includegraphics[scale=0.285]{img/ui\_screens/post\_lst\_5.png}}}%
 		
 	\end{figure}
 	
@@ -421,10 +432,16 @@
 	
 	\begin{figure}[htbp!]
 		\centering
-		\subfloat[Υλοποίηση της οθόνης \en\#1 \gr του Προγραμματισμού Ελέγχου Οχήματος χρησιμοποιώντας \en PyQt]
-		{{\includegraphics[scale=0.5]{img/ui\_screens/car\_check\_1.png}}}%
+		\subfloat[Οθόνη \en\# 1\gr: Επιλογή πακέτου ελέχου, ημερομηνίας και ώρας και εισαγωγή τοποθεσίας]
+		{{\includegraphics[scale=0.285]{img/ui\_screens/car\_check\_1.png}}}%
 		\qquad
-		\subfloat[Οθόνη \en\#2 \gr ]{{\includegraphics[scale=0.5]{img/ui\_screens/car\_check\_2.png}}}%		
+		\subfloat[Οθόνη \en\#2 \gr:Στοιχεία προτεινόμενου Ελεγκτή]{{\includegraphics[scale=0.285]{img/ui\_screens/car\_check\_2.png}}}%		
+		\qquad
+		\subfloat[Οθόνη \en\#3\gr: Εισαγωγή Κωδικού Αγγελίας και στοιχεία οχήματος]{{\includegraphics[scale=0.285]{img/ui\_screens/car\_check\_3.png}}}%		
+		\qquad
+		\subfloat[Οθόνη \en\#4\gr: Τιμή ελέγχου οχήματος και διάρκεια ελέγχου]{{\includegraphics[scale=0.285]{img/ui\_screens/car\_check\_4.png}}}%
+		\qquad
+		\subfloat[Οθόνη \en\#5\gr:Εναλλακτική Ροή \en \# 2\gr : Εισαγωγή στοιχείων Ελεγκτή ]{{\includegraphics[scale=0.285]{img/ui\_screens/car\_check\_alt\_2.png}}}%			
 	\end{figure}
 	
 	

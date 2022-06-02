@@ -102,7 +102,7 @@ class User(object):
         else:
             return False
 
-    def get_user_info(self) -> List:
+    def get_user_info(self):
         user_info = [self.__first_name, self.__last_name, self.__username,
                      self.__user_id, self.__email, self.__telephone,
                      str(self.__reg_date), self.__listings, self.__car_purchases,
@@ -237,7 +237,7 @@ class DealershipStore(object):
         self.__store_owner: str = ''
         self.__cars_list: List["Car"] = []
 
-    def get_store_info(self) -> List:
+    def get_store_info(self):
         store_details = [self.__location, self.__email, self.__telephone,
                          self.__store_name, self.__store_owner, self.__cars_list]
         return store_details
@@ -245,7 +245,7 @@ class DealershipStore(object):
     def get_store(self):
         return self
 
-    def set_store_info(self, new_location, new_email, new_telephone, new_store_owner):
+    def set_store_info(self, new_location, new_email, new_telephone, new_store_name, new_store_owner, cars_list):
         self.__location = new_location
         self.__email = new_email
         self.__telephone = new_telephone
@@ -319,6 +319,10 @@ class Car(object):
         self.__registration_plate: str = ''
         self.__estimated_price: float = 0.0
 
+    def __eq__(self, other):
+        if self.__category == other.__category and self.__company == other.__company and self.__model == other.__model and self.__release_year == other.__release_year and self.__mileage == other.__mileage and self.__engine == other.__engine:
+            return True
+
     def set_car_info(self, new_category, new_company, new_model, new_release_year, new_mileage, new_engine, new_power,
                      new_transmission_type, new_fuel_type, new_city_consumption, new_motorway_consumption, new_color,
                      new_interior_color, new_num_doors, new_registration_plate):
@@ -338,7 +342,7 @@ class Car(object):
         self.__num_doors = new_num_doors
         self.__registration_plate = new_registration_plate
 
-    def get_car_info(self) -> List:
+    def get_car_info(self):
         car_info = [self.__category, self.__company, self.__model, self.__release_year,
                     self.__mileage, self.__engine, self.__power, self.__transmission,
                     self.__fuel_type, self.__city_consumption, self.__motorway_consumption,
@@ -408,7 +412,7 @@ class SparePart(object):
         self.__type = new_type
         self.__code = new_code
 
-    def get_spare_part_info(self) -> List:
+    def get_spare_part_info(self):
         return [self.__brand, self.__type, self.__category, self.__code]
 
     def is_spare_part_code_valid(self) -> bool:
@@ -553,7 +557,7 @@ class CarDocument(object):
         self.__issuer = issue_authority
         self.__doc_id = new_id
 
-    def get_doc_info(self) -> List:
+    def get_doc_info(self):
         return [self.__issuer, self.__doc_id]
 
 
@@ -594,7 +598,7 @@ class Transaction(object):
         self.__merchant = t_merch
         self.__product_id = t_prod_id
 
-    def get_transaction_info(self) -> List:
+    def get_transaction_info(self):
         transaction_info = [self.__id, self.__timestamp, self.__payment_method,
                             self.__type, self.__customer, self.__merchant, self.__product_id]
         return transaction_info
@@ -646,13 +650,13 @@ class MonthlyInstallment(object):
     def set_transaction(self, inst_trans):
         self.__transaction = inst_trans
 
-    def get_installment_info(self) -> List:
+    def get_installment_info(self):
         return [self.__transaction, self.__price, self.__product_price, self.__due_date]
 
     def calculate_installment_price(self, user_salary) -> float:
         # if the 20% of the user's salary is greater than the product's price, then we cannot use that percentage
         # of the user's salary, as an upper bound for the randint function, as in the following "else" clause.
-        # Therefore, set the upper bound equal to the product's price divided by 5 
+        # Therefore, set the upper bound equal to the product's price divided by 5
         if 0.2 * user_salary > self.__product_price:
             self.__price = random.randint(0, int(self.__product_price / 5))
         else:
@@ -697,7 +701,7 @@ class InsurancePlan(object):
         self.__price = plan_price
         self.__num_months = plan_duration
 
-    def get_insurance_plan_info(self) -> List:
+    def get_insurance_plan_info(self):
         return [self.__name, self.__plan_id, self.__type, self.__price, self.__num_months]
 
     def calculate_insurance_plan_price(self, points):
@@ -713,7 +717,7 @@ class Location(object):
     def set_location(self, new_coordinates: Tuple[float, float]):
         self.__coordinates = new_coordinates
 
-    def get_location_coordinates(self) -> Tuple[float, float]:
+    def get_location(self) -> Tuple[float, float]:
         return self.__coordinates
 
     def check_location_validity(self, check_coordinates: Tuple[float, float]) -> bool:
@@ -841,7 +845,7 @@ class CarInspection(object):
 
         return False  # return false, as an attempt to add an already-existing car inspection, was made
 
-    def find_inspector(self) -> List:
+    def find_inspector(self):
         for user in system_registered_users:
             if isinstance(user, Inspector):
                 # inspector's location is the same as the location the user entered
@@ -880,10 +884,10 @@ class CarTransportation(object):
         elif transportation_package == 'express':
             return 1  # assume that the express transportation package, has an estimated delivery time of 1 day
 
-    def set_transportation_info(self, new_delivery_location,  transportation_package: TransportationType):
+    def set_transportation_info(self, new_delivery_location, new_package):
         self.__delivery_location = new_delivery_location
-        self.__package = transportation_package
-        self.__transportation_time = self.estimate_transportation_duration(transportation_package)
+        self.__package = new_package
+        self.__transportation_time = self.estimate_transportation_duration(new_package)
 
     def register_car_transportation(self) -> bool:
         if self not in system_scheduled_car_transportations:
@@ -893,7 +897,7 @@ class CarTransportation(object):
 
         return False  # return false, as an attempt to add an already-existing car transportation was made
 
-    def find_transporter(self) -> List:
+    def find_transporter(self):
         for user in system_registered_users:
             if isinstance(user, Transporter):
                 # transporter's location is the same as the car's location
@@ -901,7 +905,7 @@ class CarTransportation(object):
                     # if the transporter has less than 10 pending transportations
                     if user.add_transportation(self):
                         self.__transporter = user
-                        return user.get_transporter_info()
+                        break
 
 
 class CarComparison(object):
@@ -968,7 +972,7 @@ class CarSearch(object):
 
         CarListingsStatisticsLog.register_car_search(self)
 
-    def get_search_results_list(self) -> List[CarListing]:
+    def get_search_results_list(self):
         return self.__search_results
 
 
@@ -1017,7 +1021,7 @@ class CarListingsStatisticsLog(object):
     popular_car_listings: List[CarListing] = []
 
     @staticmethod
-    def get_popular_car_listings() -> List[CarListing]:
+    def get_popular_car_listings():
         return CarListingsStatisticsLog.popular_car_listings
 
     @staticmethod
@@ -1094,7 +1098,7 @@ class PushNotification(object):
         self.__text = text
         self.__issue_time = time
 
-    def get_notification_info(self) -> List:
+    def get_notification_info(self):
         return [self.__creator.get_user_info(), self.__text, str(self.__issue_time), self.__recipients]
 
     def add_recipient(self, recp):
@@ -1114,7 +1118,7 @@ class Message(object):
         self.__text = new_text
         self.__creation_timestamp = new_timestamp
 
-    def get_message_info(self) -> List:
+    def get_message_info(self):
         return [self.__sender.get_user_info(), self.__recipient.get_user_info(), self.__text,
                 str(self.__creation_timestamp)]
 
@@ -1132,7 +1136,7 @@ class Review(object):
         self.__writer = new_writer
         self.__creation_date = new_creation_date
 
-    def get_review_info(self) -> List:
+    def get_review_info(self):
         return [self.__text, self.__stars, self.__writer.get_user_info(), str(self.__creation_date)]
 
 
@@ -1152,7 +1156,7 @@ class ListingReport(object):
         self.__text = report_text
         self.__report_auditor = report_auditor
 
-    def get_listing_report(self) -> "ListingReport":
+    def get_listing_report(self):
         return self
 
     @staticmethod
@@ -1187,11 +1191,12 @@ class ListingDeletionForm(object):
         self.__listing_report = listing_report
         self.__text = text
 
-    def get_deletion_form(self) -> "ListingDeletionForm":
+    def get_deletion_form(self):
         return self
 
 
-if __name__ == "__main__":
+def main():
+    # if __name__ == "__main__":
     # sp = SparePart()
     # sp.set_spare_part_info('theBrand', 'Pipe', 'PA1')
     #
@@ -1203,20 +1208,20 @@ if __name__ == "__main__":
     # ll = Location((34.5, 35.5))
     # #
     # test_user = Transporter(ll)
-    test_user = User()
-    test_user.set_name('john', 'doe')
-    test_user.set_username('jdoe91823')
-    test_user.set_email('jdoe@gmail.com')
-    test_user.set_telephone('2610987567')
-
-    print(test_user.get_user_info())
-
-    tt = Transaction()
-    tt.set_transaction_info('Cash', 1234.55, 'Payment', test_user,
-                            test_user, 666)
-    print(tt.get_transaction_info())
-
-    plan = InsurancePlan()
+    # test_user = User()
+    # test_user.set_name('john', 'doe')
+    # test_user.set_username('jdoe91823')
+    # test_user.set_email('jdoe@gmail.com')
+    # test_user.set_telephone('2610987567')
+    #
+    # print(test_user.get_user_info())
+    #
+    # tt = Transaction()
+    # tt.set_transaction_info('Cash', 1234.55, 'Payment', test_user,
+    #                         test_user, 666)
+    # print(tt.get_transaction_info())
+    #
+    # plan = InsurancePlan()
     # plan.set_insurance_plan_info('Test Plan', 'Premium', )
 
     # print(test_user.get_user_info())
@@ -1243,10 +1248,13 @@ if __name__ == "__main__":
     # lst.delete_listing()
     # print(system_posted_listings)
 
-    # cc = Car()
-    # # print(cc.__dict__)
-    #
-    # cc.set_car_info('Alfa Romeo', 'Giulietta', 'Hatchback', 2005, 5000, 123, 32, 'Manual',
-    #                 'Diesel', 555, 666, 'Red', 'Black', 5, 'AXE1234')
-    #
+    print('in classes main')
+    cc = Car()
+    # print(cc.__dict__)
+
+    cc.set_car_info('Alfa Romeo', 'Giulietta', 'Hatchback', 2005, 5000, 123, 32, 'Manual',
+                    'Diesel', 555, 666, 'Red', 'Black', 5, 'AXE1234')
+
+    system_registered_cars.append(cc)
+
     # print(cc.calculate_car_price())

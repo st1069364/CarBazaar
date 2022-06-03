@@ -517,10 +517,11 @@ class CarListing(Listing):
         self.__vehicle: Car = None
         self.__car_condition = car_status
         self.__docs: List["CarDocument"] = []
-        self.__price: float = self.__vehicle.calculate_car_price()  # default price is the system recommended one
+        self.__price: float = 0.0
 
     def set_car(self, new_car):
         self.__vehicle = new_car
+        self.__price = self.__vehicle.calculate_car_price()  # default price is the system recommended one
 
     def get_car(self):
         return self.__vehicle

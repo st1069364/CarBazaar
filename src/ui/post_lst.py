@@ -64,10 +64,10 @@ class MainWindow(QtWidgets.QMainWindow, PostListingScreen):
         # on_company_selection method, to populate the model_box with the corresponding
         # company's car models.
         self.company_box.activated[str].connect(self.on_company_selection)
+        self.condition_box.activated[str].connect(self.on_condition_selection)
 
         # when the continue button gets clicked, we need to switch to the next UI screen,
         # so attach that functionality to the button by connecting to the corresponding method
-        # self.continue_button.clicked.connect(super().continue_button_clicked)
         self.continue_button.clicked.connect(self.continue_button_clicked)
         self.back_button.clicked.connect(super().back_button_pressed)
         self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
@@ -84,6 +84,21 @@ class MainWindow(QtWidgets.QMainWindow, PostListingScreen):
             self.model_box.addItem('C3')
             self.model_box.addItem('C4')
             self.model_box.addItem('Xsara')
+
+    # When the user selects the cars condition, check the mileage. If the user chose 'New' the car cannot
+    # have a non-zero mileage, so show a warning message. Similarly, if the user chose 'Used', the car
+    # cannot have a zero mileage, so show a corresponding warning message
+    def on_condition_selection(self):
+        if self.condition_box.currentText() == 'New' and int(self.mileage_box.toPlainText()) != 0:
+            msg = QMessageBox()
+            msg.setWindowTitle('Error!!')
+            msg.setText('A Car cannot be New and have a non-zero mileage!!')
+            msg.exec()
+        elif self.condition_box.currentText() == 'Used' and self.mileage_box.toPlainText() == '':
+            msg = QMessageBox()
+            msg.setWindowTitle('Error!!')
+            msg.setText('A Car cannot be Used and have a zero mileage')
+            msg.exec()
 
     def continue_button_clicked(self):
         listing_car = Car()
@@ -111,7 +126,7 @@ class MainWindow(QtWidgets.QMainWindow, PostListingScreen):
     def update_car_details_table(self):
         screen_5.car_info_table.setItem(0, 0, QTableWidgetItem(self.category_box.currentText()))
         screen_5.car_info_table.setItem(0, 1, QTableWidgetItem(self.company_box.currentText()))
-        # screen_5.car_info_table.setItem(0, 2, QTableWidgetItem(self.model_box.currentText()))
+        screen_5.car_info_table.setItem(0, 2, QTableWidgetItem(self.model_box.currentText()))
 
         screen_5.car_info_table.setItem(0, 3, QTableWidgetItem(str(self.year_box.value())))
         screen_5.car_info_table.setItem(0, 4, QTableWidgetItem(self.mileage_box.toPlainText()))

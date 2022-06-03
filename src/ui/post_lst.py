@@ -1,5 +1,7 @@
 import sys
 
+from src import classes
+
 sys.path.append('../src')
 
 from src.classes import *
@@ -56,6 +58,13 @@ class MainWindow(QtWidgets.QMainWindow, PostListingScreen):
         super(MainWindow, self).__init__()
         loadUi("qt_ui/post_lst_1.ui", self)  # load the .ui file for the first screen
 
+        classes.main()
+
+        # when the user selects a company on the company_box drop-down menu, call the
+        # on_company_selection method, to populate the model_box with the corresponding
+        # company's car models.
+        self.company_box.activated[str].connect(self.on_company_selection)
+
         # when the continue button gets clicked, we need to switch to the next UI screen,
         # so attach that functionality to the button by connecting to the corresponding method
         # self.continue_button.clicked.connect(super().continue_button_clicked)
@@ -64,7 +73,42 @@ class MainWindow(QtWidgets.QMainWindow, PostListingScreen):
         self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
                                        "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
 
+    # This would normally cause a data fetch from the DB, but here, we only support selecting 'Alfa Romeo'
+    # and 'Citroen', at which point we se the available model selections, to just a few predetermined ones
+    def on_company_selection(self):
+        if self.company_box.currentText() == 'Alfa Romeo':
+            self.model_box.addItem('Giulietta')
+            self.model_box.addItem('Mito')
+            self.model_box.addItem('156')
+        if self.company_box.currentText() == 'Citroen':
+            self.model_box.addItem('C3')
+            self.model_box.addItem('C4')
+            self.model_box.addItem('Xsara')
+
     def continue_button_clicked(self):
+        listing_car = Car()
+
+        listing_car.set_car_info(self.category_box.currentText(), self.company_box.currentText(),
+                                 self.model_box.currentText(), self.year_box.value(),
+                                 int(self.mileage_box.toPlainText()), int(self.engine_box.toPlainText()),
+                                 int(self.power_box.toPlainText()), self.transmission_box.currentText(),
+                                 self.fuel_box.currentText(), int(self.ccons_box.toPlainText()),
+                                 int(self.mcons_box.toPlainText()), self.color_box.currentText(),
+                                 self.int_color_box.currentText(), int(self.ndoors_box.currentText()),
+                                 self.reg_plate_box.toPlainText())
+
+        if listing_car.is_car_valid():
+            car_listing = CarListing(self.condition_box.currentText())
+            car_listing.set_car(listing_car)
+            self.update_car_details_table()
+            super().continue_button_clicked()
+        else:
+            msg = QMessageBox()
+            msg.setWindowTitle('Error!!')
+            msg.setText('Non-existent car. Please check the data you entered again !!')
+            msg.exec()
+
+    def update_car_details_table(self):
         screen_5.car_info_table.setItem(0, 0, QTableWidgetItem(self.category_box.currentText()))
         screen_5.car_info_table.setItem(0, 1, QTableWidgetItem(self.company_box.currentText()))
         # screen_5.car_info_table.setItem(0, 2, QTableWidgetItem(self.model_box.currentText()))
@@ -83,8 +127,6 @@ class MainWindow(QtWidgets.QMainWindow, PostListingScreen):
         screen_5.car_info_table.setItem(0, 13, QTableWidgetItem(self.int_color_box.currentText()))
         screen_5.car_info_table.setItem(0, 14, QTableWidgetItem(self.ndoors_box.currentText()))
         screen_5.car_info_table.setItem(0, 15, QTableWidgetItem(self.reg_plate_box.toPlainText()))
-
-        super().continue_button_clicked()
 
 
 class Screen2(QtWidgets.QMainWindow, PostListingScreen):

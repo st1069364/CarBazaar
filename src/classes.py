@@ -319,8 +319,13 @@ class Car(object):
         self.__registration_plate: str = ''
         self.__estimated_price: float = 0.0
 
+    # Override the default __eq__ dunder method, to provide the comparison criteria for two cars.
+    # Specifically, check if they belong in the same category, if they are manufactured by the same company,
+    # if they are of the same model, and if they were both released on the same year. If **all** of the above
+    # are True, then the two cars are the same. (We ignore car-specific details, like color, mileage, etc)
     def __eq__(self, other):
-        if self.__category == other.__category and self.__company == other.__company and self.__model == other.__model and self.__release_year == other.__release_year and self.__mileage == other.__mileage and self.__engine == other.__engine:
+        if self.__category == other.__category and self.__company == other.__company and self.__model == other.__model \
+                and self.__release_year == other.__release_year:
             return True
 
     def set_car_info(self, new_category, new_company, new_model, new_release_year, new_mileage, new_engine, new_power,
@@ -1195,8 +1200,9 @@ class ListingDeletionForm(object):
         return self
 
 
+# if __name__ == "__main__":
+
 def main():
-    # if __name__ == "__main__":
     # sp = SparePart()
     # sp.set_spare_part_info('theBrand', 'Pipe', 'PA1')
     #
@@ -1252,9 +1258,17 @@ def main():
     cc = Car()
     # print(cc.__dict__)
 
-    cc.set_car_info('Alfa Romeo', 'Giulietta', 'Hatchback', 2005, 5000, 123, 32, 'Manual',
+    cc.set_car_info('Hatchback', 'Alfa Romeo', 'Giulietta', 2005, 5000, 123, 32, 'Manual',
                     'Diesel', 555, 666, 'Red', 'Black', 5, 'AXE1234')
 
     system_registered_cars.append(cc)
+
+    # cc2 = Car()
+    # cc2.set_car_info('Alfa Romeo', 'Giulietta', 'Hatchback', 2005, 5000, 123, 65, 'Automatic',
+    #                  'Fuel', 3333, 4444, 'Red', 'Black', 5, 'XAA2233')
+    #
+    # # print(cc == cc2)
+    #
+    # print(cc.is_car_valid())
 
     # print(cc.calculate_car_price())

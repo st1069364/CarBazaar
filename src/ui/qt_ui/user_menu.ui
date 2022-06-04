@@ -939,7 +939,7 @@ Part Listing</string>
     </property>
     <property name="text">
      <string>Schedule Car
-Check</string>
+Inspection</string>
     </property>
    </widget>
    <widget class="QPushButton" name="button1_4">
@@ -3006,7 +3006,7 @@ Transportation</string>
      <bool>false</bool>
     </property>
     <property name="text">
-     <string>My Car Checks</string>
+     <string>My Car Inspections</string>
     </property>
    </widget>
    <widget class="QPushButton" name="button1_17">

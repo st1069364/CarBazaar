@@ -781,6 +781,11 @@
       <string>Registration Plate</string>
      </property>
     </row>
+    <row>
+     <property name="text">
+      <string>Price</string>
+     </property>
+    </row>
     <column>
      <property name="text">
       <string/>

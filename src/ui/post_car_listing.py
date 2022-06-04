@@ -27,40 +27,15 @@ car_listing: CarListing = None
 test_location: Location = Location((34.5, 35.5))
 
 
-class PostListing:
-    def __init__(self):
-        self.file_dialog = QFileDialog(self)
-        self.files = []
-        self.images = []
-
-    def continue_button_clicked(self):
-        stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)  # move to the next UI screen
-
-    def back_button_pressed(self):
-        stack_widget.setCurrentIndex(stack_widget.currentIndex() - 1)  # move to the previous UI screen
-
-    def file_upload(self):
-        global car_listing
-        file_names = self.file_dialog.getOpenFileNames(self, "Select one or more files", "./test_docs",
-                                                       "PDF Documents (*.pdf)")
-        if file_names:
-            self.files = file_names[0]
-            car_listing.set_docs(self.files)
-
-    def image_upload(self):
-        global car_listing
-        file_names = self.file_dialog.getOpenFileNames(self, "Select one or more image files",
-                                                       "./test_img", "Images (*.png *.jpg)")
-        if file_names:
-            self.images = file_names[0]
-            car_listing.set_photos(self.images)
-
-    def get_image_list(self):
-        if self.images:
-            return self.images
+def continue_button_clicked():
+    stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)  # move to the next UI screen
 
 
-class PostListingScreen1(QtWidgets.QMainWindow, PostListing):
+def back_button_pressed():
+    stack_widget.setCurrentIndex(stack_widget.currentIndex() - 1)  # move to the previous UI screen
+
+
+class PostListingScreen1(QtWidgets.QMainWindow):
     def __init__(self):
         super(PostListingScreen1, self).__init__()
         loadUi("qt_ui/post_lst_1.ui", self)  # load the .ui file for the first screen
@@ -78,7 +53,7 @@ class PostListingScreen1(QtWidgets.QMainWindow, PostListing):
         # when the continue button gets clicked, we need to switch to the next UI screen,
         # so attach that functionality to the button by connecting to the corresponding method
         self.continue_button.clicked.connect(self.continue_button_clicked)
-        self.back_button.clicked.connect(super().back_button_pressed)
+        self.back_button.clicked.connect(back_button_pressed)
         self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
                                        "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
 
@@ -135,7 +110,7 @@ class PostListingScreen1(QtWidgets.QMainWindow, PostListing):
             car_listing.set_car(listing_car)
 
             stack_widget.addWidget(self.screen_2)
-            super().continue_button_clicked()
+            continue_button_clicked()
         else:
             msg = QMessageBox()
             msg.setWindowTitle('Error!!')
@@ -143,13 +118,16 @@ class PostListingScreen1(QtWidgets.QMainWindow, PostListing):
             msg.exec()
 
 
-class PostListingScreen2(QtWidgets.QMainWindow, PostListing):
+class PostListingScreen2(QtWidgets.QMainWindow):
     def __init__(self):
         super(PostListingScreen2, self).__init__()
         loadUi("qt_ui/post_lst_2.ui", self)  # load the .ui file for the second screen
+        self.files = []
+        self.images = []
+        self.file_dialog = QFileDialog(self)
 
         self.continue_button.clicked.connect(self.continue_button_clicked)
-        self.back_button.clicked.connect(super().back_button_pressed)
+        self.back_button.clicked.connect(back_button_pressed)
         self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
                                        "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
 
@@ -157,31 +135,48 @@ class PostListingScreen2(QtWidgets.QMainWindow, PostListing):
 
         self.skip_button.setStyleSheet("QPushButton {background-color: #2d4b5a; color: white; border: none}")
 
-        self.upload_button.clicked.connect(super().file_upload)
-        self.image_upload_button.clicked.connect(super().image_upload)
+        self.upload_button.clicked.connect(self.file_upload)
+        self.image_upload_button.clicked.connect(self.image_upload)
 
         self.screen_3 = PostListingScreen3()
+
+    def file_upload(self):
+        global car_listing
+        file_names = self.file_dialog.getOpenFileNames(self, "Select one or more files", "./test_docs",
+                                                       "PDF Documents (*.pdf)")
+        if file_names:
+            self.files = file_names[0]
+            car_listing.set_docs(self.files)
+
+    def image_upload(self):
+        global car_listing
+        file_names = self.file_dialog.getOpenFileNames(self, "Select one or more image files",
+                                                       "./test_img", "Images (*.png *.jpg)")
+        if file_names:
+            self.images = file_names[0]
+            car_listing.set_photos(self.images)
 
     def continue_button_clicked(self):
         global car_listing
         # set the estimated price only the first time, because if for some reason the user pressed the 'back' button
-        # the next time that PostListingScreen3 would show up, it would have a different estimated price for the listing's car
+        # the next time that PostListingScreen3 would show up, it would have a different estimated price for
+        # the listing's car
         if self.screen_3.price_set_flag == 0:
             car_price = car_listing.get_car_price()
             self.screen_3.price_set_flag = 1
             self.screen_3.price_box.setText(str(car_price) + ' €')
 
         stack_widget.addWidget(self.screen_3)
-        super().continue_button_clicked()
+        continue_button_clicked()
 
 
-class PostListingScreen3(QtWidgets.QMainWindow, PostListing):
+class PostListingScreen3(QtWidgets.QMainWindow):
     def __init__(self):
         super(PostListingScreen3, self).__init__()
         loadUi("qt_ui/post_lst_3.ui", self)  # load the .ui file for the third screen
 
         self.continue_button.clicked.connect(self.continue_button_clicked)
-        self.back_button.clicked.connect(super().back_button_pressed)
+        self.back_button.clicked.connect(back_button_pressed)
         self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
                                        "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
 
@@ -197,7 +192,7 @@ class PostListingScreen3(QtWidgets.QMainWindow, PostListing):
         check_box_status = self.price_check_box.checkState()
         if check_box_status == 2:  # checked -> continue using the system's recommended price
             self.recommended_price_accepted_flag = 1
-        elif check_box_status == 0:  # unchecked, continue using the user's specified price (**if** it is a valid one)
+        elif check_box_status == 0:  # unchecked -> continue using the user's specified price (**if** it is a valid one)
             self.recommended_price_accepted_flag = 0
 
     def continue_button_clicked(self):
@@ -206,11 +201,11 @@ class PostListingScreen3(QtWidgets.QMainWindow, PostListing):
 
         stack_widget.addWidget(self.screen_4)
         if self.recommended_price_accepted_flag == 1:
-            super().continue_button_clicked()
+            continue_button_clicked()
         elif self.recommended_price_accepted_flag == 0 and self.custom_price_box.toPlainText() != '':
             if listing_car.compare_price(float(self.custom_price_box.toPlainText())):
                 car_listing.set_car_price(float(self.custom_price_box.toPlainText()))
-                super().continue_button_clicked()
+                continue_button_clicked()
             else:
                 msg = QMessageBox()
                 msg.setWindowTitle('Error!!')
@@ -225,13 +220,13 @@ class PostListingScreen3(QtWidgets.QMainWindow, PostListing):
             msg.exec()
 
 
-class PostListingScreen4(QtWidgets.QMainWindow, PostListing):
+class PostListingScreen4(QtWidgets.QMainWindow):
     def __init__(self):
         super(PostListingScreen4, self).__init__()
         loadUi("qt_ui/post_lst_4.ui", self)  # load the .ui file for the fourth screen
 
         self.continue_button.clicked.connect(self.continue_button_clicked)
-        self.back_button.clicked.connect(super().back_button_pressed)
+        self.back_button.clicked.connect(back_button_pressed)
         self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
                                        "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
 
@@ -272,10 +267,10 @@ class PostListingScreen4(QtWidgets.QMainWindow, PostListing):
             self.screen_5.image_list = car_listing.get_photos()
             self.screen_5.setup_images()
             stack_widget.addWidget(self.screen_5)
-            super().continue_button_clicked()
+            continue_button_clicked()
 
 
-class PostListingScreen5(QtWidgets.QMainWindow, PostListing):
+class PostListingScreen5(QtWidgets.QMainWindow):
     def __init__(self):
         super(PostListingScreen5, self).__init__()
         loadUi("qt_ui/post_lst_5.ui", self)
@@ -292,7 +287,7 @@ class PostListingScreen5(QtWidgets.QMainWindow, PostListing):
         self.label.setAlignment(Qt.AlignCenter)
 
         self.post_button.clicked.connect(self.post_listing_button_pressed)
-        self.back_button.clicked.connect(super().back_button_pressed)
+        self.back_button.clicked.connect(back_button_pressed)
         self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
                                        "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
 

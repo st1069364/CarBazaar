@@ -538,6 +538,9 @@ class CarListing(Listing):
     def create_3D_model(self):
         pass
 
+    def get_car_condition(self):
+        return self.__car_condition
+
 
 class SparePartListing(Listing):
     def __init__(self):
@@ -1215,12 +1218,14 @@ def main():
     # ll = Location((34.5, 35.5))
     # #
     # test_user = Transporter(ll)
-    # test_user = User()
-    # test_user.set_name('john', 'doe')
-    # test_user.set_username('jdoe91823')
-    # test_user.set_email('jdoe@gmail.com')
-    # test_user.set_telephone('2610987567')
-    #
+
+    test_user = User()
+    test_user.set_name('john', 'doe')
+    test_user.set_username('jdoe91823')
+    test_user.set_email('jdoe@gmail.com')
+    test_user.set_telephone('2610987567')
+    system_registered_users.append(test_user)
+
     # print(test_user.get_user_info())
     #
     # tt = Transaction()

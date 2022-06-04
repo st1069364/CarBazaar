@@ -25,6 +25,7 @@ BUTTON_STYLE = """QPushButton {
 
 listing_car: Car = None
 car_listing: CarListing = None
+test_location: Location = Location((34.5, 35.5))
 
 
 class PostListingScreen:
@@ -40,6 +41,7 @@ class PostListingScreen:
         stack_widget.setCurrentIndex(stack_widget.currentIndex() - 1)  # move to the previous UI screen
 
     def file_upload(self):
+        global car_listing
         file_names = self.file_dialog.getOpenFileNames(self, "Select one or more files", "",
                                                        "PDF Documents (*.pdf)")
         if file_names:
@@ -47,6 +49,7 @@ class PostListingScreen:
             car_listing.set_docs(self.files)
 
     def image_upload(self):
+        global car_listing
         file_names = self.file_dialog.getOpenFileNames(self, "Select one or more image files",
                                                        "", "Images (*.png *.jpg)")
         if file_names:
@@ -64,6 +67,8 @@ class MainWindow(QtWidgets.QMainWindow, PostListingScreen):
         loadUi("qt_ui/post_lst_1.ui", self)  # load the .ui file for the first screen
 
         classes.main()
+
+        self.screen_2 = Screen2()
 
         # when the user selects a company on the company_box drop-down menu, call the
         # on_company_selection method, to populate the model_box with the corresponding
@@ -94,7 +99,7 @@ class MainWindow(QtWidgets.QMainWindow, PostListingScreen):
     # have a non-zero mileage, so show a warning message. Similarly, if the user chose 'Used', the car
     # cannot have a zero mileage, so show a corresponding warning message
     def on_condition_selection(self):
-        if self.condition_box.currentText() == 'New' and int(self.mileage_box.toPlainText()) != 0:
+        if self.condition_box.currentText() == 'New' and self.mileage_box.toPlainText() != '':
             msg = QMessageBox()
             msg.setWindowTitle('Error!!')
             msg.setText('A Car cannot be New and have a non-zero mileage!!')
@@ -111,10 +116,15 @@ class MainWindow(QtWidgets.QMainWindow, PostListingScreen):
 
         listing_car = Car()
 
+        if self.mileage_box.toPlainText() == '':
+            car_mileage = 0
+        else:
+            car_mileage = int(self.mileage_box.toPlainText())
+
         listing_car.set_car_info(self.category_box.currentText(),
                                  self.company_box.currentText(),
                                  self.model_box.currentText(), self.year_box.value(),
-                                 int(self.mileage_box.toPlainText()), int(self.engine_box.toPlainText()),
+                                 car_mileage, int(self.engine_box.toPlainText()),
                                  int(self.power_box.toPlainText()), self.transmission_box.currentText(),
                                  self.fuel_box.currentText(), int(self.ccons_box.toPlainText()),
                                  int(self.mcons_box.toPlainText()), self.color_box.currentText(),
@@ -124,7 +134,8 @@ class MainWindow(QtWidgets.QMainWindow, PostListingScreen):
         if listing_car.is_car_valid():
             car_listing = CarListing(self.condition_box.currentText())
             car_listing.set_car(listing_car)
-            self.update_car_details_table()
+
+            stack_widget.addWidget(self.screen_2)
             super().continue_button_clicked()
         else:
             msg = QMessageBox()
@@ -132,61 +143,37 @@ class MainWindow(QtWidgets.QMainWindow, PostListingScreen):
             msg.setText('Non-existent car. Please check the data you entered again !!')
             msg.exec()
 
-    def update_car_details_table(self):
-        screen_5.car_info_table.setItem(0, 0, QTableWidgetItem(self.category_box.currentText()))
-        screen_5.car_info_table.setItem(0, 1, QTableWidgetItem(self.company_box.currentText()))
-        screen_5.car_info_table.setItem(0, 2, QTableWidgetItem(self.model_box.currentText()))
-
-        screen_5.car_info_table.setItem(0, 3, QTableWidgetItem(str(self.year_box.value())))
-        screen_5.car_info_table.setItem(0, 4, QTableWidgetItem(self.mileage_box.toPlainText()))
-        screen_5.car_info_table.setItem(0, 5, QTableWidgetItem(self.condition_box.currentText()))
-        screen_5.car_info_table.setItem(0, 6, QTableWidgetItem(self.engine_box.toPlainText()))
-        screen_5.car_info_table.setItem(0, 7, QTableWidgetItem(self.power_box.toPlainText()))
-        screen_5.car_info_table.setItem(0, 8, QTableWidgetItem(self.transmission_box.currentText()))
-        screen_5.car_info_table.setItem(0, 9, QTableWidgetItem(self.fuel_box.currentText()))
-        screen_5.car_info_table.setItem(0, 10, QTableWidgetItem(self.ccons_box.toPlainText()))
-        screen_5.car_info_table.setItem(0, 11, QTableWidgetItem(self.mcons_box.toPlainText()))
-
-        screen_5.car_info_table.setItem(0, 12, QTableWidgetItem(self.color_box.currentText()))
-        screen_5.car_info_table.setItem(0, 13, QTableWidgetItem(self.int_color_box.currentText()))
-        screen_5.car_info_table.setItem(0, 14, QTableWidgetItem(self.ndoors_box.currentText()))
-        screen_5.car_info_table.setItem(0, 15, QTableWidgetItem(self.reg_plate_box.toPlainText()))
-
 
 class Screen2(QtWidgets.QMainWindow, PostListingScreen):
     def __init__(self):
         super(Screen2, self).__init__()
         loadUi("qt_ui/post_lst_2.ui", self)  # load the .ui file for the second screen
+
         self.continue_button.clicked.connect(self.continue_button_clicked)
         self.back_button.clicked.connect(super().back_button_pressed)
         self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
                                        "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
+
         self.skip_button.clicked.connect(self.continue_button_clicked)
+
         self.skip_button.setStyleSheet("QPushButton {background-color: #2d4b5a; color: white; border: none}")
 
         self.upload_button.clicked.connect(super().file_upload)
         self.image_upload_button.clicked.connect(super().image_upload)
-        # self.image_upload_button.clicked.connect(self.image_upload)
 
-        # self.screen_3 = Screen3()
-
-        # self.images = []
-
-    # def image_upload(self):
-    #     file_names = self.file_dialog.getOpenFileNames(self, "Select one or more image files",
-    #                                                    "", "Images (*.png *.jpg)")
-    #     if file_names:
-    #         self.images = file_names[0]
-    #         super().car_listing.set_photos(self.images)
-    #
-    #         screen_5.image_list = self.images
-    #         screen_5.setup_images()
+        self.screen_3 = Screen3()
 
     def continue_button_clicked(self):
-        global listing_car
-        car_price = listing_car.calculate_car_price()
-        # self.screen_3.price_box.setText(car_price)
-        # self.screen_3.show()
+        global car_listing
+        # set the estimated price only the first time, because if for some reason the user pressed the 'back' button
+        # the next time that Screen3 would show up, it would have a different estimated price for the listing's car
+        if self.screen_3.price_set_flag == 0:
+            car_price = car_listing.get_car_price()
+            self.screen_3.price_set_flag = 1
+            self.screen_3.price_box.setText(str(car_price) + ' €')
+
+        stack_widget.addWidget(self.screen_3)
+        super().continue_button_clicked()
 
 
 class Screen3(QtWidgets.QMainWindow, PostListingScreen):
@@ -194,14 +181,48 @@ class Screen3(QtWidgets.QMainWindow, PostListingScreen):
         super(Screen3, self).__init__()
         loadUi("qt_ui/post_lst_3.ui", self)  # load the .ui file for the third screen
 
-        self.continue_button.clicked.connect(super().continue_button_clicked)
+        self.continue_button.clicked.connect(self.continue_button_clicked)
         self.back_button.clicked.connect(super().back_button_pressed)
         self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
                                        "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
 
-        # here using some future code functionality, we will set the displayed vehicle price
-        # self.price_box.setText('12345 €')
-        self.checkBox.setStyleSheet("QCheckBox {color: #d3311b;}")
+        self.price_check_box.setStyleSheet("QCheckBox {color: #d3311b;}")
+        self.price_check_box.stateChanged.connect(self.price_check_box_toggled)
+
+        self.price_set_flag = 0
+        self.recommended_price_accepted_flag = 0
+
+        self.screen_4 = Screen4()
+
+    def price_check_box_toggled(self):
+        check_box_status = self.price_check_box.checkState()
+        if check_box_status == 2:  # checked -> continue using the system's recommended price
+            self.recommended_price_accepted_flag = 1
+        elif check_box_status == 0:  # unchecked, continue using the user's specified price (**if** it is a valid one)
+            self.recommended_price_accepted_flag = 0
+
+    def continue_button_clicked(self):
+        global listing_car
+        global car_listing
+
+        stack_widget.addWidget(self.screen_4)
+        if self.recommended_price_accepted_flag == 1:
+            super().continue_button_clicked()
+        elif self.recommended_price_accepted_flag == 0 and self.custom_price_box.toPlainText() != '':
+            if listing_car.compare_price(float(self.custom_price_box.toPlainText())):
+                car_listing.set_car_price(float(self.custom_price_box.toPlainText()))
+                super().continue_button_clicked()
+            else:
+                msg = QMessageBox()
+                msg.setWindowTitle('Error!!')
+                msg.setText('The price you entered is too high! Please pick a price closer to the recommended one or'
+                            ' continue using the recommended price !!')
+                msg.exec()
+        else:
+            msg = QMessageBox()
+            msg.setWindowTitle('Error!!')
+            msg.setText('Please either check the box to continue using the recommended price or enter you own price')
+            msg.exec()
 
 
 class Screen4(QtWidgets.QMainWindow, PostListingScreen):
@@ -214,25 +235,44 @@ class Screen4(QtWidgets.QMainWindow, PostListingScreen):
         self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
                                        "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
 
+        self.screen_5 = Screen5()
+
     def get_listing_title(self):
         return self.listing_title_box.toPlainText()
 
     def continue_button_clicked(self):
-        screen_5.car_descr_box.setText(self.description_box.toPlainText())
+        global car_listing
+        global test_location
+        if self.description_box.toPlainText() == '':
+            msg = QMessageBox()
+            msg.setWindowTitle('Error!!')
+            msg.setText('No description added! Please fill the description box')
+            msg.exec()
+        if self.listing_title_box.toPlainText() == '':
+            msg = QMessageBox()
+            msg.setWindowTitle('Error!!')
+            msg.setText('No listing title added! Please fill the Listing Title box')
+            msg.exec()
+        else:
+            self.screen_5.car_descr_box.setText(self.description_box.toPlainText())
 
-        if self.listing_title_box.toPlainText():
-            screen_5.listing_title_bar.move(115, screen_5.listing_title_bar.y())
-            screen_5.listing_title_bar.setAlignment(Qt.AlignCenter)
-            screen_5.listing_title_bar.setStyleSheet("color: #d3311b")
-            screen_5.listing_title_bar.setText(self.listing_title_box.toPlainText())
-            screen_5.listing_title_bar.adjustSize()
+            if self.listing_title_box.toPlainText():
+                self.screen_5.listing_title_bar.move(115, self.screen_5.listing_title_bar.y())
+                self.screen_5.listing_title_bar.setAlignment(Qt.AlignCenter)
+                self.screen_5.listing_title_bar.setStyleSheet("color: #d3311b")
+                self.screen_5.listing_title_bar.setText(self.listing_title_box.toPlainText())
+                self.screen_5.listing_title_bar.adjustSize()
 
-        super(Screen4, self).continue_button_clicked()
-    # listing_title = self.get_listing_title()
-    # lst = Listing()
-    # print('Initial listing title: ' + lst.get_listing_title())
-    # lst.set_listing_title(listing_title)
-    # print('New listing title: ' + lst.get_listing_title())
+            car_listing.set_listing_info(self.listing_title_box.toPlainText(), classes.system_registered_users[0],
+                                         test_location)
+            car_listing.set_description(self.description_box.toPlainText())
+            car_listing.create_3D_model()
+
+            self.screen_5.update_car_details_table()
+            self.screen_5.image_list = car_listing.get_photos()
+            self.screen_5.setup_images()
+            stack_widget.addWidget(self.screen_5)
+            super().continue_button_clicked()
 
 
 class Screen5(QtWidgets.QMainWindow, PostListingScreen):
@@ -297,7 +337,40 @@ class Screen5(QtWidgets.QMainWindow, PostListingScreen):
         msg.exec()
 
     def post_listing_button_pressed(self):
-        pass
+        global car_listing
+        if car_listing.post_listing():
+            msg = QMessageBox()
+            msg.setWindowTitle('Success !!')
+            msg.setText('Your Car Listing has been successfully posted\nYou may now exit this screen !!')
+            msg.exec()
+        else:
+            msg = QMessageBox()
+            msg.setWindowTitle('Failure !!')
+            msg.setText('You have already posted a listing for this car !!')
+            msg.exec()
+
+    def update_car_details_table(self):
+        global listing_car
+        global car_listing
+        car_details = listing_car.get_car_info()
+
+        self.car_info_table.setItem(0, 0, QTableWidgetItem(car_details[0]))
+        self.car_info_table.setItem(0, 1, QTableWidgetItem(car_details[1]))
+        self.car_info_table.setItem(0, 2, QTableWidgetItem(car_details[2]))
+        self.car_info_table.setItem(0, 3, QTableWidgetItem(str(car_details[3])))
+        self.car_info_table.setItem(0, 4, QTableWidgetItem(str(car_details[4])))
+        self.car_info_table.setItem(0, 5, QTableWidgetItem(car_listing.get_car_condition()))
+        self.car_info_table.setItem(0, 6, QTableWidgetItem(str(car_details[5])))
+        self.car_info_table.setItem(0, 7, QTableWidgetItem(str(car_details[6])))
+        self.car_info_table.setItem(0, 8, QTableWidgetItem(car_details[7]))
+        self.car_info_table.setItem(0, 9, QTableWidgetItem(car_details[8]))
+        self.car_info_table.setItem(0, 10, QTableWidgetItem(str(car_details[9])))
+        self.car_info_table.setItem(0, 11, QTableWidgetItem(str(car_details[10])))
+        self.car_info_table.setItem(0, 12, QTableWidgetItem(car_details[11]))
+        self.car_info_table.setItem(0, 13, QTableWidgetItem(car_details[12]))
+        self.car_info_table.setItem(0, 14, QTableWidgetItem(str(car_details[13])))
+        self.car_info_table.setItem(0, 15, QTableWidgetItem(car_details[14]))
+        self.car_info_table.setItem(0, 16, QTableWidgetItem(str(car_listing.get_car_price()) + ' €'))
 
 
 if __name__ == "__main__":
@@ -309,17 +382,17 @@ if __name__ == "__main__":
 
     # create the screen to be added to the StackedWidget
     main_window = MainWindow()
-    screen_2 = Screen2()
-    screen_3 = Screen3()
-    screen_4 = Screen4()
-    screen_5 = Screen5()
+    # screen_2 = Screen2()
+    # screen_3 = Screen3()
+    # screen_4 = Screen4()
+    # screen_5 = Screen5()
 
     # add the widgets to the StackedWidget
     stack_widget.addWidget(main_window)
-    stack_widget.addWidget(screen_2)
-    stack_widget.addWidget(screen_3)
-    stack_widget.addWidget(screen_4)
-    stack_widget.addWidget(screen_5)
+    # stack_widget.addWidget(screen_2)
+    # stack_widget.addWidget(screen_3)
+    # stack_widget.addWidget(screen_4)
+    # stack_widget.addWidget(screen_5)
 
     # fix the dimensions
     stack_widget.setFixedWidth(400)

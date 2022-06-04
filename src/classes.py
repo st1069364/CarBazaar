@@ -1260,7 +1260,6 @@ def main():
     # lst.delete_listing()
     # print(system_posted_listings)
 
-    print('in classes main')
     cc = Car()
     # print(cc.__dict__)
 

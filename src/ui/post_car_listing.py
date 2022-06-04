@@ -1,5 +1,5 @@
+import app_res_rc
 import sys
-
 from src import classes
 
 sys.path.append('../src')
@@ -11,7 +11,6 @@ from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-import app_res_rc
 
 BUTTON_STYLE = """QPushButton {
     background-color: #d3311b;
@@ -28,7 +27,7 @@ car_listing: CarListing = None
 test_location: Location = Location((34.5, 35.5))
 
 
-class PostListingScreen:
+class PostListing:
     def __init__(self):
         self.file_dialog = QFileDialog(self)
         self.files = []
@@ -61,14 +60,14 @@ class PostListingScreen:
             return self.images
 
 
-class MainWindow(QtWidgets.QMainWindow, PostListingScreen):
+class PostListingScreen1(QtWidgets.QMainWindow, PostListing):
     def __init__(self):
-        super(MainWindow, self).__init__()
+        super(PostListingScreen1, self).__init__()
         loadUi("qt_ui/post_lst_1.ui", self)  # load the .ui file for the first screen
 
         classes.main()
 
-        self.screen_2 = Screen2()
+        self.screen_2 = PostListingScreen2()
 
         # when the user selects a company on the company_box drop-down menu, call the
         # on_company_selection method, to populate the model_box with the corresponding
@@ -144,9 +143,9 @@ class MainWindow(QtWidgets.QMainWindow, PostListingScreen):
             msg.exec()
 
 
-class Screen2(QtWidgets.QMainWindow, PostListingScreen):
+class PostListingScreen2(QtWidgets.QMainWindow, PostListing):
     def __init__(self):
-        super(Screen2, self).__init__()
+        super(PostListingScreen2, self).__init__()
         loadUi("qt_ui/post_lst_2.ui", self)  # load the .ui file for the second screen
 
         self.continue_button.clicked.connect(self.continue_button_clicked)
@@ -161,12 +160,12 @@ class Screen2(QtWidgets.QMainWindow, PostListingScreen):
         self.upload_button.clicked.connect(super().file_upload)
         self.image_upload_button.clicked.connect(super().image_upload)
 
-        self.screen_3 = Screen3()
+        self.screen_3 = PostListingScreen3()
 
     def continue_button_clicked(self):
         global car_listing
         # set the estimated price only the first time, because if for some reason the user pressed the 'back' button
-        # the next time that Screen3 would show up, it would have a different estimated price for the listing's car
+        # the next time that PostListingScreen3 would show up, it would have a different estimated price for the listing's car
         if self.screen_3.price_set_flag == 0:
             car_price = car_listing.get_car_price()
             self.screen_3.price_set_flag = 1
@@ -176,9 +175,9 @@ class Screen2(QtWidgets.QMainWindow, PostListingScreen):
         super().continue_button_clicked()
 
 
-class Screen3(QtWidgets.QMainWindow, PostListingScreen):
+class PostListingScreen3(QtWidgets.QMainWindow, PostListing):
     def __init__(self):
-        super(Screen3, self).__init__()
+        super(PostListingScreen3, self).__init__()
         loadUi("qt_ui/post_lst_3.ui", self)  # load the .ui file for the third screen
 
         self.continue_button.clicked.connect(self.continue_button_clicked)
@@ -192,7 +191,7 @@ class Screen3(QtWidgets.QMainWindow, PostListingScreen):
         self.price_set_flag = 0
         self.recommended_price_accepted_flag = 0
 
-        self.screen_4 = Screen4()
+        self.screen_4 = PostListingScreen4()
 
     def price_check_box_toggled(self):
         check_box_status = self.price_check_box.checkState()
@@ -226,9 +225,9 @@ class Screen3(QtWidgets.QMainWindow, PostListingScreen):
             msg.exec()
 
 
-class Screen4(QtWidgets.QMainWindow, PostListingScreen):
+class PostListingScreen4(QtWidgets.QMainWindow, PostListing):
     def __init__(self):
-        super(Screen4, self).__init__()
+        super(PostListingScreen4, self).__init__()
         loadUi("qt_ui/post_lst_4.ui", self)  # load the .ui file for the fourth screen
 
         self.continue_button.clicked.connect(self.continue_button_clicked)
@@ -236,7 +235,7 @@ class Screen4(QtWidgets.QMainWindow, PostListingScreen):
         self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
                                        "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
 
-        self.screen_5 = Screen5()
+        self.screen_5 = PostListingScreen5()
 
     def get_listing_title(self):
         return self.listing_title_box.toPlainText()
@@ -276,9 +275,9 @@ class Screen4(QtWidgets.QMainWindow, PostListingScreen):
             super().continue_button_clicked()
 
 
-class Screen5(QtWidgets.QMainWindow, PostListingScreen):
+class PostListingScreen5(QtWidgets.QMainWindow, PostListing):
     def __init__(self):
-        super(Screen5, self).__init__()
+        super(PostListingScreen5, self).__init__()
         loadUi("qt_ui/post_lst_5.ui", self)
 
         self.image_list = []
@@ -382,18 +381,10 @@ if __name__ == "__main__":
     stack_widget = QtWidgets.QStackedWidget()
 
     # create the screen to be added to the StackedWidget
-    main_window = MainWindow()
-    # screen_2 = Screen2()
-    # screen_3 = Screen3()
-    # screen_4 = Screen4()
-    # screen_5 = Screen5()
+    screen_1 = PostListingScreen1()
 
-    # add the widgets to the StackedWidget
-    stack_widget.addWidget(main_window)
-    # stack_widget.addWidget(screen_2)
-    # stack_widget.addWidget(screen_3)
-    # stack_widget.addWidget(screen_4)
-    # stack_widget.addWidget(screen_5)
+    # add the widget to the StackedWidget
+    stack_widget.addWidget(screen_1)
 
     # fix the dimensions
     stack_widget.setFixedWidth(400)

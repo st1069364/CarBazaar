@@ -42,7 +42,7 @@ class PostListingScreen:
 
     def file_upload(self):
         global car_listing
-        file_names = self.file_dialog.getOpenFileNames(self, "Select one or more files", "",
+        file_names = self.file_dialog.getOpenFileNames(self, "Select one or more files", "./test_docs",
                                                        "PDF Documents (*.pdf)")
         if file_names:
             self.files = file_names[0]
@@ -51,7 +51,7 @@ class PostListingScreen:
     def image_upload(self):
         global car_listing
         file_names = self.file_dialog.getOpenFileNames(self, "Select one or more image files",
-                                                       "", "Images (*.png *.jpg)")
+                                                       "./test_img", "Images (*.png *.jpg)")
         if file_names:
             self.images = file_names[0]
             car_listing.set_photos(self.images)

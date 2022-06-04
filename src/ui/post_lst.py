@@ -19,18 +19,19 @@ BUTTON_STYLE = """QPushButton {
     color : white;
 }"""
 
-
 # ---------------------------------------------
 # Driver code for the Post Car Listing Use Case
 # ---------------------------------------------
+
+listing_car: Car = None
+car_listing: CarListing = None
+
 
 class PostListingScreen:
     def __init__(self):
         self.file_dialog = QFileDialog(self)
         self.files = []
         self.images = []
-
-        self.call_screen5 = 0
 
     def continue_button_clicked(self):
         stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)  # move to the next UI screen
@@ -39,14 +40,18 @@ class PostListingScreen:
         stack_widget.setCurrentIndex(stack_widget.currentIndex() - 1)  # move to the previous UI screen
 
     def file_upload(self):
-        self.files = self.file_dialog.getOpenFileNames(self, "Select one or more files", "",
+        file_names = self.file_dialog.getOpenFileNames(self, "Select one or more files", "",
                                                        "PDF Documents (*.pdf)")
+        if file_names:
+            self.files = file_names[0]
+            car_listing.set_docs(self.files)
 
     def image_upload(self):
         file_names = self.file_dialog.getOpenFileNames(self, "Select one or more image files",
                                                        "", "Images (*.png *.jpg)")
-        if self.images:
+        if file_names:
             self.images = file_names[0]
+            car_listing.set_photos(self.images)
 
     def get_image_list(self):
         if self.images:
@@ -101,9 +106,13 @@ class MainWindow(QtWidgets.QMainWindow, PostListingScreen):
             msg.exec()
 
     def continue_button_clicked(self):
+        global car_listing
+        global listing_car
+
         listing_car = Car()
 
-        listing_car.set_car_info(self.category_box.currentText(), self.company_box.currentText(),
+        listing_car.set_car_info(self.category_box.currentText(),
+                                 self.company_box.currentText(),
                                  self.model_box.currentText(), self.year_box.value(),
                                  int(self.mileage_box.toPlainText()), int(self.engine_box.toPlainText()),
                                  int(self.power_box.toPlainText()), self.transmission_box.currentText(),
@@ -148,25 +157,36 @@ class Screen2(QtWidgets.QMainWindow, PostListingScreen):
     def __init__(self):
         super(Screen2, self).__init__()
         loadUi("qt_ui/post_lst_2.ui", self)  # load the .ui file for the second screen
-        self.continue_button.clicked.connect(super().continue_button_clicked)
+        self.continue_button.clicked.connect(self.continue_button_clicked)
         self.back_button.clicked.connect(super().back_button_pressed)
         self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
                                        "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
-        self.skip_button.clicked.connect(super().continue_button_clicked)
+        self.skip_button.clicked.connect(self.continue_button_clicked)
         self.skip_button.setStyleSheet("QPushButton {background-color: #2d4b5a; color: white; border: none}")
 
         self.upload_button.clicked.connect(super().file_upload)
-        self.image_upload_button.clicked.connect(self.image_upload)
+        self.image_upload_button.clicked.connect(super().image_upload)
+        # self.image_upload_button.clicked.connect(self.image_upload)
 
-        self.images = []
+        # self.screen_3 = Screen3()
 
-    def image_upload(self):
-        file_names = self.file_dialog.getOpenFileNames(self, "Select one or more image files",
-                                                       "", "Images (*.png *.jpg)")
-        if file_names:
-            self.images = file_names[0]
-            screen_5.image_list = self.images
-            screen_5.setup_images()
+        # self.images = []
+
+    # def image_upload(self):
+    #     file_names = self.file_dialog.getOpenFileNames(self, "Select one or more image files",
+    #                                                    "", "Images (*.png *.jpg)")
+    #     if file_names:
+    #         self.images = file_names[0]
+    #         super().car_listing.set_photos(self.images)
+    #
+    #         screen_5.image_list = self.images
+    #         screen_5.setup_images()
+
+    def continue_button_clicked(self):
+        global listing_car
+        car_price = listing_car.calculate_car_price()
+        # self.screen_3.price_box.setText(car_price)
+        # self.screen_3.show()
 
 
 class Screen3(QtWidgets.QMainWindow, PostListingScreen):
@@ -180,7 +200,7 @@ class Screen3(QtWidgets.QMainWindow, PostListingScreen):
                                        "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
 
         # here using some future code functionality, we will set the displayed vehicle price
-        self.price_box.setText('12345 €')
+        # self.price_box.setText('12345 €')
         self.checkBox.setStyleSheet("QCheckBox {color: #d3311b;}")
 
 

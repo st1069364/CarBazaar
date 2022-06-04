@@ -29,3 +29,8 @@ To αρχείο *app_res_rc.py* αποτελεί compiled έκδοση του *q
 
 Στον φάκελο *qt_ui/resources*, βρίσκονται τα απαραίτητα resources.
 
+# Demo
+
+Στο αρχείο *ui/post_car_listing.py* υπάρχει ο driver κώδικας, για το demo του use case "Ανάρτηση Αγγελίας Πώλησης Οχήματος". Στο παρακάτω gif, μπορούμε να δούμε την εκτέλεση του αρχείου .
+
+![post_car_listing_demo](ui/post_car_listing.gif)

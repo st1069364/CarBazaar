@@ -1263,7 +1263,7 @@ def main():
     cc = Car()
     # print(cc.__dict__)
 
-    cc.set_car_info('Hatchback', 'Alfa Romeo', 'Giulietta', 2005, 5000, 123, 32, 'Manual',
+    cc.set_car_info('Hatchback', 'Alfa Romeo', 'Giulietta', 2010, 5000, 123, 32, 'Manual',
                     'Diesel', 555, 666, 'Red', 'Black', 5, 'AXE1234')
 
     system_registered_cars.append(cc)

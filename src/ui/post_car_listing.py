@@ -215,7 +215,8 @@ class Screen3(QtWidgets.QMainWindow, PostListingScreen):
             else:
                 msg = QMessageBox()
                 msg.setWindowTitle('Error!!')
-                msg.setText('The price you entered is too high! Please pick a price closer to the recommended one or'
+                msg.setText('The price you entered varies greatly from the system\'s recommended price!'
+                            ' Please pick a price closer to the recommended one or'
                             ' continue using the recommended price !!')
                 msg.exec()
         else:

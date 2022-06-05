@@ -729,10 +729,10 @@ class Location(object):
     def get_location(self) -> Tuple[float, float]:
         return self.__coordinates
 
-    def check_location_validity(self, check_coordinates: Tuple[float, float]) -> bool:
+    def check_location_validity(self) -> bool:
         # check latitude then longitude
-        if 38.16505110795069 <= check_coordinates[0] <= 38.31297891120904 and \
-                21.656052138460673 <= check_coordinates[1] <= 21.817232185432744:
+        if 38.16505110795069 <= self.__coordinates[0] <= 38.31297891120904 and \
+                21.656052138460673 <= self.__coordinates[1] <= 21.817232185432744:
             return True  # location is within Patras, return true
         else:
             return False  # location is outside of Patras, return false

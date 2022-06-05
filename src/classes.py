@@ -139,13 +139,15 @@ class Transporter(User):
         # 10 pending transportations)
         if new_transportation not in self.__pending_transportations and len(self.__pending_transportations) < 10:
             self.__pending_transportations.append(new_transportation)
+            new_transportation.start_car_transportation()  # set status to 'Ongoing'
             return True
 
         return False
 
-    def complete_transportation(self, completed_transport):
-        if completed_transport not in self.__completed_transportations:
-            self.__completed_transportations.append(completed_transport)
+    def complete_transportation(self, completed_transportation):
+        if completed_transportation not in self.__completed_transportations:
+            self.__completed_transportations.append(completed_transportation)
+            completed_transportation.finish_car_transportation()
 
 
 class Inspector(User):
@@ -172,6 +174,7 @@ class Inspector(User):
         # 10 pending car inspections)
         if new_inspection not in self.__pending_inspections and len(self.__pending_inspections) < 10:
             self.__pending_inspections.append(new_inspection)
+            new_inspection.start_car_inspection()  # set status to 'Ongoing'
             return True
 
         return False
@@ -179,6 +182,7 @@ class Inspector(User):
     def complete_inspection(self, completed_inspection):
         if completed_inspection not in self.__completed_inspections:
             self.__completed_inspections.append(completed_inspection)
+            completed_inspection.finish_car_inspection()  # set status to 'Completed'
 
 
 class InsuranceCompanyEmployee(User):
@@ -830,9 +834,6 @@ class CarInspection(object):
         self.__inspection_type: InspectionType
         self.__location: Location = None
 
-    def set_car_inspection_location(self, check_location):
-        self.__location = check_location
-
     def set_car_inspection_inspector(self, check_inspector) -> bool:
         if check_inspector in system_registered_users:
             self.__inspector = check_inspector
@@ -840,11 +841,16 @@ class CarInspection(object):
 
         return False
 
-    def set_car_inspection_info(self, trans, car_lst, check_time, check_type):
-        self.__transaction = trans
-        self.__car_listing = car_lst
-        self.__inspection_time = check_time
+    def set_car_inspection_transaction(self, payment_transaction):
+        self.__transaction = payment_transaction
+
+    def set_car_to_inspect(self, check_car_listing):
+        self.__car_listing = check_car_listing
+
+    def set_car_inspection_info(self, check_type, check_time, check_location):
         self.__inspection_type = check_type
+        self.__inspection_time = check_time
+        self.__location = check_location
 
     def register_car_inspection(self) -> bool:
         if self not in system_scheduled_car_inspections:
@@ -863,6 +869,12 @@ class CarInspection(object):
                     if user.add_inspection(self):
                         self.__inspector = user
                         return user.get_inspector_info()
+
+    def start_car_inspection(self):
+        self.__status = OperationStatus.Ongoing
+
+    def finish_car_inspection(self):
+        self.__status = OperationStatus.Completed
 
 
 class CarTransportation(object):
@@ -915,6 +927,12 @@ class CarTransportation(object):
                     if user.add_transportation(self):
                         self.__transporter = user
                         break
+
+    def start_car_transportation(self):
+        self.__status = OperationStatus.Ongoing
+
+    def finish_car_transportation(self):
+        self.__status = OperationStatus.Completed
 
 
 class CarComparison(object):

@@ -143,7 +143,7 @@ class PostCarListingScreen1(QtWidgets.QMainWindow):
             car_listing = CarListing(self.condition_box.currentText())
             car_listing.set_car(listing_car)
 
-            stack_widget.addWidget(self.screen_2)
+            stack_widget.insertWidget(1, self.screen_2)
             continue_button_clicked()
         else:
             msg = QMessageBox()
@@ -200,7 +200,7 @@ class PostCarListingScreen2(QtWidgets.QMainWindow):
             self.screen_3.price_set_flag = 1
             self.screen_3.price_box.setText(str(car_price) + ' €')
 
-        stack_widget.addWidget(self.screen_3)
+        stack_widget.insertWidget(2, self.screen_3)
         continue_button_clicked()
 
 
@@ -233,7 +233,7 @@ class PostCarListingScreen3(QtWidgets.QMainWindow):
         global listing_car
         global car_listing
 
-        stack_widget.addWidget(self.screen_4)
+        stack_widget.insertWidget(3, self.screen_4)
         if self.recommended_price_accepted_flag == 1:
             continue_button_clicked()
         elif self.recommended_price_accepted_flag == 0 and self.custom_price_box.toPlainText() != '':
@@ -300,7 +300,7 @@ class PostCarListingScreen4(QtWidgets.QMainWindow):
             self.screen_5.update_car_details_table()
             self.screen_5.image_list = car_listing.get_photos()
             self.screen_5.setup_images()
-            stack_widget.addWidget(self.screen_5)
+            stack_widget.insertWidget(4, self.screen_5)
             continue_button_clicked()
 
 
@@ -335,9 +335,10 @@ class PostCarListingScreen5(QtWidgets.QMainWindow):
         self.car_info_table.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)  # no edit on table cells
 
     def setup_images(self):
-        self.image = QPixmap(self.image_list[self.current_image_index])
-        self.image.scaled(140, 50, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
-        self.label.setPixmap(self.image)
+        if self.image_list:
+            self.image = QPixmap(self.image_list[self.current_image_index])
+            self.image.scaled(140, 50, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
+            self.label.setPixmap(self.image)
 
     def show_next_image(self):
         if self.image_list:

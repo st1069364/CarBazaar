@@ -19,6 +19,7 @@ BUTTON_STYLE = """QPushButton {
     color : white;
 }"""
 
+
 # needed to set the placeholder text for the QComboBox objects
 def paintEvent(self, event):
     painter = QtWidgets.QStylePainter(self)
@@ -48,10 +49,6 @@ def paintEvent(self, event):
 listing_car: Car = None
 car_listing: CarListing = None
 test_location: Location = Location((34.5, 35.5))
-
-
-def continue_button_clicked():
-    stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)  # move to the next UI screen
 
 
 def back_button_pressed():
@@ -144,7 +141,7 @@ class PostCarListingScreen1(QtWidgets.QMainWindow):
             car_listing.set_car(listing_car)
 
             stack_widget.insertWidget(1, self.screen_2)
-            continue_button_clicked()
+            stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)  # move to the next UI screen
         else:
             msg = QMessageBox()
             msg.setWindowTitle('Error!!')
@@ -201,7 +198,7 @@ class PostCarListingScreen2(QtWidgets.QMainWindow):
             self.screen_3.price_box.setText(str(car_price) + ' €')
 
         stack_widget.insertWidget(2, self.screen_3)
-        continue_button_clicked()
+        stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)  # move to the next UI screen
 
 
 class PostCarListingScreen3(QtWidgets.QMainWindow):
@@ -235,11 +232,11 @@ class PostCarListingScreen3(QtWidgets.QMainWindow):
 
         stack_widget.insertWidget(3, self.screen_4)
         if self.recommended_price_accepted_flag == 1:
-            continue_button_clicked()
+            stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)  # move to the next UI screen
         elif self.recommended_price_accepted_flag == 0 and self.custom_price_box.toPlainText() != '':
             if listing_car.compare_price(float(self.custom_price_box.toPlainText())):
                 car_listing.set_car_price(float(self.custom_price_box.toPlainText()))
-                continue_button_clicked()
+                stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)  # move to the next UI screen
             else:
                 msg = QMessageBox()
                 msg.setWindowTitle('Error!!')
@@ -301,7 +298,7 @@ class PostCarListingScreen4(QtWidgets.QMainWindow):
             self.screen_5.image_list = car_listing.get_photos()
             self.screen_5.setup_images()
             stack_widget.insertWidget(4, self.screen_5)
-            continue_button_clicked()
+            stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)  # move to the next UI screen
 
 
 class PostCarListingScreen5(QtWidgets.QMainWindow):

@@ -483,7 +483,7 @@
      <property name="styleSheet">
       <string notr="true">background-color: rgb(252, 252, 252);</string>
      </property>
-     <widget class="QTextEdit" name="textEdit_2">
+     <widget class="QTextEdit" name="location_box">
       <property name="geometry">
        <rect>
         <x>100</x>
@@ -742,7 +742,7 @@
      <string>Continue</string>
     </property>
    </widget>
-   <widget class="QQuickWidget" name="quickWidget">
+   <widget class="QQuickWidget" name="map_widget">
     <property name="geometry">
      <rect>
       <x>0</x>

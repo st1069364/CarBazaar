@@ -380,7 +380,7 @@ class Car(object):
         # the car is not new, subtract an amount from the car's price, due its non-zero mileage
         # The amount to be subtracted is calculated by multiplying the car's mileage with the mileage coefficient
         else:
-            return self.__estimated_price - (mileage_coefficient * self.__mileage)
+            return round(self.__estimated_price - (mileage_coefficient * self.__mileage), 2)
 
     def compare_price(self, comp_price) -> bool:
         if abs(comp_price - self.__estimated_price) > 2000:

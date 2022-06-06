@@ -28,7 +28,6 @@ car_inspection: CarInspection = None
 car_listing: CarListing = None
 
 
-
 def back_button_pressed():
     stack_widget.setCurrentIndex(stack_widget.currentIndex() - 1)  # move to the previous UI screen
 
@@ -38,7 +37,7 @@ class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
         super(ScheduleCarInspectionScreen1, self).__init__()
         loadUi("qt_ui/car_inspection_1.ui", self)
 
-        classes.main()  # to add a listing, an inspector
+        classes.main()  # to add a listing, an inspector, reviews
 
         self.screen_2 = ScheduleCarInspectionScreen2()
 
@@ -49,7 +48,6 @@ class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
 
     def continue_button_clicked(self):
         global car_inspection
-        global car_listing
 
         coordinates_list = self.location_box.toPlainText().split(",", 2)
 
@@ -89,11 +87,20 @@ class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
             self.screen_2.recomm_insp_info_table.setItem(0, 4, QTableWidgetItem(str(inspector_info[10])))
             # assume that the actual distance of the Inspector from the user, would be calculated in some way
             self.screen_2.recomm_insp_info_table.setItem(0, 5, QTableWidgetItem('3 Km Away'))
-            self.screen_2.recomm_insp_info_table.setItem(0, 6, QTableWidgetItem('20'))
-            self.screen_2.recomm_insp_info_table.setItem(0, 7, QTableWidgetItem('90% positive'))
+            self.screen_2.recomm_insp_info_table.setItem(0, 6, QTableWidgetItem(str(len(inspector_reviews))))
+            self.screen_2.recomm_insp_info_table.setItem(0, 7, QTableWidgetItem(str(
+                self.calculate_review_positivity_percentage(inspector_reviews) * 100) + ' % Positive'))
 
             stack_widget.insertWidget(1, self.screen_2)
             stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)  # move to the next UI screen
+
+    def calculate_review_positivity_percentage(self, inspector_reviews) -> float:
+        positive_reviews_count = 0
+        for review in inspector_reviews:
+            if review.is_review_positive():
+                positive_reviews_count += 1
+
+        return positive_reviews_count / len(inspector_reviews)
 
 
 class ScheduleCarInspectionScreen2(QtWidgets.QMainWindow):
@@ -104,11 +111,63 @@ class ScheduleCarInspectionScreen2(QtWidgets.QMainWindow):
         self.back_button.clicked.connect(back_button_pressed)
         self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
                                        "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
+        self.continue_button.clicked.connect(self.continue_button_clicked)
 
         header = self.recomm_insp_info_table.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
-        # header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
-        self.recomm_insp_info_table.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)  # no edit on table cells
+        header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
+        self.recomm_insp_info_table.setEditTriggers(
+            QtWidgets.QAbstractItemView.NoEditTriggers)  # no edit on table cells
+
+        self.custom_inspector_check_box.setStyleSheet("QCheckBox {color: #d3311b;}")
+        self.custom_inspector_check_box.stateChanged.connect(self.custom_inspector_check_box_toggled)
+
+    def custom_inspector_check_box_toggled(self):
+        check_box_status = self.custom_inspector_check_box.checkState()
+        print("in here, status : ", check_box_status)
+        if check_box_status == 2:  # checked -> continue using a user specified Inspector
+            pass
+        elif check_box_status == 0:  # unchecked -> continue using the recommended Inspector
+            screen_3 = ScheduleCarInspectionScreen3()
+            stack_widget.insertWidget(2, screen_3)
+
+    def continue_button_clicked(self):
+        self.custom_inspector_check_box_toggled()
+        stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)
+
+
+class ScheduleCarInspectionScreen3(QtWidgets.QMainWindow):
+    def __init__(self):
+        super(ScheduleCarInspectionScreen3, self).__init__()
+        loadUi("qt_ui/car_inspection_3.ui", self)
+
+        self.continue_button.clicked.connect(self.continue_button_clicked)
+        self.back_button.clicked.connect(back_button_pressed)
+        self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
+                                       "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
+
+        self.submit_button.clicked.connect(self.submit_button_clicked)
+
+        header = self.car_info_table.horizontalHeader()
+        header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
+        header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
+        self.car_info_table.setEditTriggers(
+            QtWidgets.QAbstractItemView.NoEditTriggers)  # no edit on table cells
+
+    def submit_button_clicked(self):
+        global car_listing
+
+        listing_id = self.listing_id_box.toPlainText()
+
+        for listing in system_posted_listings:
+            if listing.get_listing_id() == listing_id:
+                car_listing = listing
+
+        listing_car_info = car_listing.get_car().get_car_info()
+
+
+    def continue_button_clicked(self):
+        pass
 
 
 if __name__ == "__main__":

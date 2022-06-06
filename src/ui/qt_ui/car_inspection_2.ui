@@ -60,7 +60,7 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>60</x>
       <y>520</y>
       <width>271</width>
       <height>61</height>
@@ -351,13 +351,13 @@
      <pixmap resource="app_res.qrc">:/resources/resources/arrow.png</pixmap>
     </property>
    </widget>
-   <widget class="QTableWidget" name="car_info_table">
+   <widget class="QTableWidget" name="recomm_insp_info_table">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>140</y>
       <width>401</width>
-      <height>321</height>
+      <height>311</height>
      </rect>
     </property>
     <row>

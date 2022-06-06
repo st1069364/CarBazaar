@@ -354,11 +354,14 @@
    <widget class="QTableWidget" name="recomm_insp_info_table">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>70</x>
       <y>140</y>
-      <width>401</width>
+      <width>261</width>
       <height>311</height>
      </rect>
+    </property>
+    <property name="showGrid">
+     <bool>true</bool>
     </property>
     <row>
      <property name="text">

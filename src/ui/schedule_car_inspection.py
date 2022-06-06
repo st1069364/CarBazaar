@@ -26,12 +26,11 @@ BUTTON_STYLE = """QPushButton {
 
 car_inspection: CarInspection = None
 car_listing: CarListing = None
-test_location: Location = Location((34.5, 35.5))
 
 
-#
-# def back_button_pressed():
-#     stack_widget.setCurrentIndex(stack_widget.currentIndex() - 1)  # move to the previous UI screen
+
+def back_button_pressed():
+    stack_widget.setCurrentIndex(stack_widget.currentIndex() - 1)  # move to the previous UI screen
 
 
 class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
@@ -44,7 +43,7 @@ class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
         self.screen_2 = ScheduleCarInspectionScreen2()
 
         self.continue_button.clicked.connect(self.continue_button_clicked)
-        # self.back_button.clicked.connect(back_button_pressed)
+        self.back_button.clicked.connect(back_button_pressed)
         self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
                                        "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
 
@@ -76,8 +75,22 @@ class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
             date_and_time = datetime.datetime.combine(date, time)
 
             car_inspection.set_car_inspection_info(check_type, date_and_time, entered_location)
-            inspector_info = car_inspection.find_inspector()
+            recommended_inspector = car_inspection.find_inspector()
+
+            inspector_info = recommended_inspector.get_inspector_info()
             print(inspector_info)
+
+            inspector_reviews = recommended_inspector.get_reviews_list()
+
+            self.screen_2.recomm_insp_info_table.setItem(0, 0, QTableWidgetItem(inspector_info[0]))
+            self.screen_2.recomm_insp_info_table.setItem(0, 1, QTableWidgetItem(inspector_info[1]))
+            self.screen_2.recomm_insp_info_table.setItem(0, 2, QTableWidgetItem(inspector_info[4]))
+            self.screen_2.recomm_insp_info_table.setItem(0, 3, QTableWidgetItem(inspector_info[5]))
+            self.screen_2.recomm_insp_info_table.setItem(0, 4, QTableWidgetItem(str(inspector_info[10])))
+            # assume that the actual distance of the Inspector from the user, would be calculated in some way
+            self.screen_2.recomm_insp_info_table.setItem(0, 5, QTableWidgetItem('3 Km Away'))
+            self.screen_2.recomm_insp_info_table.setItem(0, 6, QTableWidgetItem('20'))
+            self.screen_2.recomm_insp_info_table.setItem(0, 7, QTableWidgetItem('90% positive'))
 
             stack_widget.insertWidget(1, self.screen_2)
             stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)  # move to the next UI screen
@@ -87,6 +100,15 @@ class ScheduleCarInspectionScreen2(QtWidgets.QMainWindow):
     def __init__(self):
         super(ScheduleCarInspectionScreen2, self).__init__()
         loadUi("qt_ui/car_inspection_2.ui", self)
+
+        self.back_button.clicked.connect(back_button_pressed)
+        self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
+                                       "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
+
+        header = self.recomm_insp_info_table.horizontalHeader()
+        header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
+        # header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
+        self.recomm_insp_info_table.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)  # no edit on table cells
 
 
 if __name__ == "__main__":

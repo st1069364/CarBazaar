@@ -409,7 +409,7 @@
      </property>
     </column>
    </widget>
-   <widget class="QCheckBox" name="custom_inspector_box">
+   <widget class="QCheckBox" name="custom_inspector_check_box">
     <property name="geometry">
      <rect>
       <x>180</x>

@@ -1273,11 +1273,11 @@ def main():
     test_inspector.set_telephone('6900012344')
     system_registered_users.append(test_inspector)
 
-    test_inspector.add_user_review(Review().set_review_info('The best Inspector', 5, test_user))
-    test_inspector.add_user_review(Review().set_review_info('The worst Inspector', 0, test_user))
-    test_inspector.add_user_review(Review().set_review_info('A decent Inspector', 3, test_user))
-    test_inspector.add_user_review(Review().set_review_info('Would recommend', 4, test_user))
-    test_inspector.add_user_review(Review().set_review_info('Would not recommend', 2, test_user))
+    rev1 = Review(); rev1.set_review_info('The best Inspector', 5, test_user); test_inspector.add_user_review(rev1)
+    rev2 = Review(); rev2.set_review_info('The worst Inspector', 0, test_user); test_inspector.add_user_review(rev2)
+    rev3 = Review(); rev3.set_review_info('A decent Inspector', 3, test_user); test_inspector.add_user_review(rev3)
+    rev4 = Review(); rev4.set_review_info('Would recommend', 4, test_user); test_inspector.add_user_review(rev4)
+    rev5 = Review(); rev5.set_review_info('Would not recommend', 2, test_user); test_inspector.add_user_review(rev5)
 
     # print(test_user.get_user_info())
     #

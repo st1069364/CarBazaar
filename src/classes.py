@@ -147,7 +147,7 @@ class Transporter(User):
     def complete_transportation(self, completed_transportation):
         if completed_transportation not in self.__completed_transportations:
             self.__completed_transportations.append(completed_transportation)
-            completed_transportation.finish_car_transportation()
+            completed_transportation.finish_car_transportation() # set status to 'Completed'
 
 
 class Inspector(User):
@@ -727,6 +727,14 @@ class Location(object):
     def __init__(self, location_coordinates: Tuple[float, float]):
         self.__coordinates: Tuple[float, float] = location_coordinates
 
+    # Override the default __eq__ dunder method, to provide the comparison basis for two Location objects.
+    # We only need to check if their coordinates are equal
+    def __eq__(self, other):
+        if self.__coordinates == other.__coordinates:
+            return True
+
+        return False
+
     def set_location(self, new_coordinates: Tuple[float, float]):
         self.__coordinates = new_coordinates
 
@@ -1243,6 +1251,17 @@ def main():
     test_user.set_email('jdoe@gmail.com')
     test_user.set_telephone('2610987567')
     system_registered_users.append(test_user)
+
+    inspector_location = Location((38.2, 21.7))
+    test_inspector = Inspector(inspector_location)
+    test_inspector.set_name('Bob', 'Green')
+    test_inspector.set_username('bgreen123')
+    test_inspector.set_email('green123@gmail.com')
+    test_inspector.set_telephone('6900012344')
+    system_registered_users.append(test_inspector)
+
+
+
 
     # print(test_user.get_user_info())
     #

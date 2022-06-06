@@ -77,6 +77,9 @@ class User(object):
         if new_review not in self.__reviews:
             self.__reviews.append(new_review)
 
+    def get_reviews_list(self) -> List["Review"]:
+        return self.__reviews
+
     def add_listing(self, new_lst) -> bool:
         if new_lst not in self.__listings:
             self.__listings.append(new_lst)
@@ -152,7 +155,7 @@ class Transporter(User):
     def complete_transportation(self, completed_transportation):
         if completed_transportation not in self.__completed_transportations:
             self.__completed_transportations.append(completed_transportation)
-            completed_transportation.finish_car_transportation() # set status to 'Completed'
+            completed_transportation.finish_car_transportation()  # set status to 'Completed'
 
 
 class Inspector(User):
@@ -882,7 +885,7 @@ class CarInspection(object):
                     # if the inspector has less than 10 pending inspections
                     if user.add_inspection(self):
                         self.__inspector = user
-                        return user.get_inspector_info()
+                        return user
 
     def start_car_inspection(self):
         self.__status = OperationStatus.Ongoing
@@ -1169,22 +1172,22 @@ class Review(object):
         self.__text: str
         self.__stars: int
         self.__writer: User
-        self.__creation_date: datetime = None
+        self.__creation_date: datetime = datetime.date.today()
 
-    def set_review_info(self, new_text, new_stars, new_writer, new_creation_date):
+    def set_review_info(self, new_text, new_stars, new_writer):
         self.__text = new_text
         self.__stars = new_stars
         self.__writer = new_writer
-        self.__creation_date = new_creation_date
 
     def get_review_info(self):
         return [self.__text, self.__stars, self.__writer.get_user_info(), str(self.__creation_date)]
 
     def is_review_positive(self) -> bool:
-        if self.__stars >= 3: # assume that reviews with more than 3 stars are positive
+        if self.__stars >= 3:  # assume that reviews with more than 3 stars are positive
             return True
 
         return False
+
 
 class ListingReport(object):
     def __init__(self):
@@ -1242,7 +1245,6 @@ class ListingDeletionForm(object):
 
 
 # if __name__ == "__main__":
-
 def main():
     # sp = SparePart()
     # sp.set_spare_part_info('theBrand', 'Pipe', 'PA1')
@@ -1271,8 +1273,11 @@ def main():
     test_inspector.set_telephone('6900012344')
     system_registered_users.append(test_inspector)
 
-
-
+    test_inspector.add_user_review(Review().set_review_info('The best Inspector', 5, test_user))
+    test_inspector.add_user_review(Review().set_review_info('The worst Inspector', 0, test_user))
+    test_inspector.add_user_review(Review().set_review_info('A decent Inspector', 3, test_user))
+    test_inspector.add_user_review(Review().set_review_info('Would recommend', 4, test_user))
+    test_inspector.add_user_review(Review().set_review_info('Would not recommend', 2, test_user))
 
     # print(test_user.get_user_info())
     #

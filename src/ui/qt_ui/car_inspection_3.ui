@@ -64,16 +64,6 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#dd3333;&quot;&gt;Enter Listing ID&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="textBrowser">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>220</y>
-      <width>241</width>
-      <height>41</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="submit_button">
     <property name="geometry">
      <rect>
@@ -657,6 +647,16 @@ color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
      <string>Continue</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="listing_id_box">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>220</y>
+      <width>241</width>
+      <height>41</height>
+     </rect>
     </property>
    </widget>
   </widget>

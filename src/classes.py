@@ -40,6 +40,7 @@ class User(object):
         self.__listings: List["Listing"] = []
         self.__car_purchases: List["Car"] = []
         self.__points: int = 0
+        self.__reviews: List["Review"] = []
 
     def set_name(self, first_name, last_name):
         self.__first_name = first_name
@@ -71,6 +72,10 @@ class User(object):
 
     def get_user_listings(self) -> List["Listing"]:
         return self.__listings
+
+    def add_user_review(self, new_review):
+        if new_review not in self.__reviews:
+            self.__reviews.append(new_review)
 
     def add_listing(self, new_lst) -> bool:
         if new_lst not in self.__listings:
@@ -161,6 +166,7 @@ class Inspector(User):
     def get_inspector_info(self) -> List:
         inspector_info = self.get_user_info()
         inspector_info.append(self.__inspector_id)
+        inspector_info.append(self.__location.get_location())
         inspector_info.append(self.__pending_inspections)
         inspector_info.append(self.__completed_inspections)
         return inspector_info
@@ -1174,6 +1180,11 @@ class Review(object):
     def get_review_info(self):
         return [self.__text, self.__stars, self.__writer.get_user_info(), str(self.__creation_date)]
 
+    def is_review_positive(self) -> bool:
+        if self.__stars >= 3: # assume that reviews with more than 3 stars are positive
+            return True
+
+        return False
 
 class ListingReport(object):
     def __init__(self):

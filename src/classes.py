@@ -1279,20 +1279,28 @@ def main():
     test_inspector.set_telephone('6900012344')
     system_registered_users.append(test_inspector)
 
-    rev1 = Review();
-    rev1.set_review_info('The best Inspector', 5, test_user);
+    inspector_location2 = Location((38.3, 21.8))
+    test_inspector2 = Inspector(inspector_location2)
+    test_inspector2.set_name('Jim', 'Brown')
+    test_inspector2.set_username('jbr0wn33')
+    test_inspector2.set_email('jbrown33@gmail.com')
+    test_inspector2.set_telephone('6911122233')
+    system_registered_users.append(test_inspector2)
+
+    rev1 = Review()
+    rev1.set_review_info('The best Inspector', 5, test_user)
     test_inspector.add_user_review(rev1)
-    rev2 = Review();
-    rev2.set_review_info('The worst Inspector', 0, test_user);
+    rev2 = Review()
+    rev2.set_review_info('The worst Inspector', 0, test_user)
     test_inspector.add_user_review(rev2)
-    rev3 = Review();
-    rev3.set_review_info('A decent Inspector', 3, test_user);
+    rev3 = Review()
+    rev3.set_review_info('A decent Inspector', 3, test_user)
     test_inspector.add_user_review(rev3)
-    rev4 = Review();
-    rev4.set_review_info('Would recommend', 4, test_user);
+    rev4 = Review()
+    rev4.set_review_info('Would recommend', 4, test_user)
     test_inspector.add_user_review(rev4)
-    rev5 = Review();
-    rev5.set_review_info('Would not recommend', 2, test_user);
+    rev5 = Review()
+    rev5.set_review_info('Would not recommend', 2, test_user)
     test_inspector.add_user_review(rev5)
 
     c3 = Car()
@@ -1308,13 +1316,6 @@ def main():
 
     print(car_listing.get_listing_id())
 
-    # print(test_user.get_user_info())
-    #
-    # tt = Transaction()
-    # tt.set_transaction_info('Cash', 1234.55, 'Payment', test_user,
-    #                         test_user, 666)
-    # print(tt.get_transaction_info())
-    #
     # plan = InsurancePlan()
     # plan.set_insurance_plan_info('Test Plan', 'Premium', )
 

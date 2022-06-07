@@ -851,12 +851,8 @@ class CarInspection(object):
         self.__inspection_type: InspectionType
         self.__location: Location = None
 
-    def set_car_inspection_inspector(self, check_inspector) -> bool:
-        if check_inspector in system_registered_users:
-            self.__inspector = check_inspector
-            return True
-
-        return False
+    def set_car_inspection_inspector(self, check_inspector):
+        self.__inspector = check_inspector
 
     def set_car_inspection_transaction(self, payment_transaction):
         self.__transaction = payment_transaction
@@ -877,6 +873,9 @@ class CarInspection(object):
 
         return False  # return false, as an attempt to add an already-existing car inspection, was made
 
+    # find a recommended inspector, based on the location the user entered. We assume that the user's location
+    # must be exactly the same (i.e. equal) to the inspector's location. In reality, we would search an Inspector
+    # that is **near** the user, and not in the exact same location
     def find_recommended_inspector(self):
         for user in system_registered_users:
             if isinstance(user, Inspector):
@@ -886,6 +885,12 @@ class CarInspection(object):
                     if user.add_inspection(self):
                         self.__inspector = user
                         return user
+
+    def find_inspector(self, telephone, email):
+        for user in system_registered_users:
+            if isinstance(user, Inspector):
+                if user.get_telephone() == telephone and user.get_email() == email:
+                    return user
 
     def start_car_inspection(self):
         self.__status = OperationStatus.Ongoing
@@ -1271,11 +1276,21 @@ def main():
     test_inspector.set_telephone('6900012344')
     system_registered_users.append(test_inspector)
 
-    rev1 = Review(); rev1.set_review_info('The best Inspector', 5, test_user); test_inspector.add_user_review(rev1)
-    rev2 = Review(); rev2.set_review_info('The worst Inspector', 0, test_user); test_inspector.add_user_review(rev2)
-    rev3 = Review(); rev3.set_review_info('A decent Inspector', 3, test_user); test_inspector.add_user_review(rev3)
-    rev4 = Review(); rev4.set_review_info('Would recommend', 4, test_user); test_inspector.add_user_review(rev4)
-    rev5 = Review(); rev5.set_review_info('Would not recommend', 2, test_user); test_inspector.add_user_review(rev5)
+    rev1 = Review();
+    rev1.set_review_info('The best Inspector', 5, test_user);
+    test_inspector.add_user_review(rev1)
+    rev2 = Review();
+    rev2.set_review_info('The worst Inspector', 0, test_user);
+    test_inspector.add_user_review(rev2)
+    rev3 = Review();
+    rev3.set_review_info('A decent Inspector', 3, test_user);
+    test_inspector.add_user_review(rev3)
+    rev4 = Review();
+    rev4.set_review_info('Would recommend', 4, test_user);
+    test_inspector.add_user_review(rev4)
+    rev5 = Review();
+    rev5.set_review_info('Would not recommend', 2, test_user);
+    test_inspector.add_user_review(rev5)
 
     c3 = Car()
     c3.set_car_info('Hatchback', 'Citroen', 'C3', 2005, 4500, 1200, 90, 'Automatic',
@@ -1289,7 +1304,6 @@ def main():
     system_registered_cars.append(c3)
 
     print(car_listing.get_listing_id())
-
 
     # print(test_user.get_user_info())
     #
@@ -1306,4 +1320,3 @@ def main():
                            'Diesel', 555, 666, 'Red', 'Black', 5, 'AXE1234')
 
     system_registered_cars.append(giulietta)
-

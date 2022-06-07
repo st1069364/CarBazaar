@@ -157,14 +157,34 @@ class ScheduleCarInspectionScreen3(QtWidgets.QMainWindow):
     def submit_button_clicked(self):
         global car_listing
 
-        listing_id = self.listing_id_box.toPlainText()
+        listing_id = int(self.listing_id_box.toPlainText())
 
         for listing in system_posted_listings:
             if listing.get_listing_id() == listing_id:
                 car_listing = listing
 
         listing_car_info = car_listing.get_car().get_car_info()
+        # print(listing_car_info)
 
+        self.populate_car_info_table(listing_car_info)
+
+    def populate_car_info_table(self, listing_car_info):
+        self.car_info_table.setItem(0, 0, QTableWidgetItem(listing_car_info[0]))
+        self.car_info_table.setItem(0, 1, QTableWidgetItem(listing_car_info[1]))
+        self.car_info_table.setItem(0, 2, QTableWidgetItem(listing_car_info[2]))
+        self.car_info_table.setItem(0, 3, QTableWidgetItem(str(listing_car_info[3])))
+        self.car_info_table.setItem(0, 4, QTableWidgetItem(str(listing_car_info[4])))
+        self.car_info_table.setItem(0, 5, QTableWidgetItem(str(car_listing.get_car_condition())))
+        self.car_info_table.setItem(0, 6, QTableWidgetItem(str(listing_car_info[5])))
+        self.car_info_table.setItem(0, 7, QTableWidgetItem(str(listing_car_info[6])))
+        self.car_info_table.setItem(0, 8, QTableWidgetItem(str(listing_car_info[7])))
+        self.car_info_table.setItem(0, 9, QTableWidgetItem(str(listing_car_info[8])))
+        self.car_info_table.setItem(0, 10, QTableWidgetItem(str(listing_car_info[9])))
+        self.car_info_table.setItem(0, 11, QTableWidgetItem(str(listing_car_info[10])))
+        self.car_info_table.setItem(0, 12, QTableWidgetItem(str(listing_car_info[11])))
+        self.car_info_table.setItem(0, 13, QTableWidgetItem(str(listing_car_info[12])))
+        self.car_info_table.setItem(0, 14, QTableWidgetItem(str(listing_car_info[13])))
+        self.car_info_table.setItem(0, 15, QTableWidgetItem(str(listing_car_info[14])))
 
     def continue_button_clicked(self):
         pass

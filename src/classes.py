@@ -877,7 +877,7 @@ class CarInspection(object):
 
         return False  # return false, as an attempt to add an already-existing car inspection, was made
 
-    def find_inspector(self):
+    def find_recommended_inspector(self):
         for user in system_registered_users:
             if isinstance(user, Inspector):
                 # inspector's location is the same as the location the user entered

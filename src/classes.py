@@ -621,7 +621,7 @@ class Transaction(object):
         self.__product_id = t_prod_id
 
     def get_transaction_info(self):
-        transaction_info = [self.__id, self.__timestamp, self.__payment_method,
+        transaction_info = [self.__id, self.__timestamp, self.__payment_method, self.__amount,
                             self.__type, self.__customer, self.__merchant, self.__product_id]
         return transaction_info
 
@@ -897,6 +897,9 @@ class CarInspection(object):
 
     def finish_car_inspection(self):
         self.__status = OperationStatus.Completed
+
+    def get_inspector(self):
+        return self.__inspector
 
 
 class CarTransportation(object):

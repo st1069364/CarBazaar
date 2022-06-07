@@ -1254,9 +1254,7 @@ def main():
     # print(sp.is_spare_part_number_valid())
 
     #
-    # ll = Location((34.5, 35.5))
-    # #
-    # test_user = Transporter(ll)
+    test_user_location = Location((38.25, 21.75))
 
     test_user = User()
     test_user.set_name('john', 'doe')
@@ -1279,6 +1277,20 @@ def main():
     rev4 = Review(); rev4.set_review_info('Would recommend', 4, test_user); test_inspector.add_user_review(rev4)
     rev5 = Review(); rev5.set_review_info('Would not recommend', 2, test_user); test_inspector.add_user_review(rev5)
 
+    c3 = Car()
+    c3.set_car_info('Hatchback', 'Citroen', 'C3', 2005, 4500, 1200, 90, 'Automatic',
+                    'Fuel', 6, 5, 'Blue', 'Grey', 5, 'XAA2233')
+
+    car_listing = CarListing(ProductCondition.Used)
+    car_listing.set_listing_info("Citroen C3 for sale", test_user, test_user_location)
+    car_listing.set_description("The car is in excellent condition, contact me for more")
+    car_listing.set_car(c3)
+    car_listing.post_listing()
+    system_registered_cars.append(c3)
+
+    print(car_listing.get_listing_id())
+
+
     # print(test_user.get_user_info())
     #
     # tt = Transaction()
@@ -1289,44 +1301,9 @@ def main():
     # plan = InsurancePlan()
     # plan.set_insurance_plan_info('Test Plan', 'Premium', )
 
-    # print(test_user.get_user_info())
+    giulietta = Car()
+    giulietta.set_car_info('Hatchback', 'Alfa Romeo', 'Giulietta', 2010, 5000, 123, 32, 'Manual',
+                           'Diesel', 555, 666, 'Red', 'Black', 5, 'AXE1234')
 
-    #
-    # print(system_posted_listings)
-    # #
-    # lst = Listing()
-    # lst.set_listing_info(123, 'listing for car', 'this is a listing',
-    # #                      datetime.date.today(), test_user, None)
-    # # #
-    # lst.post_listing()
+    system_registered_cars.append(giulietta)
 
-    # # print(lst.__dict__)
-    # print(system_posted_listings)
-    #
-    # lst2 = Listing()
-    # lst2.set_listing_info(123, 'listing for car', 'this is a listing',
-    #                       datetime.date.today(), test_user, None)
-    #
-    # lst2.post_listing()
-    # print(system_posted_listings)
-    #
-    # lst.delete_listing()
-    # print(system_posted_listings)
-
-    cc = Car()
-    # print(cc.__dict__)
-
-    cc.set_car_info('Hatchback', 'Alfa Romeo', 'Giulietta', 2010, 5000, 123, 32, 'Manual',
-                    'Diesel', 555, 666, 'Red', 'Black', 5, 'AXE1234')
-
-    system_registered_cars.append(cc)
-
-    # cc2 = Car()
-    # cc2.set_car_info('Alfa Romeo', 'Giulietta', 'Hatchback', 2005, 5000, 123, 65, 'Automatic',
-    #                  'Fuel', 3333, 4444, 'Red', 'Black', 5, 'XAA2233')
-    #
-    # # print(cc == cc2)
-    #
-    # print(cc.is_car_valid())
-
-    # print(cc.calculate_car_price())

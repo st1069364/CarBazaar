@@ -108,7 +108,7 @@ color: rgb(255, 255, 255);</string>
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>-6</x>
       <y>750</y>
       <width>41</width>
       <height>31</height>
@@ -120,12 +120,15 @@ color: rgb(255, 255, 255);</string>
     <property name="pixmap">
      <pixmap resource="app_res.qrc">:/resources/resources/green_check.png</pixmap>
     </property>
+    <property name="scaledContents">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
-      <x>6</x>
-      <y>780</y>
+      <x>0</x>
+      <y>805</y>
       <width>31</width>
       <height>31</height>
      </rect>
@@ -141,9 +144,9 @@ color: rgb(255, 255, 255);</string>
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>780</y>
+      <y>800</y>
       <width>341</width>
-      <height>31</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">

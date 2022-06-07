@@ -1,3 +1,4 @@
+import time
 import app_res_rc
 import types
 import sys
@@ -26,6 +27,8 @@ BUTTON_STYLE = """QPushButton {
 
 car_inspection: CarInspection = None
 car_listing: CarListing = None
+inspection_invoice: Invoice = None
+inspection_transaction: Transaction = None
 
 
 def back_button_pressed():
@@ -73,7 +76,7 @@ class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
             date_and_time = datetime.datetime.combine(date, time)
 
             car_inspection.set_car_inspection_info(check_type, date_and_time, entered_location)
-            recommended_inspector = car_inspection.find_inspector()
+            recommended_inspector = car_inspection.find_recommended_inspector()
 
             inspector_info = recommended_inspector.get_inspector_info()
             print(inspector_info)
@@ -124,9 +127,9 @@ class ScheduleCarInspectionScreen2(QtWidgets.QMainWindow):
 
     def custom_inspector_check_box_toggled(self):
         check_box_status = self.custom_inspector_check_box.checkState()
-        print("in here, status : ", check_box_status)
         if check_box_status == 2:  # checked -> continue using a user specified Inspector
-            pass
+            inspector_info_screen = EnterInspectorInfoScreen()
+            stack_widget.insertWidget(2, inspector_info_screen)
         elif check_box_status == 0:  # unchecked -> continue using the recommended Inspector
             screen_3 = ScheduleCarInspectionScreen3()
             stack_widget.insertWidget(2, screen_3)
@@ -154,19 +157,29 @@ class ScheduleCarInspectionScreen3(QtWidgets.QMainWindow):
         self.car_info_table.setEditTriggers(
             QtWidgets.QAbstractItemView.NoEditTriggers)  # no edit on table cells
 
+        self.screen_4 = ScheduleCarInspectionScreen4()
+
     def submit_button_clicked(self):
         global car_listing
+        global car_inspection
 
-        listing_id = int(self.listing_id_box.toPlainText())
+        if self.listing_id_box.toPlainText() == '':
+            msg = QMessageBox()
+            msg.setWindowTitle('Error!!')
+            msg.setText('Please enter a Listing ID')
+            msg.exec()
+        else:
+            listing_id = int(self.listing_id_box.toPlainText())
 
-        for listing in system_posted_listings:
-            if listing.get_listing_id() == listing_id:
-                car_listing = listing
+            for listing in system_posted_listings:
+                if listing.get_listing_id() == listing_id:
+                    car_listing = listing
 
-        listing_car_info = car_listing.get_car().get_car_info()
-        # print(listing_car_info)
+            listing_car_info = car_listing.get_car().get_car_info()
+            # print(listing_car_info)
+            car_inspection.set_car_to_inspect(car_listing)
 
-        self.populate_car_info_table(listing_car_info)
+            self.populate_car_info_table(listing_car_info)
 
     def populate_car_info_table(self, listing_car_info):
         self.car_info_table.setItem(0, 0, QTableWidgetItem(listing_car_info[0]))
@@ -174,7 +187,12 @@ class ScheduleCarInspectionScreen3(QtWidgets.QMainWindow):
         self.car_info_table.setItem(0, 2, QTableWidgetItem(listing_car_info[2]))
         self.car_info_table.setItem(0, 3, QTableWidgetItem(str(listing_car_info[3])))
         self.car_info_table.setItem(0, 4, QTableWidgetItem(str(listing_car_info[4])))
-        self.car_info_table.setItem(0, 5, QTableWidgetItem(str(car_listing.get_car_condition())))
+
+        if car_listing.get_car_condition() == ProductCondition.Used:
+            self.car_info_table.setItem(0, 5, QTableWidgetItem('Used'))
+        elif str(car_listing.get_car_condition()) == ProductCondition.New:
+            self.car_info_table.setItem(0, 5, QTableWidgetItem('New'))
+
         self.car_info_table.setItem(0, 6, QTableWidgetItem(str(listing_car_info[5])))
         self.car_info_table.setItem(0, 7, QTableWidgetItem(str(listing_car_info[6])))
         self.car_info_table.setItem(0, 8, QTableWidgetItem(str(listing_car_info[7])))
@@ -187,7 +205,92 @@ class ScheduleCarInspectionScreen3(QtWidgets.QMainWindow):
         self.car_info_table.setItem(0, 15, QTableWidgetItem(str(listing_car_info[14])))
 
     def continue_button_clicked(self):
-        pass
+        global car_listing
+        if car_listing is None:
+            msg = QMessageBox()
+            msg.setWindowTitle('Error!!')
+            msg.setText('Please enter a Listing ID in order to retrieve the car\'s details')
+            msg.exec()
+        else:
+            self.screen_4.price_box.setText(str(random.randint(50, 150)) + ' €')
+            self.screen_4.duration_box.setText(str(random.randint(10, 90)) + ' minutes')
+            stack_widget.insertWidget(3, self.screen_4)
+            stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)
+
+
+class EnterInspectorInfoScreen(QtWidgets.QMainWindow):
+    def __init__(self):
+        super(EnterInspectorInfoScreen, self).__init__()
+        loadUi("qt_ui/car_inspection_alt_2.ui", self)
+
+        self.back_button.clicked.connect(back_button_pressed)
+        self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
+                                       "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
+
+        self.submit_button.clicked.connect(self.submit_button_clicked)
+
+    def submit_button_clicked(self):
+        global car_inspection
+
+        inspector_telephone = self.inspector_phone_box.toPlainText()
+        inspector_email = self.inspector_email_box.toPlainText()
+        chosen_inspector = car_inspection.find_inspector(inspector_telephone, inspector_email)
+        if chosen_inspector is None:
+            msg = QMessageBox()
+            msg.setWindowTitle('Error!!')
+            msg.setText('The contact info you entered, does not correspond to a registered Inspector.\nExiting...')
+            msg.exec()
+            choice = QMessageBox.Ok
+            if choice == QMessageBox.Ok:
+                app.exit(-1)
+        else:
+            car_inspection.set_car_inspection_inspector(chosen_inspector)
+            screen_3 = ScheduleCarInspectionScreen3()
+            stack_widget.insertWidget(3, screen_3)
+            stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)
+
+
+class ScheduleCarInspectionScreen4(QtWidgets.QMainWindow):
+    def __init__(self):
+        super(ScheduleCarInspectionScreen4, self).__init__()
+        loadUi("qt_ui/car_inspection_4.ui", self)
+
+        self.confirm_button.clicked.connect(self.confirm_button_clicked)
+        self.back_button.clicked.connect(back_button_pressed)
+        self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
+                                       "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
+
+    def confirm_button_clicked(self):
+        global inspection_invoice
+        global inspection_transaction
+        global car_inspection
+
+        # this Transaction would be created from the Payment Menu (payment use case)
+        inspection_transaction = Transaction()
+        # assume that the payment was made using Cash, and that the user paying for the transaction is
+        # user "system_registered_users[0]", i.e the first User created in main() of classes.py file
+        inspection_transaction.set_transaction_info(PaymentType.Cash, float(self.price_box.text().replace("€", "")),
+                                                    TransactionType.Payment, system_registered_users[0],
+                                                    car_inspection.get_inspector(), random.randint(1, 10))
+
+        inspection_invoice = Invoice()
+        inspection_invoice.set_invoice_info(inspection_transaction, "Invoice for Car Inspection of Citroen C3",
+                                            system_registered_users[0].get_email())
+
+        car_inspection.set_car_inspection_transaction(inspection_transaction)
+        if not car_inspection.register_car_inspection():
+            print("error")
+
+        if not TransactionLog.register_transaction(inspection_transaction):
+            print("error 2")
+
+        time.sleep(1)  # sleep for 5 seconds, assume that the payment is made
+        self.success_label.setText("You have successfully arranged an inspection\nappointment!")
+        self.success_label.adjustSize()
+        self.success_label.setAlignment(Qt.AlignCenter)
+        self.email_label.setText("The appointment's details have been sent\nto your email!")
+        self.email_label.adjustSize()
+        self.email_label.setAlignment(Qt.AlignCenter)
 
 
 if __name__ == "__main__":

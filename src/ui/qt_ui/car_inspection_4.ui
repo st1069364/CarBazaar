@@ -19,12 +19,12 @@
      <rect>
       <x>110</x>
       <y>85</y>
-      <width>241</width>
+      <width>281</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#d3311b;&quot;&gt;Check Price and Check Duration&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#d3311b;&quot;&gt;Inspection Price and Inspection Duration&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_7">
@@ -56,7 +56,7 @@
      <rect>
       <x>90</x>
       <y>290</y>
-      <width>231</width>
+      <width>251</width>
       <height>31</height>
      </rect>
     </property>
@@ -592,7 +592,7 @@ color: rgb(255, 255, 255);</string>
      <string>12345 €</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="inspection_duration_box">
+   <widget class="QPushButton" name="duration_box">
     <property name="geometry">
      <rect>
       <x>110</x>

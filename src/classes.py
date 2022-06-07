@@ -462,8 +462,8 @@ class SparePart(object):
 
 ##################### Listing types ##########################################
 class Listing(object):
-    def __init__(self):
-        self.__id: int = random.randint(1, 990)  # assume that Listing IDs are from 1 to 990
+    def __init__(self, listing_id = random.randint(1, 990)): # assume that Listing IDs are from 1 to 990
+        self.__id: int = listing_id
         self.__title: str = ''
         self.__description: str = ''
         self.__publish_date: datetime = datetime.date.today()
@@ -525,8 +525,8 @@ class ProductCondition(enum.Enum):  # product condition enum
 
 
 class CarListing(Listing):
-    def __init__(self, car_status: ProductCondition):
-        super(CarListing, self).__init__()
+    def __init__(self, car_status: ProductCondition, id = random.randint(1, 990)):
+        super(CarListing, self).__init__(id)
         self.__vehicle: Car = None
         self.__car_condition = car_status
         self.__docs: List["CarDocument"] = []
@@ -556,8 +556,8 @@ class CarListing(Listing):
 
 
 class SparePartListing(Listing):
-    def __init__(self):
-        super(SparePartListing, self).__init__()
+    def __init__(self, id = random.randint(1, 990)):
+        super(SparePartListing, self).__init__(id)
         self.__listing_part: SparePart = None
         self.__condition: ProductCondition
         self.__price: float = 0.0
@@ -1307,14 +1307,12 @@ def main():
     c3.set_car_info('Hatchback', 'Citroen', 'C3', 2005, 4500, 1200, 90, 'Automatic',
                     'Fuel', 6, 5, 'Blue', 'Grey', 5, 'XAA2233')
 
-    car_listing = CarListing(ProductCondition.Used)
+    car_listing = CarListing(ProductCondition.Used, 500)
     car_listing.set_listing_info("Citroen C3 for sale", test_user, test_user_location)
     car_listing.set_description("The car is in excellent condition, contact me for more")
     car_listing.set_car(c3)
     car_listing.post_listing()
     system_registered_cars.append(c3)
-
-    print(car_listing.get_listing_id())
 
     # plan = InsurancePlan()
     # plan.set_insurance_plan_info('Test Plan', 'Premium', )

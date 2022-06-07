@@ -54,7 +54,7 @@ class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
         # strip() is used to remove excess whitespace
         entered_location = Location((float(coordinates_list[0].strip()), float(coordinates_list[1].strip())))
 
-        if not entered_location.check_location_validity():
+        if not entered_location.check_location_validity(): # Alternate Flow #1 (Invalid location)
             msg = QMessageBox()
             msg.setWindowTitle('Invalid Location!!')
             msg.setText('The location you entered is outside of Patras !')
@@ -137,7 +137,7 @@ class ScheduleCarInspectionScreen2(QtWidgets.QMainWindow):
             stack_widget.insertWidget(2, screen_3)
 
     def continue_button_clicked(self):
-        self.custom_inspector_check_box_toggled()
+        self.is_recommended_inspector_accepted()
         stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)
 
 

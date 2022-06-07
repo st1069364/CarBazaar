@@ -6,7 +6,6 @@ import time
 import classes
 from classes import *
 
-
 from PyQt5 import QtGui, QtWidgets
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import *
@@ -38,7 +37,7 @@ class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
         super(ScheduleCarInspectionScreen1, self).__init__()
         loadUi("ui/qt_ui/car_inspection_1.ui", self)
 
-        classes.main()  # to add a listing, an inspector, reviews
+        classes.main()  # to add some test data
 
         self.screen_2 = ScheduleCarInspectionScreen2()
 
@@ -50,8 +49,9 @@ class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
     def continue_button_clicked(self):
         global car_inspection
 
+        # split coordinates by comma into two values
         coordinates_list = self.location_box.toPlainText().split(",", 2)
-
+        # strip() is used to remove excess whitespace
         entered_location = Location((float(coordinates_list[0].strip()), float(coordinates_list[1].strip())))
 
         if not entered_location.check_location_validity():
@@ -70,29 +70,32 @@ class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
             else:
                 check_type = InspectionType.Thorough
 
-            date = self.calendar_widget.selectedDate().toPyDate()
+            date = self.calendar_widget.selectedDate().toPyDate()  # convert QDate to datetime.date
             time = datetime.time(self.hour_box.time().hour(), self.minute_box.time().minute())
-            date_and_time = datetime.datetime.combine(date, time)
+            date_and_time = datetime.datetime.combine(date, time)  # combine date and time into a datetime object
 
             car_inspection.set_car_inspection_info(check_type, date_and_time, entered_location)
-            recommended_inspector = car_inspection.find_recommended_inspector()
+            recommended_inspector = car_inspection.find_recommended_inspector()  # find recommended inspector
 
             inspector_info = recommended_inspector.get_inspector_info()
             inspector_reviews = recommended_inspector.get_reviews_list()
 
-            self.screen_2.recomm_insp_info_table.setItem(0, 0, QTableWidgetItem(inspector_info[0]))
-            self.screen_2.recomm_insp_info_table.setItem(0, 1, QTableWidgetItem(inspector_info[1]))
-            self.screen_2.recomm_insp_info_table.setItem(0, 2, QTableWidgetItem(inspector_info[4]))
-            self.screen_2.recomm_insp_info_table.setItem(0, 3, QTableWidgetItem(inspector_info[5]))
-            self.screen_2.recomm_insp_info_table.setItem(0, 4, QTableWidgetItem(str(inspector_info[10])))
-            # assume that the actual distance of the Inspector from the user, would be calculated in some way
-            self.screen_2.recomm_insp_info_table.setItem(0, 5, QTableWidgetItem('3 Km Away'))
-            self.screen_2.recomm_insp_info_table.setItem(0, 6, QTableWidgetItem(str(len(inspector_reviews))))
-            self.screen_2.recomm_insp_info_table.setItem(0, 7, QTableWidgetItem(str(
-                self.calculate_review_positivity_percentage(inspector_reviews) * 100) + ' % Positive'))
+            self.fill_inspector_info_table(inspector_info, inspector_reviews)
 
             stack_widget.insertWidget(1, self.screen_2)
             stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)  # move to the next UI screen
+
+    def fill_inspector_info_table(self, inspector_info, inspector_reviews):
+        self.screen_2.recomm_insp_info_table.setItem(0, 0, QTableWidgetItem(inspector_info[0]))
+        self.screen_2.recomm_insp_info_table.setItem(0, 1, QTableWidgetItem(inspector_info[1]))
+        self.screen_2.recomm_insp_info_table.setItem(0, 2, QTableWidgetItem(inspector_info[4]))
+        self.screen_2.recomm_insp_info_table.setItem(0, 3, QTableWidgetItem(inspector_info[5]))
+        self.screen_2.recomm_insp_info_table.setItem(0, 4, QTableWidgetItem(str(inspector_info[10])))
+        # assume that the actual distance of the Inspector from the user, would be calculated in some way
+        self.screen_2.recomm_insp_info_table.setItem(0, 5, QTableWidgetItem('3 Km Away'))
+        self.screen_2.recomm_insp_info_table.setItem(0, 6, QTableWidgetItem(str(len(inspector_reviews))))
+        self.screen_2.recomm_insp_info_table.setItem(0, 7, QTableWidgetItem(str(
+            self.calculate_review_positivity_percentage(inspector_reviews) * 100) + ' % Positive'))
 
     def calculate_review_positivity_percentage(self, inspector_reviews) -> float:
         positive_reviews_count = 0
@@ -100,7 +103,7 @@ class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
             if review.is_review_positive():
                 positive_reviews_count += 1
 
-        return positive_reviews_count / len(inspector_reviews)
+        return positive_reviews_count / len(inspector_reviews)  # return the percetange of positive reviews
 
 
 class ScheduleCarInspectionScreen2(QtWidgets.QMainWindow):
@@ -120,13 +123,13 @@ class ScheduleCarInspectionScreen2(QtWidgets.QMainWindow):
             QtWidgets.QAbstractItemView.NoEditTriggers)  # no edit on table cells
 
         self.custom_inspector_check_box.setStyleSheet("QCheckBox {color: #d3311b;}")
-        self.custom_inspector_check_box.stateChanged.connect(self.custom_inspector_check_box_toggled)
+        self.custom_inspector_check_box.stateChanged.connect(self.is_recommended_inspector_accepted)
 
-    def custom_inspector_check_box_toggled(self):
+    def is_recommended_inspector_accepted(self):
         check_box_status = self.custom_inspector_check_box.checkState()
         if check_box_status == 2:  # checked -> continue using a user specified Inspector
             global alt_flow_2
-            alt_flow_2 = True
+            alt_flow_2 = True  # set the alt_flow_2 flag to indicate that we will execute Alternate Flow #2 of the use case
             inspector_info_screen = EnterInspectorInfoScreen()
             stack_widget.insertWidget(2, inspector_info_screen)
         elif check_box_status == 0:  # unchecked -> continue using the recommended Inspector
@@ -170,21 +173,21 @@ class ScheduleCarInspectionScreen3(QtWidgets.QMainWindow):
         else:
             listing_id = int(self.listing_id_box.toPlainText())
 
-            for listing in system_posted_listings:
+            for listing in system_posted_listings:  # find the CarListing instance with the given Listing ID
                 if listing.get_listing_id() == listing_id:
                     car_listing = listing
 
-            if car_listing is None:
+            if car_listing is None:  # if a CarListing was not found
                 msg = QMessageBox()
                 msg.setWindowTitle('Error!!')
                 msg.setText('Please enter a valid Listing ID')
                 msg.exec()
-            else:
+            else:  # if a CarListing was found
                 listing_car_info = car_listing.get_car().get_car_info()
                 car_inspection.set_car_to_inspect(car_listing)
-                self.populate_car_info_table(listing_car_info)
+                self.fill_car_info_table(listing_car_info)
 
-    def populate_car_info_table(self, listing_car_info):
+    def fill_car_info_table(self, listing_car_info):
         self.car_info_table.setItem(0, 0, QTableWidgetItem(listing_car_info[0]))
         self.car_info_table.setItem(0, 1, QTableWidgetItem(listing_car_info[1]))
         self.car_info_table.setItem(0, 2, QTableWidgetItem(listing_car_info[2]))
@@ -216,8 +219,8 @@ class ScheduleCarInspectionScreen3(QtWidgets.QMainWindow):
             msg.setText('Please enter a Listing ID in order to retrieve the car\'s details')
             msg.exec()
         else:
-            self.screen_4.price_box.setText(str(random.randint(50, 150)) + ' €')
-            self.screen_4.duration_box.setText(str(random.randint(10, 90)) + ' minutes')
+            self.screen_4.price_box.setText(str(random.randint(50, 150)) + ' €')  # random price for car inspection
+            self.screen_4.duration_box.setText(str(random.randint(10, 90)) + ' minutes')  # random duration
             if alt_flow_2:
                 stack_widget.insertWidget(4, self.screen_4)
             else:
@@ -241,8 +244,9 @@ class EnterInspectorInfoScreen(QtWidgets.QMainWindow):
 
         inspector_telephone = self.inspector_phone_box.toPlainText()
         inspector_email = self.inspector_email_box.toPlainText()
+        # search for an Inspector with the given contact information
         chosen_inspector = car_inspection.find_inspector(inspector_telephone, inspector_email)
-        if chosen_inspector is None:
+        if chosen_inspector is None:  # if such an Inspector was not found
             msg = QMessageBox()
             msg.setWindowTitle('Error!!')
             msg.setText('The contact info you entered, does not correspond to a registered Inspector.\nExiting...')
@@ -250,7 +254,7 @@ class EnterInspectorInfoScreen(QtWidgets.QMainWindow):
             choice = QMessageBox.Ok
             if choice == QMessageBox.Ok:
                 app.exit(-1)
-        else:
+        else:  # if the given Inspector was found
             car_inspection.set_car_inspection_inspector(chosen_inspector)
             screen_3 = ScheduleCarInspectionScreen3()
             stack_widget.insertWidget(3, screen_3)
@@ -272,7 +276,7 @@ class ScheduleCarInspectionScreen4(QtWidgets.QMainWindow):
         global inspection_transaction
         global car_inspection
 
-        # this Transaction would be created from the Payment Menu (payment use case)
+        # this Transaction would be normally created from the Payment Menu (payment use case)
         inspection_transaction = Transaction()
         # assume that the payment was made using Cash, and that the user paying for the transaction is
         # user "system_registered_users[0]", i.e the first User created in main() of classes.py file
@@ -286,7 +290,7 @@ class ScheduleCarInspectionScreen4(QtWidgets.QMainWindow):
 
         car_inspection.set_car_inspection_transaction(inspection_transaction)
         if car_inspection.register_car_inspection() and TransactionLog.register_transaction(inspection_transaction):
-            time.sleep(5)  # sleep for 5 seconds, assume that the payment is made and that the emails were sent
+            time.sleep(2)  # sleep for 2 seconds, assume that the payment is made and that the emails were sent
             self.success_label.setText("You have successfully arranged an inspection\nappointment!")
             self.success_label.setStyleSheet("QLabel {color: #5cb85c}")
             self.success_label.adjustSize()

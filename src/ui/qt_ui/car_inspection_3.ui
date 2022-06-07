@@ -414,7 +414,7 @@ color: rgb(255, 255, 255);</string>
     </row>
     <row>
      <property name="text">
-      <string>Year</string>
+      <string>Release Year</string>
      </property>
     </row>
     <row>
@@ -475,11 +475,6 @@ color: rgb(255, 255, 255);</string>
     <row>
      <property name="text">
       <string>Registration Plate</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>Price</string>
      </property>
     </row>
     <column>

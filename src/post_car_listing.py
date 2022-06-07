@@ -1,11 +1,8 @@
-import app_res_rc
+from ui import app_res_rc
 import types
 import sys
-from src import classes
-
-sys.path.append('../src')
-
-from src.classes import *
+import classes
+from classes import *
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.uic import loadUi
@@ -58,7 +55,7 @@ def back_button_pressed():
 class PostCarListingScreen1(QtWidgets.QMainWindow):
     def __init__(self):
         super(PostCarListingScreen1, self).__init__()
-        loadUi("qt_ui/post_lst_1.ui", self)  # load the .ui file for the first screen
+        loadUi("ui/qt_ui/post_lst_1.ui", self)  # load the .ui file for the first screen
 
         # set the placeholder text for all the QComboBox objects
         self.category_box.paintEvent = types.MethodType(paintEvent, self.category_box)
@@ -152,7 +149,7 @@ class PostCarListingScreen1(QtWidgets.QMainWindow):
 class PostCarListingScreen2(QtWidgets.QMainWindow):
     def __init__(self):
         super(PostCarListingScreen2, self).__init__()
-        loadUi("qt_ui/post_lst_2.ui", self)  # load the .ui file for the second screen
+        loadUi("ui/qt_ui/post_lst_2.ui", self)  # load the .ui file for the second screen
         self.files = []
         self.images = []
         self.file_dialog = QFileDialog(self)
@@ -204,7 +201,7 @@ class PostCarListingScreen2(QtWidgets.QMainWindow):
 class PostCarListingScreen3(QtWidgets.QMainWindow):
     def __init__(self):
         super(PostCarListingScreen3, self).__init__()
-        loadUi("qt_ui/post_lst_3.ui", self)  # load the .ui file for the third screen
+        loadUi("ui/qt_ui/post_lst_3.ui", self)  # load the .ui file for the third screen
 
         self.continue_button.clicked.connect(self.continue_button_clicked)
         self.back_button.clicked.connect(back_button_pressed)
@@ -254,7 +251,7 @@ class PostCarListingScreen3(QtWidgets.QMainWindow):
 class PostCarListingScreen4(QtWidgets.QMainWindow):
     def __init__(self):
         super(PostCarListingScreen4, self).__init__()
-        loadUi("qt_ui/post_lst_4.ui", self)  # load the .ui file for the fourth screen
+        loadUi("ui/qt_ui/post_lst_4.ui", self)  # load the .ui file for the fourth screen
 
         self.continue_button.clicked.connect(self.continue_button_clicked)
         self.back_button.clicked.connect(back_button_pressed)
@@ -304,7 +301,7 @@ class PostCarListingScreen4(QtWidgets.QMainWindow):
 class PostCarListingScreen5(QtWidgets.QMainWindow):
     def __init__(self):
         super(PostCarListingScreen5, self).__init__()
-        loadUi("qt_ui/post_lst_5.ui", self)
+        loadUi("ui/qt_ui/post_lst_5.ui", self)
 
         self.image_list = []
         self.image = None

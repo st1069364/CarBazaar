@@ -1,18 +1,15 @@
-import time
-import app_res_rc
-import types
-import sys
-from src import classes
+from ui import app_res_rc
 import os
+import sys
+import time
 
-sys.path.append('../src')
+import classes
+from classes import *
 
-from src.classes import *
 
-from PyQt5 import QtCore, QtGui, QtWidgets, QtQuick
+from PyQt5 import QtGui, QtWidgets
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 
 BUTTON_STYLE = """QPushButton {
@@ -29,6 +26,7 @@ car_inspection: CarInspection = None
 car_listing: CarListing = None
 inspection_invoice: Invoice = None
 inspection_transaction: Transaction = None
+alt_flow_2: bool = False
 
 
 def back_button_pressed():
@@ -38,7 +36,7 @@ def back_button_pressed():
 class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
     def __init__(self):
         super(ScheduleCarInspectionScreen1, self).__init__()
-        loadUi("qt_ui/car_inspection_1.ui", self)
+        loadUi("ui/qt_ui/car_inspection_1.ui", self)
 
         classes.main()  # to add a listing, an inspector, reviews
 
@@ -55,6 +53,7 @@ class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
         coordinates_list = self.location_box.toPlainText().split(",", 2)
 
         entered_location = Location((float(coordinates_list[0].strip()), float(coordinates_list[1].strip())))
+
         if not entered_location.check_location_validity():
             msg = QMessageBox()
             msg.setWindowTitle('Invalid Location!!')
@@ -79,8 +78,6 @@ class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
             recommended_inspector = car_inspection.find_recommended_inspector()
 
             inspector_info = recommended_inspector.get_inspector_info()
-            print(inspector_info)
-
             inspector_reviews = recommended_inspector.get_reviews_list()
 
             self.screen_2.recomm_insp_info_table.setItem(0, 0, QTableWidgetItem(inspector_info[0]))
@@ -109,7 +106,7 @@ class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
 class ScheduleCarInspectionScreen2(QtWidgets.QMainWindow):
     def __init__(self):
         super(ScheduleCarInspectionScreen2, self).__init__()
-        loadUi("qt_ui/car_inspection_2.ui", self)
+        loadUi("ui/qt_ui/car_inspection_2.ui", self)
 
         self.back_button.clicked.connect(back_button_pressed)
         self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
@@ -128,6 +125,8 @@ class ScheduleCarInspectionScreen2(QtWidgets.QMainWindow):
     def custom_inspector_check_box_toggled(self):
         check_box_status = self.custom_inspector_check_box.checkState()
         if check_box_status == 2:  # checked -> continue using a user specified Inspector
+            global alt_flow_2
+            alt_flow_2 = True
             inspector_info_screen = EnterInspectorInfoScreen()
             stack_widget.insertWidget(2, inspector_info_screen)
         elif check_box_status == 0:  # unchecked -> continue using the recommended Inspector
@@ -142,7 +141,7 @@ class ScheduleCarInspectionScreen2(QtWidgets.QMainWindow):
 class ScheduleCarInspectionScreen3(QtWidgets.QMainWindow):
     def __init__(self):
         super(ScheduleCarInspectionScreen3, self).__init__()
-        loadUi("qt_ui/car_inspection_3.ui", self)
+        loadUi("ui/qt_ui/car_inspection_3.ui", self)
 
         self.continue_button.clicked.connect(self.continue_button_clicked)
         self.back_button.clicked.connect(back_button_pressed)
@@ -175,11 +174,15 @@ class ScheduleCarInspectionScreen3(QtWidgets.QMainWindow):
                 if listing.get_listing_id() == listing_id:
                     car_listing = listing
 
-            listing_car_info = car_listing.get_car().get_car_info()
-            # print(listing_car_info)
-            car_inspection.set_car_to_inspect(car_listing)
-
-            self.populate_car_info_table(listing_car_info)
+            if car_listing is None:
+                msg = QMessageBox()
+                msg.setWindowTitle('Error!!')
+                msg.setText('Please enter a valid Listing ID')
+                msg.exec()
+            else:
+                listing_car_info = car_listing.get_car().get_car_info()
+                car_inspection.set_car_to_inspect(car_listing)
+                self.populate_car_info_table(listing_car_info)
 
     def populate_car_info_table(self, listing_car_info):
         self.car_info_table.setItem(0, 0, QTableWidgetItem(listing_car_info[0]))
@@ -206,6 +209,7 @@ class ScheduleCarInspectionScreen3(QtWidgets.QMainWindow):
 
     def continue_button_clicked(self):
         global car_listing
+        global alt_flow_2
         if car_listing is None:
             msg = QMessageBox()
             msg.setWindowTitle('Error!!')
@@ -214,14 +218,17 @@ class ScheduleCarInspectionScreen3(QtWidgets.QMainWindow):
         else:
             self.screen_4.price_box.setText(str(random.randint(50, 150)) + ' €')
             self.screen_4.duration_box.setText(str(random.randint(10, 90)) + ' minutes')
-            stack_widget.insertWidget(3, self.screen_4)
+            if alt_flow_2:
+                stack_widget.insertWidget(4, self.screen_4)
+            else:
+                stack_widget.insertWidget(3, self.screen_4)
             stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)
 
 
 class EnterInspectorInfoScreen(QtWidgets.QMainWindow):
     def __init__(self):
         super(EnterInspectorInfoScreen, self).__init__()
-        loadUi("qt_ui/car_inspection_alt_2.ui", self)
+        loadUi("ui/qt_ui/car_inspection_alt_2.ui", self)
 
         self.back_button.clicked.connect(back_button_pressed)
         self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
@@ -253,7 +260,7 @@ class EnterInspectorInfoScreen(QtWidgets.QMainWindow):
 class ScheduleCarInspectionScreen4(QtWidgets.QMainWindow):
     def __init__(self):
         super(ScheduleCarInspectionScreen4, self).__init__()
-        loadUi("qt_ui/car_inspection_4.ui", self)
+        loadUi("ui/qt_ui/car_inspection_4.ui", self)
 
         self.confirm_button.clicked.connect(self.confirm_button_clicked)
         self.back_button.clicked.connect(back_button_pressed)
@@ -278,19 +285,16 @@ class ScheduleCarInspectionScreen4(QtWidgets.QMainWindow):
                                             system_registered_users[0].get_email())
 
         car_inspection.set_car_inspection_transaction(inspection_transaction)
-        if not car_inspection.register_car_inspection():
-            print("error")
-
-        if not TransactionLog.register_transaction(inspection_transaction):
-            print("error 2")
-
-        time.sleep(1)  # sleep for 5 seconds, assume that the payment is made
-        self.success_label.setText("You have successfully arranged an inspection\nappointment!")
-        self.success_label.adjustSize()
-        self.success_label.setAlignment(Qt.AlignCenter)
-        self.email_label.setText("The appointment's details have been sent\nto your email!")
-        self.email_label.adjustSize()
-        self.email_label.setAlignment(Qt.AlignCenter)
+        if car_inspection.register_car_inspection() and TransactionLog.register_transaction(inspection_transaction):
+            time.sleep(5)  # sleep for 5 seconds, assume that the payment is made and that the emails were sent
+            self.success_label.setText("You have successfully arranged an inspection\nappointment!")
+            self.success_label.setStyleSheet("QLabel {color: #5cb85c}")
+            self.success_label.adjustSize()
+            self.success_label.setAlignment(Qt.AlignCenter)
+            self.email_label.setText("The appointment's details have been sent\nto your email!")
+            self.email_label.setStyleSheet("QLabel {color: #d3311b}")
+            self.email_label.adjustSize()
+            self.email_label.setAlignment(Qt.AlignCenter)
 
 
 if __name__ == "__main__":

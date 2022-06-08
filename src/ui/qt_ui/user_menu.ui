@@ -463,7 +463,7 @@
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="post_car_lst_button">
+   <widget class="QPushButton" name="car_listing_button">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -621,7 +621,7 @@
      <string>Post Car Listing</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_2">
+   <widget class="QPushButton" name="spare_part_listing_button">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -783,7 +783,7 @@
 Part Listing</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_3">
+   <widget class="QPushButton" name="car_inspection_button">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -942,7 +942,7 @@ Part Listing</string>
 Inspection</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_4">
+   <widget class="QPushButton" name="test_drive_button">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -1101,7 +1101,7 @@ Inspection</string>
 Drive</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_5">
+   <widget class="QPushButton" name="car_search_button">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -1259,7 +1259,7 @@ Drive</string>
      <string>Car Search</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_6">
+   <widget class="QPushButton" name="spare_part_search_button">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -1420,7 +1420,7 @@ Drive</string>
      <string>Spare Part Search</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_7">
+   <widget class="QPushButton" name="nearby_dealerships_button">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -1579,7 +1579,7 @@ Drive</string>
 Dealerships</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_8">
+   <widget class="QPushButton" name="compare_cars_button">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -1737,7 +1737,7 @@ Dealerships</string>
      <string>Compare Cars</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_9">
+   <widget class="QPushButton" name="car_exchange_button">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -1898,7 +1898,7 @@ Dealerships</string>
      <string>Car Exchange</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_10">
+   <widget class="QPushButton" name="insurance_plan_button">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -2057,7 +2057,7 @@ Dealerships</string>
 Insurance Plan</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_11">
+   <widget class="QPushButton" name="car_transportation_button">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -2216,7 +2216,7 @@ Insurance Plan</string>
 Transportation</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_12">
+   <widget class="QPushButton" name="buy_car_button">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -2374,7 +2374,7 @@ Transportation</string>
      <string>Buy Car</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_13">
+   <widget class="QPushButton" name="my_purchases_button">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -2532,7 +2532,7 @@ Transportation</string>
      <string>My Purchases</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_14">
+   <widget class="QPushButton" name="my_car_transportations_button">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -2690,7 +2690,7 @@ Transportation</string>
      <string>My Car Transportations</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_15">
+   <widget class="QPushButton" name="my_test_drives_button">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -2848,7 +2848,7 @@ Transportation</string>
      <string>My Test Drives</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_16">
+   <widget class="QPushButton" name="my_car_inspections_button">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -3009,7 +3009,7 @@ Transportation</string>
      <string>My Car Inspections</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_17">
+   <widget class="QPushButton" name="my_listings_button">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -3167,7 +3167,7 @@ Transportation</string>
      <string>My Listings</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_18">
+   <widget class="QPushButton" name="contact_button">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -3325,7 +3325,7 @@ Transportation</string>
      <string>Contact Us</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_19">
+   <widget class="QPushButton" name="my_messages_button">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -3486,7 +3486,7 @@ Transportation</string>
      <string>My Messages</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="button1_20">
+   <widget class="QPushButton" name="wishlist_button">
     <property name="geometry">
      <rect>
       <x>0</x>

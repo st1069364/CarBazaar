@@ -132,6 +132,8 @@ class PostCarListingScreen1(QtWidgets.QMainWindow):
         super(PostCarListingScreen1, self).__init__()
         loadUi("ui/qt_ui/post_lst_1.ui", self)  # load the .ui file for the first screen
 
+        self.back_button.clicked.connect(return_to_user_menu)
+
         # set the placeholder text for all the QComboBox objects
         self.category_box.paintEvent = types.MethodType(paintEvent, self.category_box)
         self.company_box.paintEvent = types.MethodType(paintEvent, self.company_box)
@@ -475,6 +477,7 @@ class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
         loadUi("ui/qt_ui/car_inspection_1.ui", self)
 
         classes.main()  # to add some test data
+        self.back_button.clicked.connect(return_to_user_menu)
 
         self.screen_2 = ScheduleCarInspectionScreen2()
 

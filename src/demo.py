@@ -80,9 +80,6 @@ class UserMenuScreen(QtWidgets.QMainWindow):
         super().__init__()
         loadUi("ui/qt_ui/user_menu.ui", self)  # load the .ui file
 
-        # self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
-        #                                "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
-
         self.spare_part_listing_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
         self.test_drive_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
         self.car_search_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
@@ -570,7 +567,7 @@ class ScheduleCarInspectionScreen2(QtWidgets.QMainWindow):
             alt_flow_2 = True  # set the alt_flow_2 flag to indicate that we will execute Alternate Flow #2 of the use case
             inspector_info_screen = EnterInspectorInfoScreen()
             # stack_widget.insertWidget(2, inspector_info_screen)
-            stack_widget.insertWidget(3, inspector_info_screen)
+            stack_widget.insertWidget(4, inspector_info_screen)
         elif check_box_status == 0:  # unchecked -> continue using the recommended Inspector
             screen_3 = ScheduleCarInspectionScreen3()
             # stack_widget.insertWidget(2, screen_3)
@@ -663,7 +660,7 @@ class ScheduleCarInspectionScreen3(QtWidgets.QMainWindow):
             self.screen_4.duration_box.setText(str(random.randint(10, 90)) + ' minutes')  # random duration
             if alt_flow_2:
                 # stack_widget.insertWidget(4, self.screen_4)
-                stack_widget.insertWidget(4, self.screen_4)
+                stack_widget.insertWidget(5, self.screen_4)
             else:
                 # stack_widget.insertWidget(3, self.screen_4)
                 stack_widget.insertWidget(4, self.screen_4)
@@ -699,7 +696,8 @@ class EnterInspectorInfoScreen(QtWidgets.QMainWindow):
         else:  # if the given Inspector was found
             car_inspection.set_car_inspection_inspector(chosen_inspector)
             screen_3 = ScheduleCarInspectionScreen3()
-            stack_widget.insertWidget(3, screen_3)
+            # stack_widget.insertWidget(3, screen_3)
+            stack_widget.insertWidget(4, screen_3)
             stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)
 
 

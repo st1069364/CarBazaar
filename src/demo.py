@@ -49,6 +49,16 @@ def init_stack_widget():
     stack_widget.setWindowTitle('CarBazaar')
 
 
+def return_to_user_menu():
+    for i in range(stack_widget.count()):
+        stack_widget.setCurrentIndex(i)
+        stack_widget.removeWidget(stack_widget.currentWidget())
+
+    menu_screen = UserMenuScreen()
+    stack_widget.addWidget(menu_screen)
+    stack_widget.show()
+
+
 # needed to set the placeholder text for the QComboBox objects
 def paintEvent(self, event):
     painter = QtWidgets.QStylePainter(self)
@@ -432,15 +442,9 @@ class PostCarListingScreen5(QtWidgets.QMainWindow):
         if car_listing.post_listing():
             msg = QMessageBox()
             msg.setWindowTitle('Success !!')
-            # msg.setText('Your Car Listing has been successfully posted\nYou may now exit this screen !!')
-            msg.setText('Your Car Listing has been successfully posted!!')
+            msg.setText('Your Car Listing has been successfully posted!!\nClick OK to return to User Menu')
             msg.exec()
-
-            stack_widget = QtWidgets.QStackedWidget()
-            menu_screen = UserMenuScreen()
-            stack_widget.addWidget(menu_screen)
-            init_stack_widget()
-            stack_widget.show()
+            return_to_user_menu()
 
     def update_car_details_table(self):
         global listing_car
@@ -731,7 +735,7 @@ class ScheduleCarInspectionScreen4(QtWidgets.QMainWindow):
 
         car_inspection.set_car_inspection_transaction(inspection_transaction)
         if car_inspection.register_car_inspection() and TransactionLog.register_transaction(inspection_transaction):
-            # time.sleep(2)  # sleep for 2 seconds, assume that the payment is made and that the emails were sent
+            time.sleep(2)  # sleep for 2 seconds, assume that the payment is made and that the emails were sent
             self.success_label.setText("You have successfully arranged an inspection\nappointment!")
             self.success_label.setStyleSheet("QLabel {color: #5cb85c}")
             self.success_label.adjustSize()
@@ -741,13 +745,11 @@ class ScheduleCarInspectionScreen4(QtWidgets.QMainWindow):
             self.email_label.adjustSize()
             self.email_label.setAlignment(Qt.AlignCenter)
 
-            time.sleep(4)
-
-            stack_widget = QtWidgets.QStackedWidget()
-            menu_screen = UserMenuScreen()
-            stack_widget.addWidget(menu_screen)
-            init_stack_widget()
-            stack_widget.show()
+            msg = QMessageBox()
+            msg.setWindowTitle('Return to User Menu')
+            msg.setText('Click OK to return to User Menu')
+            msg.exec()
+            return_to_user_menu()
 
 
 if __name__ == "__main__":

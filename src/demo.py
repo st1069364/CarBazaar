@@ -616,7 +616,6 @@ class ScheduleCarInspectionScreen3(QtWidgets.QMainWindow):
             for listing in system_posted_listings:  # find the CarListing instance with the given Listing ID
                 if listing.get_listing_id() == listing_id:
                     car_listing = listing
-
             if car_listing is None:  # if a CarListing was not found
                 msg = QMessageBox()
                 msg.setWindowTitle('Error!!')

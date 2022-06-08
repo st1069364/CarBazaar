@@ -50,10 +50,13 @@ def init_stack_widget():
 
 
 def return_to_user_menu():
+    # Remove all widgets from stack_widget
     for i in range(stack_widget.count()):
         stack_widget.setCurrentIndex(i)
         stack_widget.removeWidget(stack_widget.currentWidget())
 
+    # Add user menu screen to stack widget and show the widget. Since, the only widget in the stack_widget,
+    # is the menu screen, this effectively returns the user to the User Menu
     menu_screen = UserMenuScreen()
     stack_widget.addWidget(menu_screen)
     stack_widget.show()
@@ -90,24 +93,25 @@ class UserMenuScreen(QtWidgets.QMainWindow):
         super().__init__()
         loadUi("ui/qt_ui/user_menu.ui", self)  # load the .ui file
 
-        self.spare_part_listing_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
-        self.test_drive_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
-        self.car_search_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
-        self.spare_part_search_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
-        self.nearby_dealerships_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
-        self.compare_cars_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
-        self.buy_car_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
-        self.car_exchange_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
-        self.insurance_plan_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
-        self.car_transportation_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
-        self.my_purchases_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
-        self.my_car_inspections_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
-        self.my_test_drives_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
-        self.my_car_transportations_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
-        self.my_listings_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
-        self.my_messages_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
-        self.wishlist_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
-        self.contact_button.setStyleSheet("QPushButton {background-color: #ebebeb}")
+        # gray-out the non-implemented use cases
+        self.spare_part_listing_button.setStyleSheet("QPushButton {background-color: #919191}")
+        self.test_drive_button.setStyleSheet("QPushButton {background-color: #919191}")
+        self.car_search_button.setStyleSheet("QPushButton {background-color: #919191}")
+        self.spare_part_search_button.setStyleSheet("QPushButton {background-color: #919191}")
+        self.nearby_dealerships_button.setStyleSheet("QPushButton {background-color: #919191}")
+        self.compare_cars_button.setStyleSheet("QPushButton {background-color: #919191}")
+        self.buy_car_button.setStyleSheet("QPushButton {background-color: #919191}")
+        self.car_exchange_button.setStyleSheet("QPushButton {background-color: #919191}")
+        self.insurance_plan_button.setStyleSheet("QPushButton {background-color: #919191}")
+        self.car_transportation_button.setStyleSheet("QPushButton {background-color: #919191}")
+        self.my_purchases_button.setStyleSheet("QPushButton {background-color: #919191}")
+        self.my_car_inspections_button.setStyleSheet("QPushButton {background-color: #919191}")
+        self.my_test_drives_button.setStyleSheet("QPushButton {background-color: #919191}")
+        self.my_car_transportations_button.setStyleSheet("QPushButton {background-color: #919191}")
+        self.my_listings_button.setStyleSheet("QPushButton {background-color: #919191}")
+        self.my_messages_button.setStyleSheet("QPushButton {background-color: #919191}")
+        self.wishlist_button.setStyleSheet("QPushButton {background-color: #919191}")
+        self.contact_button.setStyleSheet("QPushButton {background-color: #919191}")
 
         self.car_listing_button.clicked.connect(self.post_car_listing)
         self.car_inspection_button.clicked.connect(self.schedule_car_inspection)
@@ -208,8 +212,6 @@ class PostCarListingScreen1(QtWidgets.QMainWindow):
             car_listing = CarListing(self.condition_box.currentText())
             car_listing.set_car(listing_car)
 
-            # stack_widget.insertWidget(1, self.screen_2)
-            # stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)  # move to the next UI screen
             stack_widget.insertWidget(2, self.screen_2)
             stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)  # move to the next UI screen
         else:
@@ -267,7 +269,6 @@ class PostCarListingScreen2(QtWidgets.QMainWindow):
             self.screen_3.price_set_flag = 1
             self.screen_3.price_box.setText(str(car_price) + ' €')
 
-        # stack_widget.insertWidget(2, self.screen_3)
         stack_widget.insertWidget(3, self.screen_3)
         stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)  # move to the next UI screen
 
@@ -301,7 +302,6 @@ class PostCarListingScreen3(QtWidgets.QMainWindow):
         global listing_car
         global car_listing
 
-        # stack_widget.insertWidget(3, self.screen_4)
         stack_widget.insertWidget(4, self.screen_4)
         if self.recommended_price_accepted_flag == 1:
             stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)  # move to the next UI screen
@@ -369,7 +369,6 @@ class PostCarListingScreen4(QtWidgets.QMainWindow):
             self.screen_5.update_car_details_table()
             self.screen_5.image_list = car_listing.get_photos()
             self.screen_5.setup_images()
-            # stack_widget.insertWidget(4, self.screen_5)
             stack_widget.insertWidget(5, self.screen_5)
             stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)  # move to the next UI screen
 
@@ -520,7 +519,6 @@ class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
 
             self.fill_inspector_info_table(inspector_info, inspector_reviews)
 
-            # stack_widget.insertWidget(1, self.screen_2)
             stack_widget.insertWidget(2, self.screen_2)
             stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)  # move to the next UI screen
 
@@ -570,11 +568,9 @@ class ScheduleCarInspectionScreen2(QtWidgets.QMainWindow):
             global alt_flow_2
             alt_flow_2 = True  # set the alt_flow_2 flag to indicate that we will execute Alternate Flow #2 of the use case
             inspector_info_screen = EnterInspectorInfoScreen()
-            # stack_widget.insertWidget(2, inspector_info_screen)
             stack_widget.insertWidget(4, inspector_info_screen)
         elif check_box_status == 0:  # unchecked -> continue using the recommended Inspector
             screen_3 = ScheduleCarInspectionScreen3()
-            # stack_widget.insertWidget(2, screen_3)
             stack_widget.insertWidget(3, screen_3)
 
     def continue_button_clicked(self):
@@ -663,10 +659,8 @@ class ScheduleCarInspectionScreen3(QtWidgets.QMainWindow):
             self.screen_4.price_box.setText(str(random.randint(50, 150)) + ' €')  # random price for car inspection
             self.screen_4.duration_box.setText(str(random.randint(10, 90)) + ' minutes')  # random duration
             if alt_flow_2:
-                # stack_widget.insertWidget(4, self.screen_4)
                 stack_widget.insertWidget(5, self.screen_4)
             else:
-                # stack_widget.insertWidget(3, self.screen_4)
                 stack_widget.insertWidget(4, self.screen_4)
             stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)
 
@@ -700,7 +694,6 @@ class EnterInspectorInfoScreen(QtWidgets.QMainWindow):
         else:  # if the given Inspector was found
             car_inspection.set_car_inspection_inspector(chosen_inspector)
             screen_3 = ScheduleCarInspectionScreen3()
-            # stack_widget.insertWidget(3, screen_3)
             stack_widget.insertWidget(4, screen_3)
             stack_widget.setCurrentIndex(stack_widget.currentIndex() + 1)
 

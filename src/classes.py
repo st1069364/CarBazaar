@@ -10,19 +10,19 @@ import re
 
 # The following lists model the behavior of the equivalent database tables, therefore they are used
 # as the application's backend
-system_posted_listings = []
+system_posted_listings = []  # contains all the posted listings
 
-system_registered_listing_reports = []
+system_registered_listing_reports = []  # contains all the ListingReports
 
-system_scheduled_test_drives = []
-system_scheduled_car_inspections = []
-system_scheduled_car_transportations = []
+system_scheduled_test_drives = []  # contains all the scheduled TestDrive appointments
+system_scheduled_car_inspections = []  # contains all the scheduled CarInspection appointments
+system_scheduled_car_transportations = []  # contains all the scheduled CarTransportations
 
-system_registered_stores = []
-system_registered_dealerships = []
-system_registered_users = []
+system_registered_stores = []  # contains all the registered dealership stores
+system_registered_dealerships = []  # contains all the registered Dealerships (type of User)
+system_registered_users = []  # contains all the system's registered Users
 
-system_registered_cars = []
+system_registered_cars = []  # contains all the cars
 
 
 ###########################################################################
@@ -81,14 +81,14 @@ class User(object):
         return self.__reviews
 
     def add_listing(self, new_lst) -> bool:
-        if new_lst not in self.__listings:
+        if new_lst not in self.__listings:  # check if listing does not exist in the user's list
             self.__listings.append(new_lst)
             return True
         else:
             return False
 
     def delete_listing(self, del_lst) -> bool:
-        if del_lst in self.__listings:  # check if listing exists is the user's list
+        if del_lst in self.__listings:  # check if listing exists in the user's list
             self.__listings.remove(del_lst)
             return True
         else:
@@ -104,8 +104,8 @@ class User(object):
         self.__points = new_amount
 
     def redeem_points(self, amount) -> bool:
-        if self.__points >= amount:
-            self.__points -= amount
+        if self.__points >= amount:  # check if the user has at least as many points as the amount to redeem
+            self.__points -= amount  # redeem the user's points
             return True
         else:
             return False
@@ -118,7 +118,7 @@ class User(object):
         return user_info
 
     def add_purchased_car(self, new_car):
-        if new_car not in self.__car_purchases:
+        if new_car not in self.__car_purchases:  # if car is not already in the user's purchase history
             self.__car_purchases.append(new_car)
 
 
@@ -222,11 +222,11 @@ class Dealership(User):
         self.__car_companies: CarCompanies
 
     def add_store(self, new_store):
-        if new_store not in self.__stores:
+        if new_store not in self.__stores:  # if store is not already added
             self.__stores.append(new_store)
 
     def register_company(self) -> bool:
-        if self not in system_registered_dealerships:
+        if self not in system_registered_dealerships:  # if not already registered
             system_registered_dealerships.append(self)
             return True  # registration success
 
@@ -274,7 +274,7 @@ class DealershipStore(object):
         return self.__cars_list
 
     def register_store(self) -> bool:
-        if self not in system_registered_stores:
+        if self not in system_registered_stores:  # if store is not already in the "DB"
             system_registered_stores.append(self)
             return True  # registration success
 
@@ -374,7 +374,7 @@ class Car(object):
         # if car release year is up to 2000, price range is 500 € to 2K €
         if self.__release_year <= 2000:
             self.__estimated_price = round(random.uniform(500, 2000), 2)
-            return self.__estimated_price
+            return self.__estimated_price  # return the estimated price, without taking into consideration the car's mileage
 
         # if car was released between 2001 and 2010, the price range is from 6K to 12K
         elif 2001 <= self.__release_year <= 2010:
@@ -387,22 +387,22 @@ class Car(object):
 
         # calculate the car's price (random value for simplicity)
         self.__estimated_price = round(random.uniform(low_price, high_price), 2)
-        # if the car is new, i.e. has a zero mileage, just return the price, no need to subtract anything
+        # if the car is new, i.e. has a zero mileage, just return the price, no need to subtract anything from the price
         if self.__mileage == 0:
             return self.__estimated_price
-        # the car is not new, subtract an amount from the car's price, due its non-zero mileage
+        # the car is not new, subtract an amount from the car's price, due its non-zero mileage.
         # The amount to be subtracted is calculated by multiplying the car's mileage with the mileage coefficient
         else:
-            return round(self.__estimated_price - (mileage_coefficient * self.__mileage), 2)
+            return round(self.__estimated_price - (mileage_coefficient * self.__mileage), 2)  # round to 2 decimals
 
     def compare_price(self, comp_price) -> bool:
         if abs(comp_price - self.__estimated_price) > 2000:
-            return False  # user price is 2K above, i.e.  too high
+            return False  # user price is 2K above, i.e.  too high -> car is over/underpriced
         else:
-            return True  # user entered price is ok
+            return True  # user entered price has an acceptable deviation from the system's recommended one
 
     def is_car_valid(self) -> bool:
-        if self in system_registered_cars:
+        if self in system_registered_cars:  # check if car exists in the "DB"
             return True
 
         return False
@@ -462,8 +462,8 @@ class SparePart(object):
 
 ##################### Listing types ##########################################
 class Listing(object):
-    def __init__(self, listing_id = random.randint(1, 990)): # assume that Listing IDs are from 1 to 990
-        self.__id: int = listing_id
+    def __init__(self, listing_id=random.randint(1, 990)):  # assume that Listing IDs are from 1 to 990
+        self.__id: int = listing_id  # if a specific ID was given, use that one
         self.__title: str = ''
         self.__description: str = ''
         self.__publish_date: datetime = datetime.date.today()
@@ -495,7 +495,7 @@ class Listing(object):
         return self
 
     def post_listing(self) -> bool:
-        if self not in system_posted_listings:
+        if self not in system_posted_listings:  # check if listing is already posted
             system_posted_listings.append(self)
             self.__creator.add_listing(self)  # add listing to user's list of listings
             return True  # listing post success
@@ -503,7 +503,7 @@ class Listing(object):
         return False  # listing post failure, i.e. it is already posted
 
     def delete_listing(self) -> bool:
-        if self in system_posted_listings:
+        if self in system_posted_listings:  # check if listing is actually posted, before deletion
             system_posted_listings.remove(self)
             self.__creator.delete_listing(self)  # remove listing from user's list of listings
             return True
@@ -525,7 +525,7 @@ class ProductCondition(enum.Enum):  # product condition enum
 
 
 class CarListing(Listing):
-    def __init__(self, car_status: ProductCondition, id = random.randint(1, 990)):
+    def __init__(self, car_status: ProductCondition, id=random.randint(1, 990)):
         super(CarListing, self).__init__(id)
         self.__vehicle: Car = None
         self.__car_condition = car_status
@@ -542,12 +542,15 @@ class CarListing(Listing):
     def set_docs(self, doc_list):
         self.__docs = doc_list
 
+    # user entered a valid price, so change the car's price from the recommended to the new_price argument
     def set_car_price(self, new_price):
         self.__price = new_price
 
     def get_car_price(self):
         return self.__price
 
+    # Normally, with this method, based on the car's uploaded pictures, a 3D model would be created. However, this has
+    # not been implemented, due to its complexity that surpasses the scope of this project.
     def create_3D_model(self):
         pass
 
@@ -556,7 +559,7 @@ class CarListing(Listing):
 
 
 class SparePartListing(Listing):
-    def __init__(self, id = random.randint(1, 990)):
+    def __init__(self, id=random.randint(1, 990)):
         super(SparePartListing, self).__init__(id)
         self.__listing_part: SparePart = None
         self.__condition: ProductCondition
@@ -596,7 +599,7 @@ class TransactionType(enum.Enum):  # transaction type enum
 
 class Transaction(object):
     def __init__(self):
-        self.__id: str = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))  # 10 character IDs
+        self.__id: str = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))  # 10 character rand IDs
         self.__timestamp: datetime = datetime.date.today()
         self.__payment_method: PaymentType
         self.__amount: float = 0.0
@@ -626,10 +629,10 @@ class Transaction(object):
         return transaction_info
 
 
-# This class is used to model the behavior of some DB tables, that would contain transaction records
-# The class won't ever be instantiated, as we assume it is a Database and thus that it is already initialized.
+# This class is used to model the behavior of some DB tables, that would contain transaction records.
+# The class won't ever be instantiated, as we assume it is a Database and thus, that it is already initialized.
 # Since the class won't be instantiated, all of its methods have the **@staticmethod** decorator, so that they can
-# be called from other classes, without having to get an instance of the TransactionLog class.
+# be called from other classes, without requiring access to an instance of the TransactionLog class.
 # Also, the class has some **class** attributes, and no **instance** attributes, since an __init__ method won't ever
 # be called
 class TransactionLog(object):
@@ -638,7 +641,7 @@ class TransactionLog(object):
 
     @staticmethod
     def register_transaction(new_transaction) -> bool:
-        if new_transaction not in TransactionLog.transaction_list:
+        if new_transaction not in TransactionLog.transaction_list:  # check if transaction is not registered
             TransactionLog.transaction_list.append(new_transaction)
             return True  # transaction doesn't exist, return register success
 
@@ -691,7 +694,7 @@ class MonthlyInstallment(object):
 class Invoice(object):
     def __init__(self):
         self.__transaction: Transaction = None
-        self.__invoice_code: int = random.randint(15000, 20000)  # assume Invoice code is within this range
+        self.__invoice_code: int = random.randint(15000, 20000)  # assume Invoice codes are within this range
         self.__text: str = ''
         self.__recipient_email: str = ''
 
@@ -751,7 +754,7 @@ class Location(object):
         return self.__coordinates
 
     def check_location_validity(self) -> bool:
-        # check latitude then longitude
+        # check latitude then longitude. Assume that the city of Patras is within the values below for long and lat.
         if 38.16505110795069 <= self.__coordinates[0] <= 38.31297891120904 and \
                 21.656052138460673 <= self.__coordinates[1] <= 21.817232185432744:
             return True  # location is within Patras, return true
@@ -765,8 +768,8 @@ class Photograph(object):
         self.__size: int = photo_size
 
     # assume that it is called inside the 'Upload File' use case
-    def set_photograph_info(self, fname, size):
-        self.__file_name = fname
+    def set_photograph_info(self, file_name, size):
+        self.__file_name = file_name
         self.__size = size
 
 
@@ -808,7 +811,7 @@ class TestDrive(object):
         self.__date = td_date
 
     def register_test_drive(self) -> bool:
-        if self not in system_scheduled_test_drives:
+        if self not in system_scheduled_test_drives:  # check if the appointment is not already registered
             system_scheduled_test_drives.append(self)
             return True  # new test drive added
 
@@ -851,10 +854,11 @@ class CarInspection(object):
         self.__inspection_type: InspectionType
         self.__location: Location = None
 
+    # This method is used, when the User chose an Inspector different from the system recommended one
     def set_car_inspection_inspector(self, check_inspector):
         self.__inspector = check_inspector
 
-    def set_car_inspection_transaction(self, payment_transaction):
+    def set_car_inspection_transaction(self, payment_transaction):  # set car inspection payment transaction
         self.__transaction = payment_transaction
 
     def set_car_to_inspect(self, check_car_listing):
@@ -866,37 +870,37 @@ class CarInspection(object):
         self.__location = check_location
 
     def register_car_inspection(self) -> bool:
-        if self not in system_scheduled_car_inspections:
+        if self not in system_scheduled_car_inspections:  # if appointment not already registered
             system_scheduled_car_inspections.append(self)
-            self.__inspector.add_inspection(self)
-            return True  # return true, adding a non-existing car inspection
+            if self.__inspector.add_inspection(self):  # add the appointment to the Inspector's CarInspection list
+                return True  # return true, adding a non-existing car inspection
 
         return False  # return false, as an attempt to add an already-existing car inspection, was made
 
     # find a recommended inspector, based on the location the user entered. We assume that the user's location
-    # must be exactly the same (i.e. equal) to the inspector's location. In reality, we would search an Inspector
-    # that is **near** the user, and not in the exact same location
+    # must be **exactly** the same (i.e. equal) to the inspector's location. In reality, we would search an Inspector
+    # that is **near** the user (within some radius), and not in the exact same location
     def find_recommended_inspector(self):
         for user in system_registered_users:
             if isinstance(user, Inspector):
                 # inspector's location is the same as the location the user entered
                 if user.get_inspector_location() == self.__location:
                     # if the inspector has less than 10 pending inspections
-                    if user.add_inspection(self):
+                    if user.add_inspection(self):  # if Inspector has available "inspection-slots"
                         self.__inspector = user
                         return user
 
-    def find_inspector(self, telephone, email):
+    def find_inspector(self, telephone, email):  # check to see if the User entered a valid Inspector
         for user in system_registered_users:
             if isinstance(user, Inspector):
                 if user.get_telephone() == telephone and user.get_email() == email:
                     return user
 
     def start_car_inspection(self):
-        self.__status = OperationStatus.Ongoing
+        self.__status = OperationStatus.Ongoing  # set status to Ongoing
 
     def finish_car_inspection(self):
-        self.__status = OperationStatus.Completed
+        self.__status = OperationStatus.Completed  # set status to Completed
 
     def get_inspector(self):
         return self.__inspector
@@ -916,7 +920,7 @@ class CarTransportation(object):
         self.__car_transaction = TransactionLog.find_transaction(transaction_id)
         self.find_car()
 
-    def find_car(self):
+    def find_car(self):  # find the listing of the car to be transported
         for listing in system_posted_listings:
             if isinstance(listing, CarListing):
                 if listing.get_listing_id() == self.__car_transaction.get_transaction_product_id():
@@ -938,26 +942,27 @@ class CarTransportation(object):
     def register_car_transportation(self) -> bool:
         if self not in system_scheduled_car_transportations:
             system_scheduled_car_transportations.append(self)
-            self.__transporter.add_transportation(self)  # also add the transportation, to the transporter's list
-            return True  # registering a new car transportation
+            if self.__transporter.add_transportation(self):  # also add the transportation, to the transporter's list
+                return True  # registering a new car transportation
 
         return False  # return false, as an attempt to add an already-existing car transportation was made
 
+    # find a transporter based on the location of the car
     def find_transporter(self):
         for user in system_registered_users:
             if isinstance(user, Transporter):
                 # transporter's location is the same as the car's location
                 if user.get_transporter_location() == self.__car_listing.get_listing_location():
                     # if the transporter has less than 10 pending transportations
-                    if user.add_transportation(self):
+                    if user.add_transportation(self):  # if Transporter has available "transportation-slots"
                         self.__transporter = user
                         break
 
     def start_car_transportation(self):
-        self.__status = OperationStatus.Ongoing
+        self.__status = OperationStatus.Ongoing  # set status to Ongoing
 
     def finish_car_transportation(self):
-        self.__status = OperationStatus.Completed
+        self.__status = OperationStatus.Completed  # set status to Compelted
 
 
 class CarComparison(object):
@@ -978,14 +983,15 @@ class CarComparison(object):
         self.__criteria = comp_criteria
         self.__price_range = comp_price_range
 
-    def find_recommended_car(self):  # choose a car at random for the recommended one
+    # Choose a car at random for the recommended one. Normally, we would pick a car based on the criteria the user entered
+    def find_recommended_car(self):
         self.__recommended_car = self.__car_listings[random.randint(0, len(self.__car_listings) - 1)].get_car()
 
     def generate_comparison_results(self):  # just append the cars to the results list, no actual comparison is made
         for car_lst in self.__car_listings:
             self.__comp_results.append(car_lst.get_car())
 
-        CarListingsStatisticsLog.register_car_comparison(self)
+        CarListingsStatisticsLog.register_car_comparison(self)  # add CarComparison the system's log
 
 
 class CarSearch(object):
@@ -1017,14 +1023,14 @@ class CarSearch(object):
                     if self.__criteria[0] == car_info[0] and self.__criteria[1] == car_info[1] and self.__criteria[2] == \
                             car_info[2]:
                         # car price within price range
-                        if float(self.__criteria[16]) <= lst.get_price() <= float(self.__criteria[17]):
-                            self.__search_results.append(lst)
+                        if float(self.__criteria[16]) <= lst.get_car_price() <= float(self.__criteria[17]):
+                            self.__search_results.append(lst)  # append the current listing to the search results
         else:  # the user didn't enter any criteria, fetch popular car listings
             self.__search_results = CarListingsStatisticsLog.get_popular_car_listings()
 
-        CarListingsStatisticsLog.register_car_search(self)
+        CarListingsStatisticsLog.register_car_search(self)  # register the CarSearch to the system's log
 
-    def get_search_results_list(self):
+    def get_search_results_list(self) -> List[CarListing]:
         return self.__search_results
 
 
@@ -1039,18 +1045,21 @@ class CarExchange(object):
         self.__dealerships: List["DealershipStore"] = None
         self.__chosen_store: DealershipStore = None
 
+    # find the stores that accept the user's car
     def find_stores(self) -> List[DealershipStore]:
         exchange_car_info = self.__vehicle.get_car_info()
         for store in system_registered_stores:
-            cars_list = store.get_cars_list()
+            cars_list = store.get_cars_list()  # retrieve each store's car list
             for car in cars_list:
-                car_info = car.get_car_info()
-                # company and model match
+                car_info = car.get_car_info()  # retrieve each car's info
+                # If the under-exchange car has the same manufacturing company and if of the same model, as a car
+                # found in the store's list, then the current store accepts the user's car.
                 if car_info[1] == exchange_car_info[1] and car_info[2] == exchange_car_info[2]:
-                    self.__dealerships.append(store)
+                    self.__dealerships.append(store)  # add the current store the CarExchange's store list
 
         return self.__dealerships
 
+    # set which store was chosen from the user and the exchange's reward
     def set_chosen_store(self, store, exchange_reward):
         self.__chosen_store = store
         self.__exchange_reward = exchange_reward
@@ -1067,36 +1076,56 @@ class CarExchange(object):
         self.__legal_documents = new_docs
 
 
+# Similarly, to the TransactionLog class, this class is used to model the behavior of some DB tables, that would contain
+# records of all the car searches and car comparisons, made by the users of the platform.
+# The class won't ever be instantiated, as we assume it is a Database.
+# Since the class won't be instantiated, all of its methods have the **@staticmethod** decorator, so that they can
+# be called from other classes, without requiring access to an instance of the CarListingsStatisticsLog class.
+# Also, the class has some **class** attributes, and no **instance** attributes, since an __init__ method won't ever
+# be called
 class CarListingsStatisticsLog(object):
-    car_search_log: List[CarSearch] = []
-    car_comparison_log: List[CarComparison] = []
-    popular_car_listings: List[CarListing] = []
+    car_search_log: List[CarSearch] = []  # a log of all the car searches
+    car_comparison_log: List[CarComparison] = []  # a log of all the car comparisons
+    popular_car_listings: List[CarListing] = []  # a "DB table" with the most popular car listings
 
     @staticmethod
-    def get_popular_car_listings():
+    def get_popular_car_listings() -> List[CarListing]:
         return CarListingsStatisticsLog.popular_car_listings
 
     @staticmethod
     def register_car_search(new_car_search) -> bool:
-        if new_car_search not in CarListingsStatisticsLog.car_search_log:
+        if new_car_search not in CarListingsStatisticsLog.car_search_log:  # if car search not already registered
             CarListingsStatisticsLog.car_search_log.append(new_car_search)
+            # since a new item was added on the CarListingsStatisticsLog class, we need to update the "DB table"
+            # storing the most popular car listings, to account for the new data being entered
             CarListingsStatisticsLog.update_popular_car_listings(new_car_search)
-            return True
+            return True  # registration success
         else:
-            return False
+            return False  # registration failure
 
     @staticmethod
     def register_car_comparison(new_car_comparison) -> bool:
-        if new_car_comparison not in CarListingsStatisticsLog.car_comparison_log:
+        if new_car_comparison not in CarListingsStatisticsLog.car_comparison_log:  # if car comparison not registered
             CarListingsStatisticsLog.car_comparison_log.append(new_car_comparison)
+            # since a new item was added on the CarListingsStatisticsLog class, we need to update the "DB table"
+            # storing the most popular car listings, to account for the new data being entered
             CarListingsStatisticsLog.update_popular_car_listings(new_car_comparison)
             return True
         else:
             return False
 
+    # This method does not execute any *statistical analysis*, which would be its "real-world" function.
+    # We just get the car listings, involved in each operation (CarSearch or CarComparison) and check if they appear
+    # at least 3 times in operations of the same kind. If they do, we assume that the specific listing, is a
+    # popular one, and we add it to popular_car_listings
     @staticmethod
     def update_popular_car_listings(operation):
-        if isinstance(operation, CarSearch):
+        if isinstance(operation, CarSearch):  # if operation is a CarSearch
+            # get each CarSearch's results list, which consists of a list of CarListings. Then count the number of
+            # occurrences of each CarListing, in the search results list of all the CarSearches. If the current
+            # CarListing is present in at least 3 of the search results lists, then we can conclude that it is a
+            # popular CarListings, and thus we add it to the popular_car_listings list.
+            # In the following else-if statement, we do the same for the CarComparisons
             for car_search in CarListingsStatisticsLog.car_search_log:
                 car_listings = car_search.get_search_results_list()
                 for listing in car_listings:
@@ -1110,11 +1139,11 @@ class CarListingsStatisticsLog(object):
 
         elif isinstance(operation, CarComparison):
             for car_comparison in CarListingsStatisticsLog.car_comparison_log:
-                car_listings = car_comparison.get_car_list()
+                car_listings = car_comparison.get_car_listings()
                 for listing in car_listings:
                     listing_count = 0
                     for curr_comp in CarListingsStatisticsLog.car_comparison_log:
-                        if listing in curr_comp.get_car_list():
+                        if listing in curr_comp.get_car_listings():
                             listing_count += 1
                             if listing_count >= 3:
                                 if listing not in CarListingsStatisticsLog.popular_car_listings:
@@ -1231,7 +1260,7 @@ class ListingReport(object):
         self.__status = 'Checked'
 
     def register_listing_report(self) -> bool:
-        if self not in system_registered_listing_reports:
+        if self not in system_registered_listing_reports:  # if ListingReport not in the "DB"
             system_registered_listing_reports.append(self)
             return True
 
@@ -1254,14 +1283,6 @@ class ListingDeletionForm(object):
 
 # if __name__ == "__main__":
 def main():
-    # sp = SparePart()
-    # sp.set_spare_part_info('theBrand', 'Pipe', 'PA1')
-    #
-    # print(sp.get_spare_part_info())
-    #
-    # print(sp.is_spare_part_number_valid())
-
-    #
     test_user_location = Location((38.25, 21.75))
 
     test_user = User()
@@ -1313,9 +1334,6 @@ def main():
     car_listing.set_car(c3)
     car_listing.post_listing()
     system_registered_cars.append(c3)
-
-    # plan = InsurancePlan()
-    # plan.set_insurance_plan_info('Test Plan', 'Premium', )
 
     giulietta = Car()
     giulietta.set_car_info('Hatchback', 'Alfa Romeo', 'Giulietta', 2010, 5000, 123, 32, 'Manual',

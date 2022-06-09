@@ -885,10 +885,8 @@ class CarInspection(object):
             if isinstance(user, Inspector):
                 # inspector's location is the same as the location the user entered
                 if user.get_inspector_location() == self.__location:
-                    # if the inspector has less than 10 pending inspections
-                    if user.add_inspection(self):  # if Inspector has available "inspection-slots"
-                        self.__inspector = user
-                        return user
+                    self.__inspector = user  # set the inspection's inspector to the recommended one
+                    return user
 
     def find_inspector(self, telephone, email):  # check to see if the User entered a valid Inspector
         for user in system_registered_users:

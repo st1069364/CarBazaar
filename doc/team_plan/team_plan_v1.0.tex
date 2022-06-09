@@ -1,0 +1,197 @@
+%% Overleaf			
+%% Software Manual and Technical Document Template	
+%% 									
+%% This provides an example of a software manual created in Overleaf.
+
+\documentclass{../ol-softwaremanual}
+
+% Packages used in this example
+\usepackage{graphicx}  % for including images
+\usepackage{microtype} % for typographical enhancements
+\usepackage{minted}    % for code listings
+\usepackage{amsmath}   % for equations and mathematics
+\setminted{style=friendly,fontsize=\small}
+\renewcommand{\listoflistingscaption}{List of Code Listings}
+\usepackage{hyperref}  % for hyperlinks
+\usepackage[a4paper,top=4.2cm,bottom=4.2cm,left=3.5cm,right=3.5cm]{geometry} % for setting page size and margins
+
+\usepackage[english, greek]{babel}
+
+\usepackage{subfig}
+
+\usepackage{incgraph,tikz}
+
+\usepackage{filemod}
+
+
+
+
+
+\usepackage{rotating}
+
+
+% Custom macros used in this example document
+\newcommand{\doclink}[2]{\href{#1}{#2}\footnote{\url{#1}}}
+\newcommand{\cs}[1]{\texttt{\textbackslash #1}}
+
+\begin{document}
+	
+	
+	\begin{titlepage}
+		
+		
+		% Frontmatter data; appears on title page
+		\title{\en Team Plan \\}
+		\version{1.0}
+		\softwarelogo{\includegraphics[scale=0.4]{../CarBazaar_logo.png}}		
+		
+	\end{titlepage}
+	
+	
+	\maketitle
+	
+	\newpage
+	
+	\center{\textbf{Μέλη Ομάδας}}
+	
+	\vspace{20pt}
+	
+	
+	
+	\begin{table}[htbp!]
+		
+		\begin{tabular}{llll}
+			Μεμελετζόγλου Χαρίλαος & 1069364 & \en st1069364@ceid.upatras.gr & 4o Έτος   \\ 
+			\\ Λέκκας Γεώργιος      &      1067430    &   \en st1067430@ceid.upatras.gr & 4o Έτος  \\
+			\\ Γιαννουλάκης Ανδρέας        &   1067387       & \en st1067387@ceid.upatras.gr & 4o Έτος           \\
+			\\ Κανελλόπουλος Ιωακείμ        &  1070914        &    \en st1070914@ceid.upatras.gr & 4o Έτος        \\ 
+		\end{tabular}
+	\end{table}
+	
+	\center{\textbf{Υπεύθυνοι Παρόντος Τεχνικού Κειμένου}}
+	
+	\vspace{20pt}
+	
+	\begin{table}[htbp!]
+		\begin{tabular}{ll}
+			Μεμελετζόγλου Χαρίλαος & \en Editor \\
+			\\ Λέκκας Γεώργιος      &   \en  Peer Reviewer \\
+			\\ Γιαννουλάκης Ανδρέας & \en Contributor \\
+			\\ Κανελλόπουλος Ιωακείμ & \en Contributor \\ 
+		\end{tabular}
+	\end{table}
+	
+	
+	\vspace{20pt}
+	
+	\center{\textbf{Εργαλεία που χρησιμοποιήθηκαν}}
+	
+	\vspace{20pt}
+	\flushleft
+	Χρησιμοποιήθηκε το \en \doclink{https://www.overleaf.com/}{Overleaf} \gr και το \en \doclink{https://www.texstudio.org/}{TexStudio} \gr για την συγγραφή του \LaTeX\ κώδικα. \break
+	
+	Για την δημιουργία του λογότυπου, χρησιμοποιήθηκε το εργαλείο \en \doclink{https://www.adobe.com/express/create/logo}{Adobe Express} . \gr \break
+	
+	Για την ανάπτυξη του έργου χρησιμοποιείται η γλώσσα προγραμματισμού \en Python \gr και για την συγγραφή του κώδικα, το \en IDE \doclink{https://www.jetbrains.com/pycharm/}{PyCharm} \gr και το \en \doclink{https://code.visualstudio.com/}{VSCode} \gr .         \\ \break
+	
+	Για την δημιουργία του \en Gantt Chart, \gr χρησιμοποιήθηκε το \en \doclink{https://instagantt.com/}{Instagantt}  \gr και για την δημιουργία του \en Pert Chart \gr, το \en \doclink{https://www.smartdraw.com/}{Smartdraw} \gr. \break
+	
+	Για την παρακολούθηση των \en To-Do tasks \gr, των ολοκληρωμένων, κλπ, δηλ. για την δημιουργία ενός \en Scrum Board \gr, χρησιμοποιήθηκε το \en site \doclink{https://trello.com/}{Trello} \gr. \break 
+	
+	Για την επικοινωνία των μελών της ομάδας, χρησιμοποιήθηκε το \en \doclink{ https://www.discord.com/}{Discord} \gr . \linebreak 
+	
+	
+	Για τον διαμοιρασμό και την παρακολούθηση της διαδικασίας ανάπτυξης, χρησιμοποιήθηκε το \en \doclink{https://github.com/st1069364/CarBazaar}{Github} \gr.
+	
+	
+	
+	\newpage
+	
+	\center{\textbf{Διαδικασία Διαχείρισης Έργου}}
+	\flushleft
+	Προκειμένου να οργανώσουμε την εργασία της ομάδας μας, αποφασίσαμε να δουλέψουμε ακολουθώντας την μέθοδο \en \textit{SCRUM} \gr , που ανήκει στην κατηγορία των \en Agile development frameworks. \gr \break
+	
+	Συγκεκριμένα, αποφασίσαμε να εργαστούμε χρησιμοποιώντας \en \textit{Sprints} \gr διάρκειας δύο εβδομάδων, όση και η προθεσμία για το κάθε παραδοτέο. Στα παραδοτέα όπου υπήρξε παράταση, τα \en Sprints \gr, είχαν την αντίστοιχη μεγαλύτερη διάρκεια. \break
+	
+	Ρόλοι κατά \en Scrum \gr : \newline
+	
+	
+	\flushleft
+	\begin{tabular}{ll}
+		\en \textbf{Project Owner : }  & \gr \hspace{5mm}  Μεμελετζόγλου Χαρίλαος \\
+		\\ \en \textbf{Scrum Master : } &  \gr \hspace{5mm} Λέκκας Γεώργιος \\
+		
+		\\ \en \textbf{Development Team : } & \begin{tabular}[t]{ll}
+			&  \gr  Μεμελετζόγλου Χαρίλαος  \\
+			& \gr     Λέκκας Γεώργιος \\
+			& \gr     Γιαννουλάκης Ανδρέας \\
+			& \gr     Κανελλόπουλος Ιωακείμ \\
+		\end{tabular} 
+	\end{tabular} \linebreak
+	
+	\vspace{20pt}
+	
+	Στην αρχή κάθε \en Sprint cycle \gr , διεξαγόταν το \en Sprint Planning meeting \gr , στο οποίο καθορίζονταν οι στόχοι της ομάδας για το \en Sprint Cycle \gr που επρόκειτο να ξεκινήσει. Συγκεκριμένα, ο \en Project Owner \gr , επέλεγε από το \en Project Backlog \gr, τα \en tasks \gr με τα οποία θα έπρεπε να ασχοληθεί η ομάδα στο εκάστοτε παραδοτέο. \break
+		
+	Στόχος σε κάθε \en Sprint Cycle \gr , ήταν η ανάπτυξη νέων \en features \gr και η παράδοση ενός \en working product \gr στους πελάτες. \break
+	
+	Έπειτα, από το \en Sprint Planning meeting \gr, η ομάδα ανάπτυξης, ξεκινούσε να εργάζεται στα καθορισμένα \en tasks \gr . \break
+	
+	Για να είναι συντονισμένη η διαδικασία ανάπτυξης των απαραίτητων Τεχνικών Κειμένων για το κάθε παραδοτέο, διεξάγονταν 2 με 3 εβδομαδιαία \en Scrum meetings \gr . Στις συναντήσεις, αυτές, γινόταν έλεγχος προόδου, κάθε μέλος της ομάδας εξηγούσε ποια \en tasks \gr είχε ολοκληρώσει και ποια θα αναλάμβανε στην συνέχεια, αλλά και συζητούσε τυχόν εμπόδια που αντιμετώπιζε. \break
+	
+	Η επικοινωνία μεταξύ των μελών της ομάδας γινόταν μέσω \en Discord \gr. \break
+	
+	Στο τέλος κάθε \en Sprint Cycle \gr , διεξαγόταν το \en Sprint Retrospective meeting \gr , στο οποίο η ομάδα συζητούσε σχετικά με τις δυσκολίες και τα λάθη που έγιναν στο \en Sprint \gr που μόλις ολοκληρώθηκε, αλλά και πιθανούς τρόπους για να αντιμετωπιστούν αντίστοιχα φαινόμενα σε μελλοντικά \en Sprints \gr . Επίσης, γινόταν συζήτηση, επί των μεθόδων που είχαν ως αποτέλεσμα την ομαλότερη διεκπεραίωση των \en tasks \gr του \en Sprint Backlog \gr .
+	
+	\newpage
+	
+	\center{\textbf{Χρονοπρογραμματισμός Έργου}}
+	
+	\flushleft
+	
+	Παρακάτω παρατίθεται ο χρονοπρογραμματισμός του έργου. Ως έναρξη του \en project \gr έχει οριστεί η 1η Μαρτίου και ως λήξη η 12η Ιουνίου. 
+	
+	
+	\begin{figure}[htbp!]
+		
+		\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/gantt\_chart.png}
+		\caption{Χρονοπρογραμματισμός Έργου}
+		
+		
+	\end{figure}
+	
+	Ως τυπικά υποέργα (\en tasks\gr), είχαμε τα Τεχνικά Κείμενα που έπρεπε να παραδοθούν σε κάθε ένα από τα παραδοτέα. Τα \en tasks \gr, φαίνονται στο \en Gantt \gr διάγραμμα. \break
+	
+	Στο τέλος κάθε παραδοτέου (και άρα κάθε \en Sprint Cycle \gr) υπήρχε ένα \en Milestone \gr. Συγκεκριμένα :
+	
+	\begin{enumerate}
+		\item Ανάλυση Απαιτήσεων Εφαρμογής (\en Requirements Engineering\gr)
+		\item Σχεδιασμός Γενικής Αρχιτεκτονικής και Λειτουργιών Συστήματος
+		\item  Επέκταση Αρχιτεκτονικής και \en Minimum Viable Product \gr.
+		\item \en Testing \gr Υλοποίησης
+		\item Τελικές αλλαγές στο σύστημα και παράδοση στον πελάτη
+	\end{enumerate}
+	\newpage
+	
+	
+	\center{\textbf{\en Pert Chart \gr Έργου}}
+	\flushleft
+	Παρακάτω υπάρχει το \en Pert Chart \gr, όπως αυτό προκύπτει από το αντίστοιχο \en Gantt Chart\gr. Το \en Critical Path \gr φαίνεται με κόκκινες ακμές.
+	
+	\begin{figure}[htbp!]
+		
+		\includegraphics[width=\textwidth, height=\textheight, keepaspectratio ]{img/PertChart\_for\_TeamPlan.jpg}
+		\caption{Αρχικό \en Pert Chart \gr Έργου}
+	\end{figure}
+	
+	\center{\textbf{Κατανομή Προσπάθειας}}
+	\flushleft
+	Παρακάτω φαίνεται η κατανομή προσπάθειας της ομάδας μας , δηλαδή οι ατομικοί βαθμοί που έχουν αποφασιστεί \textbf{ομόφωνα} για το κάθε μέλος της ομάδας.
+	
+	
+	\center{\textbf{Συμπεράσματα από τον τρόπο εργασίας σαν ομάδα}}
+	\flushleft
+	Η ομάδα μας χρησιμοποιώντας την μέθοδο \en SCRUM \gr κατάφερε να επιτύχει τους στόχους που είχε θέσει από την αρχή του \en project \gr και να βγάλει ένα ικανοποιητικό αποτέλεσμα, που έχει ακολουθήσει τις μεθοδολογίες ανάλυσης, σχεδίασης και υλοποίησης που διδάχθηκαν στο μάθημα. \break
+	
+	Όσον αφορά τα πράγματα που θα μπορούσαμε να αλλάξουμε και να διαχειριστούμε διαφορετικά αυτά θα περιελάμβαναν την διοργάνωση περισσότερων \en daily scrum meetings \gr, τον ορισμό περισσότερων (εσωτερικών στην ομάδα) άτυπων διοριών ανάμεσα στα παραδοτέα και την τακτικότερη επικοινωνία των μελών της ομάδας.
+\end{document}

@@ -34,7 +34,7 @@
 		
 		% Frontmatter data; appears on title page
 		\title{\en Project Code \\}
-		\version{0.3}
+		\version{1.0}
 		\softwarelogo{\includegraphics[scale=0.4]{../CarBazaar_logo.png}}
 	\end{titlepage}
 	
@@ -73,16 +73,16 @@
 	\end{table}
 	
 	\vspace{10pt}
-	\center{\textbf{Αλλαγές στην έκδοση \en v0.3 \gr}}
+	\center{\textbf{Αλλαγές στην έκδοση \en v1.0 \gr}}
 	\vspace{10pt}
 	\flushleft
 	
-
-	Τροποποίηση της παραγράφου για το αρχείο \en classes.py \gr . \break
+	Αφαιρέθηκε η παράγραφος για τον \en driver \gr κώδικα του \en use case "\gr Ανάρτηση Αγγελίας Πώλησης Οχήματος\en"\gr. Προσθήκη της παραγράφου που αφορά το αρχείο \en demo.py \gr, που περιέχει το \en demo \gr της εφαρμογής. \break
 	
-	Τροποποιήσεις στις υπόλοιπες παραγράφους.	\break
-	
+	Τέλος, προστέθηκε η παράγραφος για το \en README \gr αρχείο που βρίσκεται στο \en \textit{src} directory \gr.
 
+	
+	
 	
 	\newpage
 	
@@ -113,27 +113,22 @@
 	
 	Συγκεκριμένα, στο \en \textbf{src} directory \gr, υπάρχει ο κώδικας του \en project \gr. \break
 	
-	Στο αρχείο \en \textbf{ui/post\_lst.py} \gr υπάρχει ο κώδικας για τις μεταβάσεις μεταξύ των οθονών του \en Use case \gr \en"\gr Ανάρτηση Αγγελίας Πώλησης Οχήματος\en"\gr.  Συγκεκριμένα, κάνοντας κλικ στο κουμπί \en 'Continue' \gr , γίνεται μετάβαση στην επόμενη οθόνη, και κάνοντας κλικ στο κουμπί \en 'Back' \gr , γίνεται μετάβαση στην προηγούμενη οθόνη.
-	Επίσης, έχει ενσωματωθεί διαδραστικός χάρτης (\en OpenStreetMaps API \gr), ο οποίος έχει προκύψει μέσω του αρχείου \en \textit{src/ui/qml/map.qml}\gr. \\
+	Στο αρχείο \en \textbf{src/classes.py} \gr, υπάρχουν οι κλάσεις του \en Class Diagram \gr, καθώς και οι μέθοδοί τους. Επίσης, υπάρχουν και μέθοδοι που δεν εμφανίζονται στο \en Class Diagram \gr, (πχ \en getters/setters \gr), αλλά υλοποιούνται καθώς (λογικά) θα χρειαζόντουσαν στην πλήρη έκδοση της εφαρμογής. \break	
 	
-	Στο αρχείο αυτό θα υπάρχει στο τέλος, ο \en driver \gr κώδικας για το \en use case \gr της Ανάρτησης Αγγελίας Πώλησης Οχήματος. \break
-	
-	Στα αρχεία \en \textit{ui/car\_check*.py} \gr υπάρχει ο κώδικας που υλοποιεί τις οθόνες του \en Use Case "\gr Προγραμματισμός Ελέγχου Οχήματος\en"\gr. \break 
-	
-	\red{Στο αρχείο \en \textbf{src/classes.py} \gr, υπάρχουν οι κλάσεις του \en Class Diagram \gr, καθώς και οι μέθοδοί τους, σε μια μη-τελική μορφή. } \break
-		
-	\red{Επίσης, υπάρχουν και μέθοδοι που δεν εμφανίζονται στο \en Class Diagram \gr, (πχ \en getters/setters \gr), αλλά υλοποιούνται καθώς (λογικά) θα χρειαζόντουσαν στην πλήρη έκδοση της εφαρμογής.}  \break
-	
-	
+	\red{Στο αρχείο \en \textbf{demo.py} \gr, υπάρχει ένα \en demo \gr της εφαρμογής, όπου έχει υλοποιηθεί πλήρως το \en GUI \gr, των \en use cases "\gr Ανάρτηση Αγγελίας Πώλησης Οχήματος\en"\gr και \en"\gr Προγραμματισμός Ελέγχου Οχήματος\en"\gr.} \break
+
+	Στις οθόνες, έχει ενσωματωθεί διαδραστικός χάρτης (μέσω του \en OpenStreetMaps API \gr), ο οποίος έχει προκύψει μέσω του \en QML \gr αρχείου \en \textit{src/ui/qml/map.qml}\gr. \break	
 	
 	Στο \en directory \textbf{ui/qt\_ui} \gr υπάρχουν τα απαραίτητα \en resources \gr, καθώς και τα \en .ui \gr αρχεία που προκύπτουν από τον \en Qt Designer \gr. \break	
 	
-	Το \en \textit{src/ui/app\_res\_rc.py} \gr αρχείο περιέχει την \en compiled \gr έκδοση του \en .qrc \gr αρχείου που ομαδοποιεί τα \en resources \gr του \en Qt Designer \gr.
+	Το \en \textit{ui/app\_res\_rc.py} \gr αρχείο περιέχει την \en compiled \gr έκδοση του \en .qrc \gr αρχείου που ομαδοποιεί τα \en resources \gr του \en Qt Designer \gr. \break
 	
 	
 	Στο \en \textbf{doc} directory \gr, υπάρχουν όλα τα Τεχνικά Κείμενα. \break
 	
-	Χρησιμοποιούμε τα \en \textit{Releases} \gr που προσφέρει το \en Github \gr, ώστε να ομαδοποιούμε τα τεχνικά κείμενα του κάθε παραδοτέου σε ένα \en release \gr .
+	Χρησιμοποιούμε τα \en \textit{Releases} \gr που προσφέρει το \en Github \gr, ώστε να ομαδοποιούμε τα τεχνικά κείμενα του κάθε παραδοτέου σε ένα \en release \gr .\break
+	
+	\red{Τέλος, στο \en \textbf{src} directory \gr, υπάρχει ένα \en README \gr αρχείο το οποίο περιγράφει τα βήματα που πρέπει να ακολουθηθούν ώστε να μπορέσουν να εγκατασταθούν τα απαραίτητα πακέτα και να εκτελεστεί το \en demo \gr. Επίσης, στο αρχείο αυτό υπάρχει ενσωματωμένο ένα \en gif \gr, το οποίο επιδεικνύει την εκτέλεση του \en demo \gr.}
 	
 	
 	

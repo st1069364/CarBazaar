@@ -59,6 +59,7 @@ def return_to_user_menu():
     # is the menu screen, this effectively returns the user to the User Menu
     menu_screen = UserMenuScreen()
     stack_widget.addWidget(menu_screen)
+    stack_widget.setWindowTitle('CarBazaar')
     stack_widget.show()
 
 
@@ -148,6 +149,8 @@ class PostCarListingScreen1(QtWidgets.QMainWindow):
         classes.main()
 
         self.screen_2 = PostCarListingScreen2()
+
+        stack_widget.setWindowTitle('Post Car Listing')
 
         # when the user selects a company on the company_box drop-down menu, call the
         # on_company_selection method, to populate the model_box with the corresponding
@@ -485,6 +488,7 @@ class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
         self.back_button.clicked.connect(back_button_pressed)
         self.back_button.setStyleSheet("QPushButton {background-color: #ebebeb; color: #d3311b; border-style: outset; "
                                        "border-width: 2px; border-color: #d5d5d5; font: bold 11px}")
+        stack_widget.setWindowTitle('Schedule Car Inspection')
 
     def continue_button_clicked(self):
         global car_inspection

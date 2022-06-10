@@ -533,7 +533,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="doc_issue_authority_combobox">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -585,7 +585,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QTextEdit" name="textEdit">
+   <widget class="QTextEdit" name="doc_id_box">
     <property name="geometry">
      <rect>
       <x>120</x>

@@ -6,6 +6,9 @@ import sys
 import classes
 from classes import *
 
+import test_data_init
+from test_data_init import main
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import *
@@ -147,7 +150,7 @@ class PostCarListingScreen1(QtWidgets.QMainWindow):
         self.int_color_box.paintEvent = types.MethodType(paintEvent, self.int_color_box)
         self.ndoors_box.paintEvent = types.MethodType(paintEvent, self.ndoors_box)
 
-        classes.main()
+        test_data_init.main()  # load test data
 
         self.screen_2 = PostCarListingScreen2()
 
@@ -488,7 +491,8 @@ class ScheduleCarInspectionScreen1(QtWidgets.QMainWindow):
         super(ScheduleCarInspectionScreen1, self).__init__()
         loadUi("ui/qt_ui/car_inspection_1.ui", self)
 
-        classes.main()  # to add some test data
+        test_data_init.main()  # load test data
+
         self.back_button.clicked.connect(return_to_user_menu)
 
         self.screen_2 = ScheduleCarInspectionScreen2()
@@ -732,7 +736,7 @@ class ScheduleCarInspectionScreen4(QtWidgets.QMainWindow):
         # this Transaction would be normally created from the Payment Menu (payment use case)
         inspection_transaction = Transaction()
         # assume that the payment was made using Cash, and that the user paying for the transaction is
-        # user "system_registered_users[0]", i.e the first User created in main() of classes.py file
+        # user "system_registered_users[0]", i.e the first User created in main() of test_data_init.py file
         inspection_transaction.set_transaction_info(PaymentType.Cash, float(self.price_box.text().replace("€", "")),
                                                     TransactionType.Payment, system_registered_users[0],
                                                     car_inspection.get_inspector(), random.randint(1, 10))

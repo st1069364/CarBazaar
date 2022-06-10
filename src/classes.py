@@ -371,8 +371,8 @@ class Car(object):
         # mileage coefficient, used for calculating the amount that will be removed from the car's price
         mileage_coefficient = 0.25
 
-        # if car release year is up to 2000, price range is 500 € to 2K €
-        if self.__release_year <= 2000:
+        # if car release year is between 1990 and 2000, price range is 500 € to 2K €
+        if 1990 <= self.__release_year <= 2000:
             self.__estimated_price = round(random.uniform(500, 2000), 2)
             return self.__estimated_price  # return the estimated price, without taking into consideration the car's mileage
 
@@ -469,7 +469,7 @@ class Listing(object):
         self.__publish_date: datetime = datetime.date.today()
         self.__creator: User = None
         self.__location: Location = None
-        self.__photos: List[Photograph] = []
+        self.__photos = []
 
     def get_listing_id(self) -> int:
         return self.__id
@@ -578,6 +578,7 @@ class CarDocument(object):
         self.__issuer: str = ''
         self.__doc_id: str = ''
 
+    # assume that this method is called inside the 'Upload File' use case, for each file uploaded
     def set_doc_info(self, issue_authority, new_id):
         self.__issuer = issue_authority
         self.__doc_id = new_id
@@ -760,17 +761,6 @@ class Location(object):
             return True  # location is within Patras, return true
         else:
             return False  # location is outside of Patras, return false
-
-
-class Photograph(object):
-    def __init__(self, photo_file_name, photo_size):
-        self.__file_name: str = photo_file_name
-        self.__size: int = photo_size
-
-    # assume that it is called inside the 'Upload File' use case
-    def set_photograph_info(self, file_name, size):
-        self.__file_name = file_name
-        self.__size = size
 
 
 class CarCompanies(enum.Enum):  # companies enum
@@ -1152,7 +1142,7 @@ class Advertisement(object):
     def __init__(self):
         self.__creator: User = None
         self.__text: str = ''
-        self.__photos: List["Photograph"] = []
+        self.__photos = []
         self.__creation_date: datetime = None
 
     def set_ad_info(self, creator, text, date, photos_list):

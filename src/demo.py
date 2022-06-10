@@ -1,3 +1,4 @@
+import os.path
 import time
 from ui import app_res_rc
 import types
@@ -230,7 +231,7 @@ class PostCarListingScreen2(QtWidgets.QMainWindow):
     def __init__(self):
         super(PostCarListingScreen2, self).__init__()
         loadUi("ui/qt_ui/post_lst_2.ui", self)  # load the .ui file for the second screen
-        self.files = []
+        self.car_docs: List[CarDocument] = []
         self.images = []
         self.file_dialog = QFileDialog(self)
 
@@ -253,8 +254,10 @@ class PostCarListingScreen2(QtWidgets.QMainWindow):
         file_names = self.file_dialog.getOpenFileNames(self, "Select one or more files", "./ui/test_docs",
                                                        "PDF Documents (*.pdf)")
         if file_names:
-            self.files = file_names[0]
-            car_listing.set_docs(self.files)
+            file_names = file_names[0]
+            for file_name in file_names:
+                doc = CarDocument()
+                self.car_docs.append(doc)
 
     def image_upload(self):
         global car_listing
@@ -266,6 +269,12 @@ class PostCarListingScreen2(QtWidgets.QMainWindow):
 
     def continue_button_clicked(self):
         global car_listing
+
+        for doc in self.car_docs:
+            doc.set_doc_info(self.doc_issue_authority_combobox.currentText(), self.doc_id_box.toPlainText())
+
+        car_listing.set_docs(self.car_docs)
+
         # set the estimated price only the first time, because if for some reason the user pressed the 'back' button
         # the next time that PostCarListingScreen3 would show up, it would have a different estimated price for
         # the listing's car
@@ -406,7 +415,7 @@ class PostCarListingScreen5(QtWidgets.QMainWindow):
         header = self.car_info_table.horizontalHeader()
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
         # header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
-        self.car_info_table.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)  # no edit on table cells
+        self.car_info_table.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)  # no editing on table cells
 
     def setup_images(self):
         if self.image_list:
@@ -564,7 +573,7 @@ class ScheduleCarInspectionScreen2(QtWidgets.QMainWindow):
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
         header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
         self.recomm_insp_info_table.setEditTriggers(
-            QtWidgets.QAbstractItemView.NoEditTriggers)  # no edit on table cells
+            QtWidgets.QAbstractItemView.NoEditTriggers)  # no editing on table cells
 
         self.custom_inspector_check_box.setStyleSheet("QCheckBox {color: #d3311b;}")
         self.custom_inspector_check_box.stateChanged.connect(self.is_recommended_inspector_accepted)
@@ -601,7 +610,7 @@ class ScheduleCarInspectionScreen3(QtWidgets.QMainWindow):
         header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
         header.setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
         self.car_info_table.setEditTriggers(
-            QtWidgets.QAbstractItemView.NoEditTriggers)  # no edit on table cells
+            QtWidgets.QAbstractItemView.NoEditTriggers)  # no editing on table cells
 
         self.screen_4 = ScheduleCarInspectionScreen4()
 

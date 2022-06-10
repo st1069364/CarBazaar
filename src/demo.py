@@ -705,11 +705,12 @@ class EnterInspectorInfoScreen(QtWidgets.QMainWindow):
         if chosen_inspector is None:  # if such an Inspector was not found
             msg = QMessageBox()
             msg.setWindowTitle('Error!!')
-            msg.setText('The contact info you entered, does not correspond to a registered Inspector.\nExiting...')
+            msg.setText(
+                'The contact info you entered, does not correspond to a registered Inspector.\nReturning to main menu...')
             msg.exec()
             choice = QMessageBox.Ok
             if choice == QMessageBox.Ok:
-                app.exit(-1)
+                return_to_user_menu()
         else:  # if the given Inspector was found
             car_inspection.set_car_inspection_inspector(chosen_inspector)
             screen_3 = ScheduleCarInspectionScreen3()

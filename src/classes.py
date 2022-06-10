@@ -250,7 +250,7 @@ class DealershipStore(object):
         self.__store_owner: str = ''
         self.__cars_list: List["Car"] = []
 
-    def get_store_info(self):
+    def get_store_info(self) -> List:
         store_details = [self.__location, self.__email, self.__telephone,
                          self.__store_name, self.__store_owner, self.__cars_list]
         return store_details
@@ -258,7 +258,7 @@ class DealershipStore(object):
     def get_store(self):
         return self
 
-    def set_store_info(self, new_location, new_email, new_telephone, new_store_name, new_store_owner, cars_list):
+    def set_store_info(self, new_location, new_email, new_telephone, new_store_owner):
         self.__location = new_location
         self.__email = new_email
         self.__telephone = new_telephone
@@ -360,7 +360,7 @@ class Car(object):
         self.__num_doors = new_num_doors
         self.__registration_plate = new_registration_plate
 
-    def get_car_info(self):
+    def get_car_info(self) -> List:
         car_info = [self.__category, self.__company, self.__model, self.__release_year,
                     self.__mileage, self.__engine, self.__power, self.__transmission,
                     self.__fuel_type, self.__city_consumption, self.__motorway_consumption,
@@ -430,7 +430,7 @@ class SparePart(object):
         self.__type = new_type
         self.__code = new_code
 
-    def get_spare_part_info(self):
+    def get_spare_part_info(self) -> List:
         return [self.__brand, self.__type, self.__category, self.__code]
 
     def is_spare_part_code_valid(self) -> bool:
@@ -455,9 +455,6 @@ class SparePart(object):
             self.__category = 'Fuel Gauge'
         elif part_code_prefix == 'PA4':
             self.__category = 'General'
-
-    def get_spare_part_category(self):
-        return self.__category
 
 
 ##################### Listing types ##########################################
@@ -485,7 +482,7 @@ class Listing(object):
     def set_photos(self, photos_list):
         self.__photos = photos_list
 
-    def get_photos(self):
+    def get_photos(self) -> List:
         return self.__photos
 
     def set_description(self, new_description):
@@ -536,17 +533,17 @@ class CarListing(Listing):
         self.__vehicle = new_car
         self.__price = self.__vehicle.calculate_car_price()  # default price is the system recommended one
 
-    def get_car(self):
+    def get_car(self) -> Car:
         return self.__vehicle
 
-    def set_docs(self, doc_list):
+    def set_docs(self, doc_list: List["CarDocument"]):
         self.__docs = doc_list
 
     # user entered a valid price, so change the car's price from the recommended to the new_price argument
     def set_car_price(self, new_price):
         self.__price = new_price
 
-    def get_car_price(self):
+    def get_car_price(self) -> float:
         return self.__price
 
     # Normally, with this method, based on the car's uploaded pictures, a 3D model would be created. However, this has
@@ -583,7 +580,7 @@ class CarDocument(object):
         self.__issuer = issue_authority
         self.__doc_id = new_id
 
-    def get_doc_info(self):
+    def get_doc_info(self) -> List:
         return [self.__issuer, self.__doc_id]
 
 
@@ -624,7 +621,7 @@ class Transaction(object):
         self.__merchant = t_merch
         self.__product_id = t_prod_id
 
-    def get_transaction_info(self):
+    def get_transaction_info(self) -> List:
         transaction_info = [self.__id, self.__timestamp, self.__payment_method, self.__amount,
                             self.__type, self.__customer, self.__merchant, self.__product_id]
         return transaction_info
@@ -676,7 +673,7 @@ class MonthlyInstallment(object):
     def set_transaction(self, inst_trans):
         self.__transaction = inst_trans
 
-    def get_installment_info(self):
+    def get_installment_info(self) -> List:
         return [self.__transaction, self.__price, self.__product_price, self.__due_date]
 
     def calculate_installment_price(self, user_salary) -> float:
@@ -704,7 +701,7 @@ class Invoice(object):
         self.__text = inv_text
         self.__recipient_email = inv_recp_email
 
-    def get_invoice(self):
+    def get_invoice(self) -> "Invoice":
         return self
 
 
@@ -727,7 +724,7 @@ class InsurancePlan(object):
         self.__price = plan_price
         self.__num_months = plan_duration
 
-    def get_insurance_plan_info(self):
+    def get_insurance_plan_info(self) -> List:
         return [self.__name, self.__plan_id, self.__type, self.__price, self.__num_months]
 
     def calculate_insurance_plan_price(self, points):
@@ -845,13 +842,13 @@ class CarInspection(object):
         self.__location: Location = None
 
     # This method is used, when the User chose an Inspector different from the system recommended one
-    def set_car_inspection_inspector(self, check_inspector):
+    def set_car_inspection_inspector(self, check_inspector: Inspector):
         self.__inspector = check_inspector
 
     def set_car_inspection_transaction(self, payment_transaction):  # set car inspection payment transaction
         self.__transaction = payment_transaction
 
-    def set_car_to_inspect(self, check_car_listing):
+    def set_car_to_inspect(self, check_car_listing: CarListing):
         self.__car_listing = check_car_listing
 
     def set_car_inspection_info(self, check_type, check_time, check_location):
@@ -870,7 +867,7 @@ class CarInspection(object):
     # find a recommended inspector, based on the location the user entered. We assume that the user's location
     # must be **exactly** the same (i.e. equal) to the inspector's location. In reality, we would search an Inspector
     # that is **near** the user (within some radius), and not in the exact same location
-    def find_recommended_inspector(self):
+    def find_recommended_inspector(self) -> Inspector:
         for user in system_registered_users:
             if isinstance(user, Inspector):
                 # inspector's location is the same as the location the user entered
@@ -878,7 +875,8 @@ class CarInspection(object):
                     self.__inspector = user  # set the inspection's inspector to the recommended one
                     return user
 
-    def find_inspector(self, telephone, email):  # check to see if the User entered a valid Inspector
+    # check to see if the User entered a valid Inspector
+    def find_inspector(self, telephone, email) -> Inspector:
         for user in system_registered_users:
             if isinstance(user, Inspector):
                 if user.get_telephone() == telephone and user.get_email() == email:
@@ -890,7 +888,7 @@ class CarInspection(object):
     def finish_car_inspection(self):
         self.__status = OperationStatus.Completed  # set status to Completed
 
-    def get_inspector(self):
+    def get_inspector(self) -> Inspector:
         return self.__inspector
 
 
@@ -922,7 +920,7 @@ class CarTransportation(object):
         elif transportation_package == 'express':
             return 1  # assume that the express transportation package, has an estimated delivery time of 1 day
 
-    def set_transportation_info(self, new_delivery_location, new_package):
+    def set_car_transportation_info(self, new_delivery_location, new_package):
         self.__delivery_location = new_delivery_location
         self.__package = new_package
         self.__transportation_time = self.estimate_transportation_duration(new_package)
@@ -955,16 +953,16 @@ class CarTransportation(object):
 
 class CarComparison(object):
     def __init__(self):
-        self.__car_listings: List["CarListing"] = []
+        self.__car_listings: List[CarListing] = []
         self.__criteria: List[str] = []
         self.__price_range: Tuple[float, float] = (0.0, 0.0)
         self.__comp_results: List[Car] = []
         self.__recommended_car: Car = None
 
-    def set_listings_to_compare(self, listings):
+    def set_listings_to_compare(self, listings: List[CarListing]):
         self.__car_listings = listings
 
-    def get_car_listings(self):
+    def get_car_listings(self) -> List[CarListing]:
         return self.__car_listings
 
     def set_car_comparison_info(self, comp_criteria, comp_price_range):
@@ -1028,9 +1026,9 @@ class CarExchange(object):
         self.__car_estimated_price: float = 0.0
         self.__car_owner: User = None
         self.__exchange_reward: float = 0.0
-        self.__legal_documents: List["CarDocument"] = []
+        self.__legal_documents: List[CarDocument] = []
         self.__transaction: Transaction = None
-        self.__dealerships: List["DealershipStore"] = None
+        self.__dealerships: List[DealershipStore] = None
         self.__chosen_store: DealershipStore = None
 
     # find the stores that accept the user's car
@@ -1151,7 +1149,7 @@ class Advertisement(object):
         self.__photos = photos_list
         self.__creation_date = date
 
-    def get_ad_info(self):
+    def get_ad_info(self) -> List:
         return [self.__creator.get_user_info(), self.__text, self.__photos, str(self.__creation_date)]
 
 
@@ -1167,7 +1165,7 @@ class PushNotification(object):
         self.__text = text
         self.__issue_time = time
 
-    def get_notification_info(self):
+    def get_notification_info(self) -> List:
         return [self.__creator.get_user_info(), self.__text, str(self.__issue_time), self.__recipients]
 
     def add_recipient(self, recp):
@@ -1187,7 +1185,7 @@ class Message(object):
         self.__text = new_text
         self.__creation_timestamp = new_timestamp
 
-    def get_message_info(self):
+    def get_message_info(self) -> List:
         return [self.__sender.get_user_info(), self.__recipient.get_user_info(), self.__text,
                 str(self.__creation_timestamp)]
 
@@ -1204,7 +1202,7 @@ class Review(object):
         self.__stars = new_stars
         self.__writer = new_writer
 
-    def get_review_info(self):
+    def get_review_info(self) -> List:
         return [self.__text, self.__stars, self.__writer.get_user_info(), str(self.__creation_date)]
 
     def is_review_positive(self) -> bool:
@@ -1222,19 +1220,19 @@ class ListingReport(object):
         self.__status: str = 'Unchecked'
         self.__text: str = ''
         self.__creation_date: datetime.date = datetime.date.today()
-        self.__report_auditor: "InsuranceCompanyEmployee" = None
+        self.__report_auditor: InsuranceCompanyEmployee = None
 
-    def set_listing_report_info(self, report_listing, report_creator, report_text, report_auditor):
-        self.__listing = report_listing
+    def set_listing_report_info(self, reported_listing, report_creator, report_text, report_auditor):
+        self.__listing = reported_listing
         self.__creator = report_creator
         self.__text = report_text
         self.__report_auditor = report_auditor
 
-    def get_listing_report(self):
+    def get_listing_report(self) -> "ListingReport":
         return self
 
     @staticmethod
-    def is_listing_report_id_valid(search_id) -> bool:
+    def is_listing_report_id_valid(search_id: int) -> bool:
         for report in system_registered_listing_reports:
             if report.__report_id == search_id:
                 return True  # a ListingReport with the given ID was found, return True
@@ -1265,7 +1263,7 @@ class ListingDeletionForm(object):
         self.__listing_report = listing_report
         self.__text = text
 
-    def get_deletion_form(self):
+    def get_deletion_form(self) -> "ListingDeletionForm":
         return self
 
 
